@@ -3,6 +3,7 @@
 # The cloud VM sends everything through an HTTP proxy, so tailscaled runs in userspace mode and reaches peers over DERP:
 # `ssh <100.x | *.ts.net>` goes through `tailscale nc` (openssh-client is installed if missing), other tools through SOCKS5 localhost:1055.
 # Needs TS_AUTHKEY (reusable + ephemeral auth key) in the environment variables and *.tailscale.com in its allowed domains.
+# Optional SSH_KEY_B64 (base64 of an unencrypted private key, one line) becomes ~/.ssh/id_tailnet for those hosts.
 set -euo pipefail
 [ "${CLAUDE_CODE_REMOTE:-}" = true ] || exit 0
 [ -n "${TS_AUTHKEY:-}" ] || { echo "tailnet_up: TS_AUTHKEY not set, not joining the tailnet" >&2; exit 0; }
@@ -18,5 +19,11 @@ if ! tailscale status > /dev/null 2>&1; then
 fi
 command -v ssh > /dev/null || { apt-get update -qq && apt-get install -y -qq --no-install-recommends openssh-client; } > /dev/null 2>&1 \
   || echo "tailnet_up: could not install openssh-client, ssh unavailable" >&2
-grep -q 'tailscale nc' ~/.ssh/config 2> /dev/null || { mkdir -p ~/.ssh; printf 'Host 100.* *.ts.net\n  ProxyCommand tailscale nc %%h %%p\n' >> ~/.ssh/config; }
+mkdir -p ~/.ssh
+if [ -n "${SSH_KEY_B64:-}" ]; then
+  (umask 077; printf '%s' "$SSH_KEY_B64" | base64 -d > ~/.ssh/id_tailnet 2> /dev/null) && ssh-keygen -y -P '' -f ~/.ssh/id_tailnet > /dev/null 2>&1 \
+    || echo "tailnet_up: SSH_KEY_B64 is not a base64-encoded unencrypted private key" >&2
+fi
+grep -q 'tailscale nc' ~/.ssh/config 2> /dev/null \
+  || printf 'Host 100.* *.ts.net\n  ProxyCommand tailscale nc %%h %%p\n  IdentityFile ~/.ssh/id_tailnet\n  StrictHostKeyChecking accept-new\n' >> ~/.ssh/config
 echo "tailnet_up: joined as $(tailscale ip -4)"
