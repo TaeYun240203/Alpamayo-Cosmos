@@ -1,0 +1,4 @@
+pass
+== s1 ok in 237 s: {"final":{"best_global_step":15,"best_metric":4.8762325420975685,"best_model_checkpoint":"/workspace/out/ssmoke/s1/checkpoint-15"},"last_train":{"step":30,"kv":13.54809,"vit":0.26108,"traj_ce":22.33519,"lm":9.75982,"fm":4.26038,"s_per_step":2.372,"peak_mem_gb":62.08},"last_eval":{"step":30,"eval_kv":13.53091,"eval_vit":0.27067,"eval_traj_ce":22.322,"eval_lm":9.69177,"eval_fm":4.87661,"peak_mem_gb"
+ratio = 1.5720 not below 1.5
+HALT: student gate: ratio = 1.5720 not below 1.5

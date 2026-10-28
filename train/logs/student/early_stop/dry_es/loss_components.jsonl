@@ -1,0 +1,4 @@
+{"step": 10, "kv": 2.28707, "vit": 2.13334, "traj_ce": 11.45028, "lm": 9.79371, "fm": 2.68192, "peak_mem_gb": 1.9}
+{"step": 20, "kv": 1.60697, "vit": 1.11611, "traj_ce": 10.21319, "lm": 7.65652, "fm": 2.89755, "s_per_step": 0.942, "peak_mem_gb": 1.9}
+{"step": 20, "eval_kv": 1.11774, "eval_vit": 0.69499, "eval_traj_ce": 7.96309, "eval_lm": 6.82556, "eval_fm": 1.20379, "peak_mem_gb": 1.9}
+{"step": 25, "kv": 1.07296, "vit": 0.62018, "traj_ce": 9.18843, "lm": 6.56488, "fm": 2.1892, "s_per_step": 7.72, "peak_mem_gb": 1.9}

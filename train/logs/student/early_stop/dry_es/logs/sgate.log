@@ -1,0 +1,49 @@
+[2026-10-25 20:40:52,700][morai_vla.model][INFO] - loaded /home/taeyun_kim/morai-student/runs/dry_es/t2/final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+[2026-10-25 20:40:52,707][morai_vla.model][INFO] - stage []: 0.000B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 1.0}
+[2026-10-25 20:40:54,213][morai_vla.model][INFO] - loaded /home/taeyun_kim/morai-student/runs/dry_es/s1/final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+[2026-10-25 20:40:54,216][morai_vla.model][INFO] - stage []: 0.000B trainable, losses {'kv': 1.0, 'vit': 1.0, 'fm': 1.0, 'traj_ce': 1.0, 'lm': 1.0, 'vkd': 0.0, 'coc_kl': 0.0}
+[2026-10-25 20:40:56,041][morai_vla.data][INFO] - MoraiDataset ['val', 'val_asset'] coc=False: 8 samples from 8 episodes
+[2026-10-25 20:40:58,878][root][INFO] - {"key": "run1021v-w2-103/1330", "cell": "C3", "teacher_ade": 11.741957664489746, "teacher_fde": 30.25322723388672, "teacher_minade": 10.25070571899414, "student_ade": 8.62606143951416, "student_fde": 22.1790714263916, "student_minade": 7.160165786743164, "st_ade": 3.2365477085113525}
+{
+ "teacher_ade": 7.331,
+ "teacher_fde": 17.436,
+ "teacher_minade": 5.531,
+ "student_ade": 6.724,
+ "student_fde": 15.324,
+ "student_minade": 5.245,
+ "st_ade": 3.502,
+ "n": 8,
+ "ratio": 0.917,
+ "by_cell": {
+  "C0": {
+   "teacher_ade": 8.215,
+   "teacher_fde": 23.728,
+   "teacher_minade": 5.027,
+   "student_ade": 8.228,
+   "student_fde": 21.757,
+   "student_minade": 5.419,
+   "st_ade": 1.698,
+   "n": 2
+  },
+  "C2": {
+   "teacher_ade": 1.1,
+   "teacher_fde": 2.496,
+   "teacher_minade": 0.586,
+   "student_ade": 0.776,
+   "student_fde": 1.95,
+   "student_minade": 0.086,
+   "st_ade": 0.524,
+   "n": 1
+  },
+  "C3": {
+   "teacher_ade": 8.224,
+   "teacher_fde": 17.906,
+   "teacher_minade": 6.721,
+   "student_ade": 7.312,
+   "student_fde": 15.425,
+   "student_minade": 6.207,
+   "st_ade": 4.82,
+   "n": 5
+  }
+ }
+}

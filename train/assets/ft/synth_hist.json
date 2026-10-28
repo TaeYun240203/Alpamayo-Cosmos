@@ -1,0 +1,16 @@
+{
+ "r2_D": {
+  "rows": 20039,
+  "lane": 18527
+ },
+ "r2_D_start": {
+  "rows": 847,
+  "lane": 777,
+  "episodes": 75,
+  "rows_2hz": 173
+ },
+ "old_recovery": {
+  "rows": 14924,
+  "lane": 13944
+ }
+}

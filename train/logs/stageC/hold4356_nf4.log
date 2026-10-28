@@ -1,0 +1,89 @@
+stop  kind  fog  
+4356  go    False    122
+            True      43
+      wait  False    707
+            True     664
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:07<00:29,  7.48s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:16<00:25,  8.49s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:35<00:26, 13.35s/it]Loading checkpoint shards:  80%|████████  | 4/5 [01:21<00:26, 26.29s/it]Loading checkpoint shards: 100%|██████████| 5/5 [01:40<00:00, 23.41s/it]Loading checkpoint shards: 100%|██████████| 5/5 [01:40<00:00, 20.05s/it]
+MoraiDataset: skipped 1 episodes with missing or incomplete step-0 files
+recorded 2 / 144
+recorded 4 / 144
+recorded 6 / 144
+recorded 8 / 144
+recorded 10 / 144
+recorded 12 / 144
+recorded 14 / 144
+recorded 16 / 144
+recorded 18 / 144
+recorded 20 / 144
+recorded 22 / 144
+recorded 24 / 144
+recorded 26 / 144
+recorded 28 / 144
+recorded 30 / 144
+recorded 32 / 144
+recorded 34 / 144
+recorded 36 / 144
+recorded 38 / 144
+recorded 40 / 144
+recorded 42 / 144
+recorded 44 / 144
+recorded 46 / 144
+recorded 48 / 144
+recorded 50 / 144
+recorded 52 / 144
+recorded 54 / 144
+recorded 56 / 144
+recorded 58 / 144
+recorded 60 / 144
+recorded 62 / 144
+recorded 64 / 144
+recorded 66 / 144
+recorded 68 / 144
+recorded 70 / 144
+recorded 72 / 144
+recorded 74 / 144
+recorded 76 / 144
+recorded 78 / 144
+recorded 80 / 144
+recorded 82 / 144
+recorded 84 / 144
+recorded 86 / 144
+recorded 88 / 144
+recorded 90 / 144
+recorded 92 / 144
+recorded 94 / 144
+recorded 96 / 144
+recorded 98 / 144
+recorded 100 / 144
+recorded 102 / 144
+recorded 104 / 144
+recorded 106 / 144
+recorded 108 / 144
+recorded 110 / 144
+recorded 112 / 144
+recorded 114 / 144
+recorded 116 / 144
+recorded 118 / 144
+recorded 120 / 144
+recorded 122 / 144
+recorded 124 / 144
+recorded 126 / 144
+recorded 128 / 144
+recorded 130 / 144
+recorded 132 / 144
+recorded 134 / 144
+recorded 136 / 144
+recorded 138 / 144
+recorded 140 / 144
+recorded 142 / 144
+recorded 144 / 144
+{
+ "recorded": {
+  "n": 144,
+  "agree": 0.6666666666666666,
+  "pred_go_when_gt_wait": 1,
+  "pred_wait_when_gt_go": 47,
+  "gt_depart_s_median": 1.0,
+  "pred_depart_s_median_when_gt_go": 4.2
+ }
+}

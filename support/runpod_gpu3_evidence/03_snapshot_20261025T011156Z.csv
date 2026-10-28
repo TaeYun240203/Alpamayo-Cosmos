@@ -1,0 +1,9 @@
+index, temperature.gpu, clocks.current.sm [MHz], clocks.max.sm [MHz], clocks_event_reasons.active, clocks_event_reasons.sw_thermal_slowdown, clocks_event_reasons.hw_thermal_slowdown, power.draw [W], utilization.gpu [%]
+0, 55, 1965 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 542.12 W, 100 %
+1, 69, 1965 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 584.83 W, 98 %
+2, 58, 1965 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 524.76 W, 100 %
+3, 62, 345 MHz, 1980 MHz, 0x0000000000000001, Not Active, Not Active, 87.40 W, 0 %
+4, 52, 1965 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 524.83 W, 96 %
+5, 66, 1965 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 549.60 W, 100 %
+6, 52, 1965 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 533.71 W, 100 %
+7, 69, 1935 MHz, 1980 MHz, 0x0000000000000004, Not Active, Not Active, 553.99 W, 100 %

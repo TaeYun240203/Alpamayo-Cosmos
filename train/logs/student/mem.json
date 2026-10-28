@@ -1,0 +1,65 @@
+{
+ "2x3": {
+  "stage1": {
+   "n_train_b": 0.904,
+   "resident_gb": 6.04,
+   "fwd_act_gb": 1.87,
+   "bwd_peak_gb": 3.24,
+   "teacher_fwd_s": 0.147,
+   "student_fwd_bwd_s": 0.359
+  },
+  "stage2": {
+   "n_train_b": 1.032,
+   "resident_gb": 6.14,
+   "fwd_act_gb": 1.8,
+   "bwd_peak_gb": 3.39,
+   "teacher_fwd_s": 0.186,
+   "student_fwd_bwd_s": 0.295
+  },
+  "student_params_b": 1.032,
+  "teacher_params_b": 2.211,
+  "tokens": 1852
+ },
+ "5x3": {
+  "stage1": {
+   "n_train_b": 1.207,
+   "resident_gb": 8.41,
+   "fwd_act_gb": 2.94,
+   "bwd_peak_gb": 3.81,
+   "teacher_fwd_s": 0.192,
+   "student_fwd_bwd_s": 2.383
+  },
+  "stage2": {
+   "n_train_b": 1.525,
+   "resident_gb": 8.49,
+   "fwd_act_gb": 2.91,
+   "bwd_peak_gb": 4.33,
+   "teacher_fwd_s": 0.181,
+   "student_fwd_bwd_s": 0.353
+  },
+  "student_params_b": 1.525,
+  "teacher_params_b": 2.979,
+  "tokens": 1852
+ },
+ "2x9": {
+  "stage1": {
+   "n_train_b": 1.056,
+   "resident_gb": 6.68,
+   "fwd_act_gb": 3.24,
+   "bwd_peak_gb": 3.85,
+   "teacher_fwd_s": 0.166,
+   "student_fwd_bwd_s": 0.378
+  },
+  "stage2": {
+   "n_train_b": 1.184,
+   "resident_gb": 6.76,
+   "fwd_act_gb": 3.19,
+   "bwd_peak_gb": 4.01,
+   "teacher_fwd_s": 0.145,
+   "student_fwd_bwd_s": 0.335
+  },
+  "student_params_b": 1.184,
+  "teacher_params_b": 2.394,
+  "tokens": 1852
+ }
+}

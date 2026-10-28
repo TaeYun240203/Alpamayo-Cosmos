@@ -1,0 +1,4 @@
+# Used by student_ft only: drops base.yaml's single-MoraiDataset keys (root, split, cell_keep, ...) from data.train_dataset
+# before student_ft sets the mixture there. OmegaConf merges dicts key by key; a null in between replaces the node.
+data:
+  train_dataset: null

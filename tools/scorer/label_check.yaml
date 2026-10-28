@@ -1,0 +1,94 @@
+# DAgger label checker (label_check.py). Rules and map stay in thresholds.yaml; this file holds only what the checker adds:
+# the reference (oracle) vehicle limits, the tolerances and the conflict weights. Kept apart so the scorer's config hash
+# (and every labels parquet made with it) does not change.
+version: 1
+
+# Reference trajectories must never do what the car could not: every limit sits on the weak side of the collection
+# driver, so a reference that "does better" than a label really could have (a too-strong reference drops good labels).
+oracle:
+  brake_mps2: 6.0           # velocity_planner stops at 5.0 (target_speed_deceleration_limit); R1/R2 hard stops ~8 sim
+  brake_delay_s: 0.2
+  lat_accel_mps2: 3.0       # curvature_velocity maximum_lateral_acceleration 2.6; tyres allow more
+  steer_max_rad: 0.6981317  # bridge / pp.hpp STEER_LIMIT (40 deg)
+  steer_rate_radps: 1.0471976  # pp.yaml steering_rate_limit
+  wheelbase_m: 3.0
+  shift_slack: 1.2          # sideways shifts of the label take this much longer than the limits allow
+  shifts_m: [-0.6, -0.3, 0.3, 0.6]   # sideways shifts of the label's path (left +)
+  lookahead: [0.6, 2.0, 15.0]        # pure pursuit back to the route lane: clamp(gain * v, min, max), the collection pp
+  go_accel_mps2: 1.5        # route_go: the pp back along the route, pulling away gently (stopped labels' way on)
+  go_speed_mps: 8.0
+
+body_m: [-0.8, 3.9, 0.95]   # ego box from base_link (rear axle): rear, front, half width (Ioniq5 4.64 x 1.89 m)
+
+signal:
+  # t0 yellow: a crossing within this is a yellow crossing (no penalty; yellow ~3 s sim, 5.4 s wall max), a later one
+  # unknown: K-City shows yellow both after green and before green (R1: 34 and 107 of 141), so red or green follows
+  yellow_max_s: 5.0
+  yellow_stop_mps2: 3.0     # velocity_planner stop_line_state z_mps2: on yellow it stops if v^2 / 2z fits
+  # User 10/28: on red, a car that cannot stop before its front axle reaches the line even braking at the collection
+  # driver's limit should go through (stopping in the junction fails); one whose front axle is already past should
+  # go once the way is clear (objects at constant velocity) and fails standing still on a clear way.
+  max_brake_mps2: 8.0        # R1/R2 hard stops ~8 sim (dagger_label A_BRAKE_MAX guesses 9)
+  max_brake_delay_s: 0.2
+  junction_stop_mps: 0.5     # slower than this after crossing on red = stopped in the junction
+  stop_offset_m: 5.0        # stop_line_state x_m: the planner's base_link stop point before the line
+
+blackout_s: [[1860.0, 2015.0]]   # route s of the GPS blackout (lane/inoperable exempt): R1/R2 labels 1869-2009 m, +-10 m
+
+objects:
+  static_mps: 0.3           # slower objects stand still (gt-yield-node MIN_SPEED)
+  search_m: 30.0            # objects farther than 6.4 s of closing speed + this are skipped
+  # NPC cars follow their lane: constant velocity is metres off within seconds on a curve (10 m/s, R 30 m: 6.7 m at
+  # 2 s). Contacts with moving vehicles count only this far ahead (gt-aeb-node HORIZON_S); pedestrians and standing
+  # objects the whole 6.4 s.
+  vehicle_trust_s: 2.0
+
+visibility:                 # visible(): what the model could see at t0 (shared with the shadow labeller)
+  bev_m: [20.0, 60.0, 20.0]  # LiDAR BEV behind, ahead, either side of base_link (MODEL_PLAN 2.3)
+  lidar_x_m: 1.4            # LiDAR ahead of base_link (roof, assumed)
+  occluder_m: 2.0           # non-vehicle objects at least this long hide what is behind them
+  rear_roi_m: 20.0          # shadow frenet_gap.patch REAR_RANGE_M: a car farther back (+ half its length) is unseen
+
+# Generous to the label, strict to the references: the label's violations are judged as the scorer does (objects a
+# little smaller), a reference's with margins (it must clear by these to count as doing better).
+margin:
+  label_object_shrink_m: 0.15      # Object Info sizes can be off (scaled props report the unscaled size)
+  ref_object_grow_m: 0.3
+  ref_static_grow_m: 1.2           # hybrid_astar collision_margin_m: references keep the planner's own clearance
+  ref_lane_grow_m: 0.1
+  ref_stop_line_m: 1.0             # a reference stopping counts only if its front axle stays this far before the line
+  label_speed_kph: 1.0             # ego status noise; the speed filter holds right at 60
+  ref_checkpoint_m: 0.3
+
+# A rule fails only if some reference does better on it by more than amount * rel + abs, is not blocked (stopped behind
+# a standing obstacle it must pass anyway) and costs less overall by cost_s.
+tolerance:
+  lane: [0.5, 1.0]          # contact seconds
+  inoperable: [0.5, 1.0]    # all-wheels-off seconds
+  speed: [0.0, 0.5]         # seconds over the limit
+  signal: [0.0, 0.0]        # red crossings
+  collision: [0.0, 0.0]     # objects hit
+  checkpoint: [0.0, 0.0]    # checkpoints passed farther than the radius
+  cost_s: 2.0
+  stopped_mps: 0.5          # the ego slower than this is struck, not striking
+  min_ref_speed_mps: 3.0    # progress lost by a slower reference costs (metres / max(label mean speed, this)) s
+
+# Competition penalties made continuous, only to rank one violation against another (rules v1.2, DATA_PLAN.md 2).
+cost:
+  signal: 30.0
+  collision: 15.0
+  speed_onset: 15.0
+  speed_per_s: 5.0          # +15 s per 3 s
+  lane_per_s: 1.6667        # +5 s per 3 s
+  inoperable: 15.0          # operator return
+  inoperable_per_s: 5.0
+  checkpoint: 300.0         # a skipped checkpoint fails the run
+  off_route_end: 5.0        # ending outside the route lane: a line crossing is still owed
+route_lane_m: 2.5           # |offset from the route path| beyond this is another lane
+lane_width_m: 3.5           # lane_change_rear: the ego half this or more off a car's path at t0 = another lane
+merge_s: [[1200.0, 1310.0]]   # highway merge on the route (osm: left solid ends ~1235, ramp joins ~1255-1270):
+                             # a vehicle from behind here is the label's (lane_change_rear)
+
+start:                      # t0 states no reference can judge (unjudgeable, kept)
+  off_route_m: 15.0         # dagger_label.py gives no label there either
+  wrong_way_rad: 1.5708

@@ -1,0 +1,23 @@
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:02<00:08,  2.01s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:04<00:06,  2.20s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:06<00:04,  2.25s/it]Loading checkpoint shards: 100%|██████████| 5/5 [00:06<00:00,  1.34s/it]
+{
+ "camera_vit": {
+  "max_abs": 8e-06,
+  "mean_abs": 1.619e-07
+ },
+ "expert": {
+  "max_abs": 0.0,
+  "mean_abs": 0.0
+ },
+ "lidar": {
+  "max_abs": 6.1e-05,
+  "mean_abs": 1.199e-05
+ },
+ "llm": {
+  "max_abs": 6.1e-05,
+  "mean_abs": 1.093e-05
+ },
+ "lm_head": {
+  "max_abs": 6.1e-05,
+  "mean_abs": 6.061e-07
+ }
+}

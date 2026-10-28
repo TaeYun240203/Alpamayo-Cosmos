@@ -1,0 +1,691 @@
+[
+ {
+  "ep": "run1021i-w1-006",
+  "kind": "stop_tl",
+  "t0": 121,
+  "tau0": 12.1,
+  "section": 4,
+  "fog": false,
+  "decision": {
+   "longitudinal": "Stop for static constraints",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "red",
+    "distance_m": 56.4
+   },
+   {
+    "category": "Yield/Stop control",
+    "type": "stop line"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 56.4,
+  "coc": "Decelerate to a stop because the traffic light ahead is red.",
+  "bag_ns": [
+   1792533751605810432,
+   1792533752162086144,
+   1792533752722423296,
+   1792533753290231040,
+   1792533753864157696,
+   1792533754443001344,
+   1792533755021557504,
+   1792533755603204352,
+   1792533756187682560,
+   1792533756780946176,
+   1792533757394360576,
+   1792533758036339968,
+   1792533758714741760,
+   1792533759404774144,
+   1792533760094791936,
+   1792533760784795392,
+   1792533761474784256
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-0.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+3.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+6.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=6.182 m/s), (t=-1.5s, v_long=7.035 m/s), (t=-1.0s, v_long=7.939 m/s), (t=-0.5s, v_long=8.846 m/s), (t=0.0s, v_long=9.795 m/s), (t=0.5s, v_long=10.729 m/s), (t=1.0s, v_long=7.586 m/s), (t=1.5s, v_long=4.065 m/s), (t=2.0s, v_long=1.740 m/s), (t=2.5s, v_long=0.498 m/s), (t=3.0s, v_long=-0.008 m/s), (t=3.5s, v_long=0.000 m/s), (t=4.0s, v_long=0.000 m/s), (t=4.5s, v_long=-0.000 m/s), (t=5.0s, v_long=-0.000 m/s), (t=5.5s, v_long=0.000 m/s), (t=6.0s, v_long=0.000 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=-0.011 m/s), (t=-1.5s, v_lat=-0.001 m/s), (t=-1.0s, v_lat=-0.000 m/s), (t=-0.5s, v_lat=0.001 m/s), (t=0.0s, v_lat=0.011 m/s), (t=0.5s, v_lat=0.019 m/s), (t=1.0s, v_lat=0.031 m/s), (t=1.5s, v_lat=-0.015 m/s), (t=2.0s, v_lat=-0.004 m/s), (t=2.5s, v_lat=0.000 m/s), (t=3.0s, v_lat=0.000 m/s), (t=3.5s, v_lat=0.000 m/s), (t=4.0s, v_lat=-0.000 m/s), (t=4.5s, v_lat=-0.000 m/s), (t=5.0s, v_lat=-0.000 m/s), (t=5.5s, v_lat=-0.000 m/s), (t=6.0s, v_lat=-0.000 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p00"
+ },
+ {
+  "ep": "run1021i-w1-006",
+  "kind": "resume_tl",
+  "t0": 677,
+  "tau0": 67.7,
+  "section": 4,
+  "fog": false,
+  "decision": {
+   "longitudinal": "Set speed tracking",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "green",
+    "distance_m": 41.7
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 41.7,
+  "coc": "Accelerate toward the intersection as the traffic light turns green.",
+  "bag_ns": [
+   1792533827095461120,
+   1792533827784059392,
+   1792533828472643072,
+   1792533829146644224,
+   1792533829828637696,
+   1792533830510706944,
+   1792533831188601856,
+   1792533831870802176,
+   1792533832553117440,
+   1792533833243215616,
+   1792533833933805568,
+   1792533834630878464,
+   1792533835325950464,
+   1792533836017288192,
+   1792533836708151040,
+   1792533837395171328,
+   1792533838078780672
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-0.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Go Straight, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Acceleration, lateral: Go Straight, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Acceleration, lateral: Go Straight, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+3.0s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+3.5s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+4.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+4.5s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+5.5s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+6.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=-0.000 m/s), (t=-1.5s, v_long=0.000 m/s), (t=-1.0s, v_long=-0.000 m/s), (t=-0.5s, v_long=0.000 m/s), (t=0.0s, v_long=0.000 m/s), (t=0.5s, v_long=1.440 m/s), (t=1.0s, v_long=3.183 m/s), (t=1.5s, v_long=4.884 m/s), (t=2.0s, v_long=6.262 m/s), (t=2.5s, v_long=7.130 m/s), (t=3.0s, v_long=7.793 m/s), (t=3.5s, v_long=8.044 m/s), (t=4.0s, v_long=7.940 m/s), (t=4.5s, v_long=7.645 m/s), (t=5.0s, v_long=7.232 m/s), (t=5.5s, v_long=6.643 m/s), (t=6.0s, v_long=6.035 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=-0.000 m/s), (t=-1.5s, v_lat=-0.000 m/s), (t=-1.0s, v_lat=-0.000 m/s), (t=-0.5s, v_lat=-0.000 m/s), (t=0.0s, v_lat=0.000 m/s), (t=0.5s, v_lat=-0.001 m/s), (t=1.0s, v_lat=0.000 m/s), (t=1.5s, v_lat=0.001 m/s), (t=2.0s, v_lat=0.008 m/s), (t=2.5s, v_lat=-0.007 m/s), (t=3.0s, v_lat=0.026 m/s), (t=3.5s, v_lat=0.009 m/s), (t=4.0s, v_lat=0.002 m/s), (t=4.5s, v_lat=-0.005 m/s), (t=5.0s, v_lat=0.021 m/s), (t=5.5s, v_lat=-0.073 m/s), (t=6.0s, v_lat=-0.080 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p01"
+ },
+ {
+  "ep": "run1021i-w1-006",
+  "kind": "stop_tl",
+  "t0": 843,
+  "tau0": 84.3,
+  "section": 5,
+  "fog": false,
+  "decision": {
+   "longitudinal": "Stop for static constraints",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "red",
+    "distance_m": 67.3
+   },
+   {
+    "category": "Yield/Stop control",
+    "type": "stop line"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 67.3,
+  "coc": "Slow down and stop before the intersection for the red traffic light.",
+  "bag_ns": [
+   1792533850511899904,
+   1792533851239106560,
+   1792533851957228800,
+   1792533852673023488,
+   1792533853392125184,
+   1792533854112425728,
+   1792533854831412480,
+   1792533855545835008,
+   1792533856268435968,
+   1792533857003550976,
+   1792533857750667264,
+   1792533858528655104,
+   1792533859333735168,
+   1792533860137713920,
+   1792533860940595456,
+   1792533861742384384,
+   1792533862543085824
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-0.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Go Straight, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+3.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+6.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=7.632 m/s), (t=-1.5s, v_long=8.553 m/s), (t=-1.0s, v_long=9.476 m/s), (t=-0.5s, v_long=10.364 m/s), (t=0.0s, v_long=11.291 m/s), (t=0.5s, v_long=12.255 m/s), (t=1.0s, v_long=8.676 m/s), (t=1.5s, v_long=4.683 m/s), (t=2.0s, v_long=1.848 m/s), (t=2.5s, v_long=0.639 m/s), (t=3.0s, v_long=-0.007 m/s), (t=3.5s, v_long=0.001 m/s), (t=4.0s, v_long=0.000 m/s), (t=4.5s, v_long=-0.000 m/s), (t=5.0s, v_long=-0.000 m/s), (t=5.5s, v_long=0.000 m/s), (t=6.0s, v_long=0.000 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=-0.001 m/s), (t=-1.5s, v_lat=0.003 m/s), (t=-1.0s, v_lat=0.006 m/s), (t=-0.5s, v_lat=0.009 m/s), (t=0.0s, v_lat=0.005 m/s), (t=0.5s, v_lat=0.003 m/s), (t=1.0s, v_lat=0.004 m/s), (t=1.5s, v_lat=0.001 m/s), (t=2.0s, v_lat=0.001 m/s), (t=2.5s, v_lat=0.001 m/s), (t=3.0s, v_lat=-0.000 m/s), (t=3.5s, v_lat=-0.000 m/s), (t=4.0s, v_lat=0.000 m/s), (t=4.5s, v_lat=0.000 m/s), (t=5.0s, v_lat=0.000 m/s), (t=5.5s, v_lat=0.000 m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p02"
+ },
+ {
+  "ep": "run1021i-w1-006",
+  "kind": "resume_tl",
+  "t0": 1223,
+  "tau0": 122.3,
+  "section": 5,
+  "fog": false,
+  "decision": {
+   "longitudinal": "Set speed tracking",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "green",
+    "distance_m": 50.0
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 50.0,
+  "coc": "Accelerate toward the intersection as the traffic light turns green.",
+  "bag_ns": [
+   1792533908746327296,
+   1792533909488026368,
+   1792533910228867072,
+   1792533910970493184,
+   1792533911716835328,
+   1792533912434867456,
+   1792533913144302336,
+   1792533913884705536,
+   1792533914629871360,
+   1792533915375144960,
+   1792533916115699456,
+   1792533916866986752,
+   1792533917624029952,
+   1792533918386817536,
+   1792533919133680128,
+   1792533919874570496,
+   1792533920610238464
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-0.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+6.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=-0.000 m/s), (t=-1.5s, v_long=0.000 m/s), (t=-1.0s, v_long=-0.000 m/s), (t=-0.5s, v_long=0.000 m/s), (t=0.0s, v_long=0.000 m/s), (t=0.5s, v_long=1.265 m/s), (t=1.0s, v_long=2.849 m/s), (t=1.5s, v_long=4.475 m/s), (t=2.0s, v_long=6.107 m/s), (t=2.5s, v_long=7.052 m/s), (t=3.0s, v_long=7.868 m/s), (t=3.5s, v_long=8.803 m/s), (t=4.0s, v_long=9.580 m/s), (t=4.5s, v_long=10.007 m/s), (t=5.0s, v_long=10.100 m/s), (t=5.5s, v_long=9.840 m/s), (t=6.0s, v_long=9.330 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=nan m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p03"
+ },
+ {
+  "ep": "run1021i-w1-006",
+  "kind": "bypass",
+  "t0": 728,
+  "tau0": 72.8,
+  "section": 4,
+  "fog": false,
+  "decision": {
+   "longitudinal": "Speed adaptation (road events)",
+   "lateral": "Out-of-lane nudge (left)"
+  },
+  "critical_components": [
+   {
+    "category": "Critical objects",
+    "type": "parked vehicle",
+    "pose": "in-path, right side",
+    "motion": "stationary"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 23.3,
+  "coc": "Slow down and nudge left out of the lane to pass the parked vehicle on the right.",
+  "bag_ns": [
+   1792533834074269952,
+   1792533834769982976,
+   1792533835463691008,
+   1792533836155687424,
+   1792533836846051072,
+   1792533837532814080,
+   1792533838215645952,
+   1792533838897414144,
+   1792533839580995072,
+   1792533840275426816,
+   1792533840974616064,
+   1792533841681699072,
+   1792533842395842816,
+   1792533843117792000,
+   1792533843848542464,
+   1792533844585525760,
+   1792533845320866304
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.5s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=-0.5s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+0.5s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+1.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+1.5s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+2.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+2.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+3.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+3.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+4.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+5.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+6.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=7.862 m/s), (t=-1.5s, v_long=8.053 m/s), (t=-1.0s, v_long=7.891 m/s), (t=-0.5s, v_long=7.579 m/s), (t=0.0s, v_long=7.119 m/s), (t=0.5s, v_long=6.466 m/s), (t=1.0s, v_long=5.922 m/s), (t=1.5s, v_long=5.389 m/s), (t=2.0s, v_long=5.421 m/s), (t=2.5s, v_long=5.750 m/s), (t=3.0s, v_long=6.091 m/s), (t=3.5s, v_long=6.284 m/s), (t=4.0s, v_long=6.475 m/s), (t=4.5s, v_long=6.953 m/s), (t=5.0s, v_long=7.364 m/s), (t=5.5s, v_long=6.705 m/s), (t=6.0s, v_long=6.106 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=0.001 m/s), (t=-1.5s, v_lat=-0.015 m/s), (t=-1.0s, v_lat=-0.003 m/s), (t=-0.5s, v_lat=0.003 m/s), (t=0.0s, v_lat=0.020 m/s), (t=0.5s, v_lat=0.062 m/s), (t=1.0s, v_lat=0.020 m/s), (t=1.5s, v_lat=-0.083 m/s), (t=2.0s, v_lat=0.014 m/s), (t=2.5s, v_lat=-0.029 m/s), (t=3.0s, v_lat=0.009 m/s), (t=3.5s, v_lat=0.055 m/s), (t=4.0s, v_lat=0.001 m/s), (t=4.5s, v_lat=-0.001 m/s), (t=5.0s, v_lat=-0.042 m/s), (t=5.5s, v_lat=0.018 m/s), (t=6.0s, v_lat=0.036 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p04"
+ },
+ {
+  "ep": "run1021i-w2-010",
+  "kind": "stop_tl",
+  "t0": 232,
+  "tau0": 23.2,
+  "section": 5,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Stop for static constraints",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "red",
+    "distance_m": 65.8
+   },
+   {
+    "category": "Yield/Stop control",
+    "type": "stop line"
+   }
+  ],
+  "observed_in_history": false,
+  "cause_dist_m": 65.8,
+  "coc": "UNOBSERVED",
+  "bag_ns": [
+   1792533969690505472,
+   1792533970314607616,
+   1792533970937198848,
+   1792533971558299392,
+   1792533972177918976,
+   1792533972796068096,
+   1792533973437498112,
+   1792533974085224960,
+   1792533974732310016,
+   1792533975378651648,
+   1792533976043349248,
+   1792533976733184256,
+   1792533977418578688,
+   1792533978103650816,
+   1792533978788401152,
+   1792533979472830976,
+   1792533980156940544
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-0.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+6.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=7.111 m/s), (t=-1.5s, v_long=7.351 m/s), (t=-1.0s, v_long=8.087 m/s), (t=-0.5s, v_long=8.809 m/s), (t=0.0s, v_long=9.296 m/s), (t=0.5s, v_long=9.919 m/s), (t=1.0s, v_long=6.969 m/s), (t=1.5s, v_long=3.557 m/s), (t=2.0s, v_long=1.410 m/s), (t=2.5s, v_long=0.411 m/s), (t=3.0s, v_long=-0.009 m/s), (t=3.5s, v_long=0.000 m/s), (t=4.0s, v_long=0.000 m/s), (t=4.5s, v_long=-0.000 m/s), (t=5.0s, v_long=-0.000 m/s), (t=5.5s, v_long=0.000 m/s), (t=6.0s, v_long=0.000 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=0.002 m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p05"
+ },
+ {
+  "ep": "run1021i-w2-010",
+  "kind": "resume_tl",
+  "t0": 985,
+  "tau0": 98.5,
+  "section": 5,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Set speed tracking",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "green",
+    "distance_m": 52.2
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 52.2,
+  "coc": "Accelerate toward the intersection as the traffic light turns green.",
+  "bag_ns": [
+   1792534069486982144,
+   1792534070131407872,
+   1792534070775565568,
+   1792534071421798912,
+   1792534072074533376,
+   1792534072773567488,
+   1792534073485900544,
+   1792534074193714176,
+   1792534074914475520,
+   1792534075639411712,
+   1792534076372360192,
+   1792534077109660928,
+   1792534077846550528,
+   1792534078585222144,
+   1792534079338267392,
+   1792534080110526976,
+   1792534080897670400
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-0.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+6.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=-0.000 m/s), (t=-1.5s, v_long=0.000 m/s), (t=-1.0s, v_long=-0.000 m/s), (t=-0.5s, v_long=0.000 m/s), (t=0.0s, v_long=-0.000 m/s), (t=0.5s, v_long=0.735 m/s), (t=1.0s, v_long=2.718 m/s), (t=1.5s, v_long=4.557 m/s), (t=2.0s, v_long=5.869 m/s), (t=2.5s, v_long=6.828 m/s), (t=3.0s, v_long=7.857 m/s), (t=3.5s, v_long=8.670 m/s), (t=4.0s, v_long=9.532 m/s), (t=4.5s, v_long=10.069 m/s), (t=5.0s, v_long=10.308 m/s), (t=5.5s, v_long=10.125 m/s), (t=6.0s, v_long=9.613 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=nan m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p06"
+ },
+ {
+  "ep": "run1021i-w2-010",
+  "kind": "stop_tl",
+  "t0": 1205,
+  "tau0": 120.5,
+  "section": 6,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Stop for static constraints",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "red",
+    "distance_m": 40.9
+   },
+   {
+    "category": "Yield/Stop control",
+    "type": "stop line"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 40.9,
+  "coc": "Stop for the red traffic light ahead.",
+  "bag_ns": [
+   1792534101690629376,
+   1792534102424477952,
+   1792534103162199808,
+   1792534103903001344,
+   1792534104656547584,
+   1792534105407952128,
+   1792534106159847168,
+   1792534106914017024,
+   1792534107659842048,
+   1792534108418423296,
+   1792534109233083392,
+   1792534110033021696,
+   1792534110810072576,
+   1792534111566020608,
+   1792534112302608128,
+   1792534113021178368,
+   1792534113722998784
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-0.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+2.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+6.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=5.589 m/s), (t=-1.5s, v_long=5.151 m/s), (t=-1.0s, v_long=4.907 m/s), (t=-0.5s, v_long=4.778 m/s), (t=0.0s, v_long=4.810 m/s), (t=0.5s, v_long=4.789 m/s), (t=1.0s, v_long=3.008 m/s), (t=1.5s, v_long=1.082 m/s), (t=2.0s, v_long=0.148 m/s), (t=2.5s, v_long=-0.001 m/s), (t=3.0s, v_long=-0.000 m/s), (t=3.5s, v_long=0.000 m/s), (t=4.0s, v_long=0.000 m/s), (t=4.5s, v_long=-0.000 m/s), (t=5.0s, v_long=-0.000 m/s), (t=5.5s, v_long=0.000 m/s), (t=6.0s, v_long=-0.000 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=nan m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p07"
+ },
+ {
+  "ep": "run1021i-w2-010",
+  "kind": "bypass",
+  "t0": 111,
+  "tau0": 11.1,
+  "section": 4,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Speed adaptation (road events)",
+   "lateral": "Out-of-lane nudge (left)"
+  },
+  "critical_components": [
+   {
+    "category": "Critical objects",
+    "type": "parked vehicle",
+    "pose": "in-path, right side",
+    "motion": "stationary"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 27.3,
+  "coc": "Slow down and nudge left out of the lane to pass the parked vehicle on the right.",
+  "bag_ns": [
+   1792533954621406208,
+   1792533955230275072,
+   1792533955839172608,
+   1792533956464789248,
+   1792533957100154624,
+   1792533957742505216,
+   1792533958380552704,
+   1792533959016277760,
+   1792533959656226816,
+   1792533960294817792,
+   1792533960932933376,
+   1792533961545858816,
+   1792533962150988032,
+   1792533962759521024,
+   1792533963373971968,
+   1792533963987803648,
+   1792533964599134976
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.5s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.0s) longitudinal: Gentle Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=-0.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+0.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+2.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+2.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+3.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+3.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.0s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+5.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Right\n(t=+6.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Right",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=11.671 m/s), (t=-1.5s, v_long=11.577 m/s), (t=-1.0s, v_long=11.070 m/s), (t=-0.5s, v_long=10.418 m/s), (t=0.0s, v_long=9.641 m/s), (t=0.5s, v_long=8.890 m/s), (t=1.0s, v_long=8.203 m/s), (t=1.5s, v_long=7.470 m/s), (t=2.0s, v_long=6.853 m/s), (t=2.5s, v_long=6.425 m/s), (t=3.0s, v_long=6.171 m/s), (t=3.5s, v_long=6.423 m/s), (t=4.0s, v_long=6.832 m/s), (t=4.5s, v_long=7.489 m/s), (t=5.0s, v_long=8.274 m/s), (t=5.5s, v_long=8.280 m/s), (t=6.0s, v_long=7.214 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=0.035 m/s), (t=-1.5s, v_lat=0.012 m/s), (t=-1.0s, v_lat=0.040 m/s), (t=-0.5s, v_lat=0.006 m/s), (t=0.0s, v_lat=0.027 m/s), (t=0.5s, v_lat=-0.002 m/s), (t=1.0s, v_lat=0.015 m/s), (t=1.5s, v_lat=0.044 m/s), (t=2.0s, v_lat=-0.016 m/s), (t=2.5s, v_lat=0.063 m/s), (t=3.0s, v_lat=-0.008 m/s), (t=3.5s, v_lat=0.001 m/s), (t=4.0s, v_lat=-0.003 m/s), (t=4.5s, v_lat=0.008 m/s), (t=5.0s, v_lat=-0.006 m/s), (t=5.5s, v_lat=0.085 m/s), (t=6.0s, v_lat=-0.056 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p08"
+ },
+ {
+  "ep": "run1021i-w2-010",
+  "kind": "yield_ped",
+  "t0": 1032,
+  "tau0": 103.2,
+  "section": 5,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Yield (agent right-of-way)",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Critical objects",
+    "type": "pedestrian",
+    "pose": "ahead, crossing",
+    "motion": "crossing"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 35.1,
+  "coc": "Decelerate to yield to the pedestrian crossing ahead.",
+  "bag_ns": [
+   1792534075929779968,
+   1792534076665824000,
+   1792534077405525504,
+   1792534078141854976,
+   1792534078884116736,
+   1792534079641429504,
+   1792534080425843200,
+   1792534081209847552,
+   1792534081991145472,
+   1792534082772459520,
+   1792534083555568384,
+   1792534084334942464,
+   1792534085094771456,
+   1792534085826194944,
+   1792534086580489984,
+   1792534087337051904,
+   1792534088091670016
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-0.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+6.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=7.258 m/s), (t=-1.5s, v_long=8.180 m/s), (t=-1.0s, v_long=9.101 m/s), (t=-0.5s, v_long=9.823 m/s), (t=0.0s, v_long=10.179 m/s), (t=0.5s, v_long=10.303 m/s), (t=1.0s, v_long=9.964 m/s), (t=1.5s, v_long=9.370 m/s), (t=2.0s, v_long=8.615 m/s), (t=2.5s, v_long=7.984 m/s), (t=3.0s, v_long=7.137 m/s), (t=3.5s, v_long=6.352 m/s), (t=4.0s, v_long=5.546 m/s), (t=4.5s, v_long=5.027 m/s), (t=5.0s, v_long=5.470 m/s), (t=5.5s, v_long=6.088 m/s), (t=6.0s, v_long=6.765 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=nan m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p09"
+ },
+ {
+  "ep": "run1021h-w2-001",
+  "kind": "stop_tl",
+  "t0": 259,
+  "tau0": 25.9,
+  "section": 5,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Stop for static constraints",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "red",
+    "distance_m": 65.3
+   },
+   {
+    "category": "Yield/Stop control",
+    "type": "stop line"
+   }
+  ],
+  "observed_in_history": false,
+  "cause_dist_m": 65.3,
+  "coc": "UNOBSERVED",
+  "bag_ns": [
+   1792531521364923648,
+   1792531521982115328,
+   1792531522614584576,
+   1792531523260770816,
+   1792531523921146112,
+   1792531524587723520,
+   1792531525256848640,
+   1792531525939644928,
+   1792531526642050048,
+   1792531527354419200,
+   1792531528092638464,
+   1792531528816088064,
+   1792531529533435136,
+   1792531530249750528,
+   1792531530965038336,
+   1792531531679303168,
+   1792531532392549376
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-0.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.0s) longitudinal: Strong Acceleration, lateral: Go Straight, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Go Straight, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Deceleration, lateral: Go Straight, lane: Keep Lane\n(t=+3.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+6.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=6.751 m/s), (t=-1.5s, v_long=7.189 m/s), (t=-1.0s, v_long=7.846 m/s), (t=-0.5s, v_long=8.617 m/s), (t=0.0s, v_long=9.538 m/s), (t=0.5s, v_long=10.369 m/s), (t=1.0s, v_long=7.552 m/s), (t=1.5s, v_long=3.875 m/s), (t=2.0s, v_long=1.435 m/s), (t=2.5s, v_long=0.367 m/s), (t=3.0s, v_long=-0.005 m/s), (t=3.5s, v_long=-0.000 m/s), (t=4.0s, v_long=0.000 m/s), (t=4.5s, v_long=0.000 m/s), (t=5.0s, v_long=0.000 m/s), (t=5.5s, v_long=-0.000 m/s), (t=6.0s, v_long=0.000 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=-0.004 m/s), (t=-1.5s, v_lat=0.003 m/s), (t=-1.0s, v_lat=-0.005 m/s), (t=-0.5s, v_lat=0.002 m/s), (t=0.0s, v_lat=0.007 m/s), (t=0.5s, v_lat=0.000 m/s), (t=1.0s, v_lat=0.018 m/s), (t=1.5s, v_lat=-0.000 m/s), (t=2.0s, v_lat=0.002 m/s), (t=2.5s, v_lat=0.000 m/s), (t=3.0s, v_lat=-0.000 m/s), (t=3.5s, v_lat=0.000 m/s), (t=4.0s, v_lat=0.000 m/s), (t=4.5s, v_lat=0.000 m/s), (t=5.0s, v_lat=0.000 m/s), (t=5.5s, v_lat=0.000 m/s), (t=6.0s, v_lat=0.000 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p10"
+ },
+ {
+  "ep": "run1021h-w2-001",
+  "kind": "resume_tl",
+  "t0": 1074,
+  "tau0": 107.4,
+  "section": 5,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Set speed tracking",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "green",
+    "distance_m": 51.6
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 51.6,
+  "coc": "Resume speed through the intersection because the light has turned green.",
+  "bag_ns": [
+   1792531628029407232,
+   1792531628627520256,
+   1792531629225034496,
+   1792531629822346496,
+   1792531630464571648,
+   1792531631119893248,
+   1792531631798790144,
+   1792531632490284544,
+   1792531633183040256,
+   1792531633885858048,
+   1792531634615893248,
+   1792531635381033728,
+   1792531636185794560,
+   1792531637011169280,
+   1792531637867675392,
+   1792531638763400960,
+   1792531639697529344
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-1.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=-0.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+6.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=-0.000 m/s), (t=-1.5s, v_long=-0.000 m/s), (t=-1.0s, v_long=-0.000 m/s), (t=-0.5s, v_long=-0.000 m/s), (t=0.0s, v_long=0.000 m/s), (t=0.5s, v_long=0.414 m/s), (t=1.0s, v_long=2.145 m/s), (t=1.5s, v_long=4.129 m/s), (t=2.0s, v_long=5.782 m/s), (t=2.5s, v_long=6.743 m/s), (t=3.0s, v_long=7.689 m/s), (t=3.5s, v_long=8.642 m/s), (t=4.0s, v_long=9.560 m/s), (t=4.5s, v_long=10.009 m/s), (t=5.0s, v_long=10.184 m/s), (t=5.5s, v_long=10.037 m/s), (t=6.0s, v_long=9.513 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=nan m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p11"
+ },
+ {
+  "ep": "run1021h-w2-001",
+  "kind": "stop_tl",
+  "t0": 1282,
+  "tau0": 128.2,
+  "section": 6,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Stop for static constraints",
+   "lateral": "Lane keeping & centering"
+  },
+  "critical_components": [
+   {
+    "category": "Traffic lights",
+    "state": "red",
+    "distance_m": 41.3
+   },
+   {
+    "category": "Yield/Stop control",
+    "type": "stop line"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 41.3,
+  "coc": "Decelerate to a stop because the traffic light ahead is red.",
+  "bag_ns": [
+   1792531659746502400,
+   1792531660428904704,
+   1792531661112201728,
+   1792531661802981632,
+   1792531662495657472,
+   1792531663189356288,
+   1792531663883255808,
+   1792531664582543104,
+   1792531665280926720,
+   1792531666005766912,
+   1792531666793792768,
+   1792531667544117504,
+   1792531668294441984,
+   1792531669044766720,
+   1792531669795091456,
+   1792531670545416192,
+   1792531671295740928
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-0.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+3.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+4.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+5.5s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane\n(t=+6.0s) longitudinal: Stop, lateral: Go Straight, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=6.958 m/s), (t=-1.5s, v_long=6.268 m/s), (t=-1.0s, v_long=5.405 m/s), (t=-0.5s, v_long=5.235 m/s), (t=0.0s, v_long=5.679 m/s), (t=0.5s, v_long=5.922 m/s), (t=1.0s, v_long=4.110 m/s), (t=1.5s, v_long=1.754 m/s), (t=2.0s, v_long=0.502 m/s), (t=2.5s, v_long=-0.009 m/s), (t=3.0s, v_long=0.000 m/s), (t=3.5s, v_long=0.000 m/s), (t=4.0s, v_long=-0.000 m/s), (t=4.5s, v_long=-0.000 m/s), (t=5.0s, v_long=-0.000 m/s), (t=5.5s, v_long=0.000 m/s), (t=6.0s, v_long=0.000 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=nan m/s), (t=-1.5s, v_lat=nan m/s), (t=-1.0s, v_lat=nan m/s), (t=-0.5s, v_lat=nan m/s), (t=0.0s, v_lat=nan m/s), (t=0.5s, v_lat=nan m/s), (t=1.0s, v_lat=nan m/s), (t=1.5s, v_lat=nan m/s), (t=2.0s, v_lat=nan m/s), (t=2.5s, v_lat=nan m/s), (t=3.0s, v_lat=nan m/s), (t=3.5s, v_lat=nan m/s), (t=4.0s, v_lat=nan m/s), (t=4.5s, v_lat=nan m/s), (t=5.0s, v_lat=nan m/s), (t=5.5s, v_lat=nan m/s), (t=6.0s, v_lat=nan m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p12"
+ },
+ {
+  "ep": "run1021h-w2-001",
+  "kind": "bypass",
+  "t0": 109,
+  "tau0": 10.9,
+  "section": 4,
+  "fog": true,
+  "decision": {
+   "longitudinal": "Speed adaptation (road events)",
+   "lateral": "Out-of-lane nudge (left)"
+  },
+  "critical_components": [
+   {
+    "category": "Critical objects",
+    "type": "obstacle",
+    "pose": "in-path, right side",
+    "motion": "stationary"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 32.4,
+  "coc": "Slow down and nudge left out of the lane to pass the obstacle on the right.",
+  "bag_ns": [
+   1792531503319534336,
+   1792531503895118592,
+   1792531504476734720,
+   1792531505057966080,
+   1792531505645987584,
+   1792531506240632064,
+   1792531506840000256,
+   1792531507443611136,
+   1792531508047800576,
+   1792531508653667840,
+   1792531509258801664,
+   1792531509866309888,
+   1792531510478872320,
+   1792531511084134912,
+   1792531511690112768,
+   1792531512296093696,
+   1792531512904343808
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.5s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-1.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=-0.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+1.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+2.0s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+2.5s) longitudinal: Strong Deceleration, lateral: Steer Left, lane: Follow Curve Left\n(t=+3.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+4.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+5.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Follow Curve Right\n(t=+5.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+6.0s) longitudinal: Strong Acceleration, lateral: Steer Left, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=10.581 m/s), (t=-1.5s, v_long=11.291 m/s), (t=-1.0s, v_long=11.127 m/s), (t=-0.5s, v_long=10.460 m/s), (t=0.0s, v_long=9.686 m/s), (t=0.5s, v_long=8.817 m/s), (t=1.0s, v_long=7.894 m/s), (t=1.5s, v_long=6.831 m/s), (t=2.0s, v_long=6.188 m/s), (t=2.5s, v_long=5.465 m/s), (t=3.0s, v_long=4.849 m/s), (t=3.5s, v_long=4.636 m/s), (t=4.0s, v_long=4.674 m/s), (t=4.5s, v_long=4.938 m/s), (t=5.0s, v_long=5.402 m/s), (t=5.5s, v_long=6.064 m/s), (t=6.0s, v_long=6.647 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=0.018 m/s), (t=-1.5s, v_lat=0.030 m/s), (t=-1.0s, v_lat=0.023 m/s), (t=-0.5s, v_lat=0.012 m/s), (t=0.0s, v_lat=-0.004 m/s), (t=0.5s, v_lat=-0.000 m/s), (t=1.0s, v_lat=-0.001 m/s), (t=1.5s, v_lat=-0.020 m/s), (t=2.0s, v_lat=0.037 m/s), (t=2.5s, v_lat=-0.013 m/s), (t=3.0s, v_lat=-0.020 m/s), (t=3.5s, v_lat=0.015 m/s), (t=4.0s, v_lat=0.035 m/s), (t=4.5s, v_lat=-0.007 m/s), (t=5.0s, v_lat=-0.008 m/s), (t=5.5s, v_lat=0.003 m/s), (t=6.0s, v_lat=0.008 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p13"
+ },
+ {
+  "ep": "run1021v-w1-018",
+  "kind": "bypass",
+  "t0": 1075,
+  "tau0": 107.5,
+  "section": 15,
+  "fog": false,
+  "decision": {
+   "longitudinal": "Set speed tracking",
+   "lateral": "Out-of-lane nudge (left)"
+  },
+  "critical_components": [
+   {
+    "category": "Critical objects",
+    "type": "obstacle",
+    "pose": "in-path, right side",
+    "motion": "stationary"
+   }
+  ],
+  "observed_in_history": true,
+  "cause_dist_m": 32.7,
+  "coc": "Nudge left out of the lane to pass the obstacle on the right in the tunnel.",
+  "bag_ns": [
+   1792610623542584832,
+   1792610624079708416,
+   1792610624617125632,
+   1792610625159314944,
+   1792610625705131008,
+   1792610626256942592,
+   1792610626815410944,
+   1792610627380063744,
+   1792610627944726016,
+   1792610628511461888,
+   1792610629079310848,
+   1792610629653625088,
+   1792610630226878976,
+   1792610630798479104,
+   1792610631367134464,
+   1792610631932190208,
+   1792610632490732800
+  ],
+  "meta": "\nMeta-actions by sampled timestamp (relative to event, unit: seconds):\n(t=-2.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-1.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=-0.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+0.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+1.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.0s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+2.5s) longitudinal: Strong Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.0s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+3.5s) longitudinal: Gentle Deceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+4.5s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.0s) longitudinal: Gentle Acceleration, lateral: Steer Right, lane: Keep Lane\n(t=+5.5s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane\n(t=+6.0s) longitudinal: Gentle Acceleration, lateral: Steer Left, lane: Keep Lane",
+  "ego": "Ego speed time series (relative to event time t=0.0s):\n- Longitudinal (m/s): [(t=-2.0s, v_long=9.384 m/s), (t=-1.5s, v_long=9.572 m/s), (t=-1.0s, v_long=9.301 m/s), (t=-0.5s, v_long=8.811 m/s), (t=0.0s, v_long=8.049 m/s), (t=0.5s, v_long=8.205 m/s), (t=1.0s, v_long=9.050 m/s), (t=1.5s, v_long=9.701 m/s), (t=2.0s, v_long=10.557 m/s), (t=2.5s, v_long=10.989 m/s), (t=3.0s, v_long=10.812 m/s), (t=3.5s, v_long=10.547 m/s), (t=4.0s, v_long=10.634 m/s), (t=4.5s, v_long=10.942 m/s), (t=5.0s, v_long=11.017 m/s), (t=5.5s, v_long=10.400 m/s), (t=6.0s, v_long=9.697 m/s)]\n- Lateral (m/s): [(t=-2.0s, v_lat=0.021 m/s), (t=-1.5s, v_lat=-0.002 m/s), (t=-1.0s, v_lat=0.011 m/s), (t=-0.5s, v_lat=0.036 m/s), (t=0.0s, v_lat=0.017 m/s), (t=0.5s, v_lat=0.092 m/s), (t=1.0s, v_lat=0.012 m/s), (t=1.5s, v_lat=0.017 m/s), (t=2.0s, v_lat=0.005 m/s), (t=2.5s, v_lat=-0.015 m/s), (t=3.0s, v_lat=-0.059 m/s), (t=3.5s, v_lat=0.009 m/s), (t=4.0s, v_lat=-0.009 m/s), (t=4.5s, v_lat=0.004 m/s), (t=5.0s, v_lat=0.009 m/s), (t=5.5s, v_lat=0.067 m/s), (t=6.0s, v_lat=0.023 m/s)]\nPositive lateral speed means rightward motion, negative means leftward motion.",
+  "dir": "p14"
+ }
+]

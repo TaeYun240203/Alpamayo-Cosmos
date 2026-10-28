@@ -1,0 +1,88 @@
+{
+ "chosen_step": 12,
+ "chosen_tag": "end",
+ "chosen_ade": {
+  "general": 4.07152,
+  "dynamic": 4.05327,
+  "static": 10.68602,
+  "curve": 6.60989
+ },
+ "ref": "general",
+ "ref_start": 4.07593,
+ "limit": 4.15745,
+ "last_step": 12,
+ "history": [
+  {
+   "step": 0,
+   "tag": "start",
+   "ade": {
+    "general": 4.07593,
+    "dynamic": 4.08394,
+    "static": 10.69135,
+    "curve": 6.63474
+   },
+   "n": {
+    "general": 4,
+    "dynamic": 4,
+    "static": 3,
+    "curve": 4
+   },
+   "seconds": 7.2,
+   "snapshot": "ft_snapshots/step-0.safetensors"
+  },
+  {
+   "step": 4,
+   "tag": "main",
+   "ade": {
+    "general": 4.08315,
+    "dynamic": 4.07764,
+    "static": 10.68897,
+    "curve": 6.60821
+   },
+   "n": {
+    "general": 4,
+    "dynamic": 4,
+    "static": 3,
+    "curve": 4
+   },
+   "seconds": 5.3,
+   "snapshot": "ft_snapshots/step-4.safetensors"
+  },
+  {
+   "step": 8,
+   "tag": "main",
+   "ade": {
+    "general": 4.06308,
+    "dynamic": 4.06221,
+    "static": 10.69411,
+    "curve": 6.61214
+   },
+   "n": {
+    "general": 4,
+    "dynamic": 4,
+    "static": 3,
+    "curve": 4
+   },
+   "seconds": 5.0,
+   "snapshot": "ft_snapshots/step-8.safetensors"
+  },
+  {
+   "step": 12,
+   "tag": "end",
+   "ade": {
+    "general": 4.07152,
+    "dynamic": 4.05327,
+    "static": 10.68602,
+    "curve": 6.60989
+   },
+   "n": {
+    "general": 4,
+    "dynamic": 4,
+    "static": 3,
+    "curve": 4
+   },
+   "seconds": 4.6,
+   "snapshot": "ft_snapshots/step-12.safetensors"
+  }
+ ]
+}

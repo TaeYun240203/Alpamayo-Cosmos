@@ -1,0 +1,120 @@
+{
+ "stop_lines_s": [
+  208.5,
+  315.9,
+  436.8,
+  609.9
+ ],
+ "index_rows": 2086127,
+ "train": {
+  "rows": 1818540,
+  "rows_2hz": 364140,
+  "signal_approach": 55478,
+  "signal_hold": 379051,
+  "signal_approach_2hz": 11114,
+  "signal_hold_2hz": 75840,
+  "signal_approach_motion": {
+   "brake": 49467,
+   "cruise": 5792,
+   "accel": 219
+  },
+  "future_green": {
+   "unknown": 177185,
+   "to_green": 89004
+  },
+  "future_green_2hz": {
+   "unknown": 35441,
+   "to_green": 17813
+  }
+ },
+ "val": {
+  "rows": 115333,
+  "rows_2hz": 23097,
+  "signal_approach": 5072,
+  "signal_hold": 25732,
+  "signal_approach_2hz": 1023,
+  "signal_hold_2hz": 5140,
+  "signal_approach_motion": {
+   "brake": 4520,
+   "cruise": 533,
+   "accel": 19
+  },
+  "future_green": {
+   "unknown": 14424,
+   "to_green": 5728
+  },
+  "future_green_2hz": {
+   "unknown": 2886,
+   "to_green": 1146
+  }
+ },
+ "val_asset": {
+  "rows": 152254,
+  "rows_2hz": 30452,
+  "signal_approach": 8624,
+  "signal_hold": 68217,
+  "signal_approach_2hz": 1724,
+  "signal_hold_2hz": 13640,
+  "signal_approach_motion": {
+   "brake": 7699,
+   "cruise": 896,
+   "accel": 29
+  },
+  "future_green": {
+   "unknown": 29614,
+   "to_green": 12949
+  },
+  "future_green_2hz": {
+   "unknown": 5913,
+   "to_green": 2590
+  }
+ },
+ "start_relabel_rows": 54285,
+ "highway": {
+  "train": 294361,
+  "val": 17209,
+  "val_asset": 0
+ },
+ "r2_dynamic": {
+  "A": {
+   "episodes": 396,
+   "with_moving_actor": 395,
+   "events": 1149,
+   "effective_events": 1069,
+   "episodes_kept": 308,
+   "rescued_rows": 5109,
+   "rescued_kept": 4219,
+   "rescued_kept_by_brake_only": 1948,
+   "rows_unseen": 7396,
+   "rows_no_event": 1890,
+   "rows_unjudgeable": 2966,
+   "rows_judged_seen": 17588,
+   "train_rows_unseen": 6819,
+   "rows": 29840,
+   "rows_of_pool": 63025,
+   "train_rows": 27498,
+   "train_rows_2hz": 5518,
+   "pool_train_rows": 57617
+  },
+  "B": {
+   "episodes": 160,
+   "with_moving_actor": 109,
+   "events": 352,
+   "effective_events": 315,
+   "episodes_kept": 85,
+   "rescued_rows": 2140,
+   "rescued_kept": 1482,
+   "rescued_kept_by_brake_only": 320,
+   "rows_unseen": 837,
+   "rows_no_event": 278,
+   "rows_unjudgeable": 508,
+   "rows_judged_seen": 4917,
+   "train_rows_unseen": 800,
+   "rows": 6540,
+   "rows_of_pool": 23076,
+   "train_rows": 5955,
+   "train_rows_2hz": 1204,
+   "pool_train_rows": 20852
+  }
+ }
+}

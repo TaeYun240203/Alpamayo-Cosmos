@@ -1,0 +1,17 @@
+# MODEL_PLAN 4.2: LiDAR path adaptation = the recipe's Stage 1 with only the LiDAR ViT + merger + 3 DeepStack mergers
+# trainable (~0.6B). Loss = Stage 1's: discrete-trajectory CE (+ the CE of the answer's end token, as the recipe).
+# Keep it short: a long run lets the LiDAR path absorb camera errors before Stage 1-T adapts the camera path.
+defaults: [base, _self_]
+
+model:
+  train_parts: [lidar]
+  loss_weights: {traj_ce: 1.0, lm: 1.0, fm: 0.0}
+
+data:
+  train_dataset:
+    lidar_dropout: 0.0                     # only the LiDAR path learns here
+
+trainer:
+  max_steps: 2000                          # x4 accumulation = 8k samples; stop earlier if val loss flattens
+
+task_name: teacher_step2

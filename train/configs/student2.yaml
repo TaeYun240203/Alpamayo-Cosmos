@@ -1,0 +1,27 @@
+# MODEL_PLAN 4.5 student stage 2: from the stage-1 checkpoint, the expert trains too (0.1x lr) and the velocity field of
+# T* at the student's own (x_t, t) is distilled on rule-checked rows (lambda_v 1 -> 0.2 over the run). GT losses stay main.
+defaults: [student_base, _self_]
+
+model:
+  init: ???                                # student stage-1 checkpoint dir
+  train_parts: [camera_vit, lidar, llm, lm_head, kd_proj, expert]
+  loss_weights: {vkd: 1.0}                 # LinearLossWeight below sets it every step
+
+data:
+  train_dataset:
+    rule_ok: ???                           # parquet (episode, i, rule_ok): rule check of the soft-target trajectories
+
+trainer:
+  num_train_epochs: 1
+  eval_steps: 1000                         # ~9.6k steps on 7 GPUs: 9 candidates for final/ (best eval_fm)
+  save_steps: 1000
+  lr_multiplier: {vlm.model.visual: 0.1, expert: 0.1, action_in_proj: 0.1, action_out_proj: 0.1}
+
+callbacks:
+  vkd_weight:
+    _target_: morai_vla.student.LinearLossWeight
+    key: vkd
+    start: 1.0
+    end: 0.2
+
+task_name: student_stage2

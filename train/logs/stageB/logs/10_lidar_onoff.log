@@ -1,0 +1,73 @@
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.28it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.27it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.27it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  2.22it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  2.44it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  2.36it/s]
+MoraiDataset: skipped 1 episodes with missing or incomplete step-0 files
+MoraiDataset: skipped 1 episodes with missing or incomplete step-0 files
+0 3
+100 43
+200 83
+300 123
+400 164
+500 205
+600 245
+700 286
+800 327
+900 368
+{
+ "on": 1.225,
+ "off": 1.4989,
+ "off_minus_on": 0.2739,
+ "frac_on_better": 0.994,
+ "n": 1000,
+ "s": 408,
+ "by_cell": {
+  "C0": {
+   "on": 2.1136,
+   "off": 2.5617,
+   "off_minus_on": 0.4481,
+   "frac_on_better": 1.0,
+   "n": 68
+  },
+  "C1": {
+   "on": 1.0632,
+   "off": 1.3898,
+   "off_minus_on": 0.3266,
+   "frac_on_better": 1.0,
+   "n": 36
+  },
+  "C2": {
+   "on": 0.7988,
+   "off": 1.0335,
+   "off_minus_on": 0.2347,
+   "frac_on_better": 0.995,
+   "n": 208
+  },
+  "C3": {
+   "on": 1.0254,
+   "off": 1.2702,
+   "off_minus_on": 0.2448,
+   "frac_on_better": 0.994,
+   "n": 479
+  },
+  "C4": {
+   "on": 2.3312,
+   "off": 2.7031,
+   "off_minus_on": 0.372,
+   "frac_on_better": 0.973,
+   "n": 37
+  },
+  "C5": {
+   "on": 2.1483,
+   "off": 2.4628,
+   "off_minus_on": 0.3145,
+   "frac_on_better": 0.986,
+   "n": 69
+  },
+  "C6": {
+   "on": 1.4683,
+   "off": 1.7607,
+   "off_minus_on": 0.2924,
+   "frac_on_better": 1.0,
+   "n": 103
+  }
+ }
+}
+exit 0

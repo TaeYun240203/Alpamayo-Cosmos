@@ -1,0 +1,92 @@
+stop  kind  fog  
+4188  go    False      788
+            True       831
+      wait  False    16016
+            True     17426
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:07<00:28,  7.18s/it]Loading checkpoint shards:  40%|████      | 2/5 [00:15<00:23,  7.95s/it]Loading checkpoint shards:  60%|██████    | 3/5 [00:28<00:20, 10.11s/it]Loading checkpoint shards:  80%|████████  | 4/5 [00:49<00:14, 14.41s/it]Loading checkpoint shards: 100%|██████████| 5/5 [01:02<00:00, 13.95s/it]Loading checkpoint shards: 100%|██████████| 5/5 [01:02<00:00, 12.50s/it]
+MoraiDataset: skipped 1 episodes with missing or incomplete step-0 files
+recorded 2 / 150
+recorded 4 / 150
+recorded 6 / 150
+recorded 8 / 150
+recorded 10 / 150
+recorded 12 / 150
+recorded 14 / 150
+recorded 16 / 150
+recorded 18 / 150
+recorded 20 / 150
+recorded 22 / 150
+recorded 24 / 150
+recorded 26 / 150
+recorded 28 / 150
+recorded 30 / 150
+recorded 32 / 150
+recorded 34 / 150
+recorded 36 / 150
+recorded 38 / 150
+recorded 40 / 150
+recorded 42 / 150
+recorded 44 / 150
+recorded 46 / 150
+recorded 48 / 150
+recorded 50 / 150
+recorded 52 / 150
+recorded 54 / 150
+recorded 56 / 150
+recorded 58 / 150
+recorded 60 / 150
+recorded 62 / 150
+recorded 64 / 150
+recorded 66 / 150
+recorded 68 / 150
+recorded 70 / 150
+recorded 72 / 150
+recorded 74 / 150
+recorded 76 / 150
+recorded 78 / 150
+recorded 80 / 150
+recorded 82 / 150
+recorded 84 / 150
+recorded 86 / 150
+recorded 88 / 150
+recorded 90 / 150
+recorded 92 / 150
+recorded 94 / 150
+recorded 96 / 150
+recorded 98 / 150
+recorded 100 / 150
+recorded 102 / 150
+recorded 104 / 150
+recorded 106 / 150
+recorded 108 / 150
+recorded 110 / 150
+recorded 112 / 150
+recorded 114 / 150
+recorded 116 / 150
+recorded 118 / 150
+recorded 120 / 150
+recorded 122 / 150
+recorded 124 / 150
+recorded 126 / 150
+recorded 128 / 150
+recorded 130 / 150
+recorded 132 / 150
+recorded 134 / 150
+recorded 136 / 150
+recorded 138 / 150
+recorded 140 / 150
+recorded 142 / 150
+recorded 144 / 150
+recorded 146 / 150
+recorded 148 / 150
+recorded 150 / 150
+{
+ "recorded": {
+  "n": 150,
+  "agree": 0.5733333333333334,
+  "pred_go_when_gt_wait": 0,
+  "pred_wait_when_gt_go": 64,
+  "gt_depart_s_median": 1.2,
+  "pred_depart_s_median_when_gt_go": 6.5
+ }
+}

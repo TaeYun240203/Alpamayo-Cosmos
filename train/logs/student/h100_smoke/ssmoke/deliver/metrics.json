@@ -1,0 +1,15 @@
+{
+ "files": [
+  "CONTENTS.txt",
+  "final/config.json",
+  "final/model-00001-of-00003.safetensors",
+  "final/model-00002-of-00003.safetensors",
+  "final/model-00003-of-00003.safetensors",
+  "final/model.safetensors.index.json",
+  "final/modelopt_state.pth",
+  "final/training_args.bin",
+  "quant_manifest.json",
+  "summary.json"
+ ],
+ "bytes": 14292777491
+}

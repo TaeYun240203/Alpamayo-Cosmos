@@ -1,0 +1,13 @@
+{
+ "cv_ade": 7.833,
+ "traj_ade": 8.483,
+ "traj_fde": 23.316,
+ "traj_minade": 5.726,
+ "traj_nolidar_ade": 8.461,
+ "traj_nolidar_fde": 23.319,
+ "traj_nolidar_minade": 5.73,
+ "cot_ade": 8.175,
+ "cot_fde": 23.882,
+ "cot_minade": 8.175,
+ "n": 24
+}

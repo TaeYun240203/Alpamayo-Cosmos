@@ -1,0 +1,76 @@
+# WoWmayo DAgger runner (train/dagger/README.md), on student_ft's paths, losses and val rows. Every share is a fraction of
+# the WHOLE batch: dagger.share + the replay sources' shares = 1 (the runner checks). A source at share 0 is not loaded.
+# Users 10/28 (confirmed): the red-light replay 15 % as signal_approach 10 % + signal_hold 5 %, both recorded as val sets;
+# DAgger row weights x2 (signal approach, lane departure). Still proposals until the user confirms: DAgger 50 %, R1 general
+# 25 %, R2 A/B/D 5 / 2.5 / 2.5 %. Change with the runner's --override dagger.<key>=<value>.
+defaults: [student_ft, _self_]
+
+paths:
+  s2: unused                               # the runner's model is --base (the delivery)
+  dagger_pools: assets/dagger              # dagger/pools.py (in the repo, as assets/ft)
+
+dagger:
+  share: 0.50                              # DAgger rows per batch (proposal; the first brief's 50 %)
+  # DAgger row loss multipliers (user 10/28: x2 on). A row with both tags takes the larger one.
+  #   signal: label signal red/yellow with the judged stop line <= signal_stop_d ahead, or red and v < stop_v (stopped)
+  #   lane: label source 1 (official route fallback) or |critic_obs lane_offset| >= lane_offset
+  weights: {signal: 2.0, lane: 2.0}
+  tags: {signal_stop_d: 60.0, stop_v: 0.5, lane_offset: 0.5}
+  replay:
+    _target_: morai_vla.finetune.MixtureDataset
+    _recursive_: false
+    frame_stride: 5                        # as student_ft: R2 rows ~4 Hz, R1 rows 2 Hz, fixed schedule (the runner wraps it)
+    epochs: 2
+    extra_offsets: [2, 3]
+    hist_dropout: 0.5                      # GT-loss rows only (student_ft)
+    seed: 0
+    common: ${data.train_dataset.common}
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+    # loss gt: fm + traj_ce (+ history dropout); distill: + lm (R2 ft's replay rows). future_green: dagger/pools.py's exclude
+    # (user 10/28: no 6.4 s GT future that knows the light turns green); on for the R1 sources, R2 has no red / yellow GT
+    sources:
+      r1_general:                          # s2's training rows (cell balance), minus start relabel and future_green rows
+        {share: 0.25, loss: distill, dataset: {root: "${data.root}", split: train, cell_keep: {C0: 0.4, C3: 0.65, C5: 0.55},
+                                               exclude: "${paths.dagger_pools}/r1_replay_exclude.parquet"}}
+      signal_approach:                     # R1 red-light rows braking, or still moving with the judged line <= 60 m ahead
+        {share: 0.10, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.dagger_pools}/signal_approach.parquet"}}
+      signal_hold:                         # R1 red-light rows standing ("stays stopped"); both minus future_green
+        {share: 0.05, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.dagger_pools}/signal_hold.parquet"}}
+      # R2 A / B: only rows whose GT future meets an object event that really slowed the car, + the --glitch net hard-braking
+      # rows (user 10/28 "실제로 급제동하는 경우 위주로. 아예정지하지 않는 경우는 제외"), minus the rows whose braking object
+      # the model could not see at t0 (user 10/28, future-information leak; r2_unseen, dagger/pools.py r2 --r2logs)
+      new_a: {share: 0.05, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.dagger_pools}/r2_A_dyn.parquet",
+                                                          exclude: "${paths.dagger_pools}/r2_unseen.parquet"}}
+      new_b: {share: 0.025, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.dagger_pools}/r2_B_dyn.parquet",
+                                                           exclude: "${paths.dagger_pools}/r2_unseen.parquet"}}
+      new_d: {share: 0.025, loss: gt, new: true, hist: thirds, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.ft_pools}/r2_D.parquet",
+                                                                       synth: "${paths.synth_hist}"}}
+      start_relabel: {share: 0.0, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.start_relabel}"}}
+      old_recovery: {share: 0.0, loss: gt, hist: thirds, dataset: {root: "${data.root}", split: train, keep: "${paths.ft_pools}/old_recovery.parquet",
+                                                                  synth: "${paths.synth_hist}", exclude: "${paths.dagger_pools}/future_green.parquet"}}
+      old_curve: {share: 0.0, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.ft_pools}/old_curve.parquet",
+                                                 exclude: "${paths.dagger_pools}/future_green.parquet"}}
+  # publish check: `general` (data.val_dataset, --val_n rows) gates (NaN, blow-up); these are recorded only (MoraiDataset
+  # rows, augment off, noise fixed by the sample keys), parts as FtSelect's sets: {n, MoraiDataset kwargs}
+  val_sets:
+    signal_approach:                       # users 10/28: R1 val rows of the same rules, one set per pool
+      - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.dagger_pools}/signal_approach.parquet", n: 32}
+    signal_hold:
+      - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.dagger_pools}/signal_hold.parquet", n: 32}
+    lane:                                  # curve + R2 D (= ft_select's curve set)
+      - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/old_curve.parquet", n: 32}
+      - {root: "${paths.r2_root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/r2_D.parquet", n: 32}
+  # user 10/28: history dependence of every published version (+ version 0), recorded only (dagger/history.py =
+  # scripts/ft_measure.py history: zero / swap history tokens vs base, move and dlat_2s/3s), per set
+  history_steps: 10                        # deterministic Euler steps (the engine's)
+  history_sets:
+    general:                               # the gate set's rows (val + val_asset)
+      - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, n: 32}
+    curve:                                 # curve + R2 D
+      - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/old_curve.parquet", n: 16}
+      - {root: "${paths.r2_root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/r2_D.parquet", n: 16}
+    highway:                               # 고주로 (60 kph exemption, dagger/pools.py)
+      - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.dagger_pools}/highway.parquet", n: 32}
+
+task_name: dagger

@@ -1,0 +1,36 @@
+# Fixed route annotation for 2026_molit_comp_global_path (s = global-path progress of base_link, m).
+# Derived from the MGeo link sequence, path curvature and lane-line crossings, then checked frame by frame on the full
+# lap run1021t-w1-002 (sunny 15 h, 2026-10-24). These are permanent map facts; scenario actors come from the manifests.
+
+judged_signals:        # osm stop line id -> route crossing s and the route's movement (tools/scorer/thresholds.yaml)
+  "7294": {s: 208.5, movement: straight}
+  "6254": {s: 315.9, movement: straight}
+  "4188": {s: 436.8, movement: straight, four_lamp: true}   # "green" = straight + arrow lit together
+  "4356": {s: 609.9, movement: left}                         # goes only on the green left arrow
+
+features:
+  # intersections: stop_s = route stop line; movement = the route's own movement through it
+  - {id: int73,  type: intersection, s: [55, 98],   stop_s: 72.6,  movement: left,     signal: none}    # MGeo: no light controls link A2256W000182
+  - {id: crv120, type: curve,        s: [105, 145], dir: right, sharp: true}
+  - {id: int160, type: intersection, s: [145, 187], stop_s: 160.0, movement: straight, signal: none}   # MGeo: no light controls link A2256W000236
+  - {id: int208, type: intersection, s: [195, 237], stop_s: 208.5, movement: straight, signal: "7294"}
+  - {id: int316, type: intersection, s: [300, 347], stop_s: 315.9, movement: straight, signal: "6254"}
+  - {id: int437, type: intersection, s: [420, 463], stop_s: 436.8, movement: straight, signal: "4188"}
+  - {id: int551, type: intersection, s: [535, 584], stop_s: 550.6, movement: right,    signal: unjudged}   # right_unprotected: a pass on red is a free right turn
+  - {id: int610, type: intersection, s: [595, 641], stop_s: 609.9, movement: left,     signal: "4356"}
+  - {id: crv780, type: curve,        s: [740, 812], dir: right}
+  - {id: rbt,    type: roundabout,   s: [845, 931], entry_s: 885.1, exit_s: 922.0}
+  - {id: ramp,   type: curve,        s: [990, 1060], dir: right, ramp: true}    # single-lane ramp, chevron signs
+  - {id: merge,  type: merge,        s: [1080, 1262], dir: left, cross_s: 1246.2}  # acceleration lane -> mainline
+  - {id: work,   type: construction, s: [1440, 1638], dir: left, cross_s: 1574.2, devices_s: 1490, drums_s: 1525}  # water barriers left from ~1490, drums right from ~1525;
+    # the expert already moves one lane left at ~1475 (d +2 m) and comes back right at ~1646 for the toll lane
+  - {id: toll,   type: toll_plaza,   s: [1638, 1765], gate_s: 1712}              # Hi-pass toll gate canopy ~1710-1740
+  - {id: tunnel, type: tunnel,       s: [1868, 1996]}
+  - {id: crv2040, type: curve,       s: [1994, 2097], dir: right}
+  - {id: crv2120, type: curve,       s: [2104, 2136], dir: right}
+
+# Lane-line crossings of the global path inside these features are junction/merge geometry, not lane changes.
+crossing_exempt: [int73, int160, int208, int316, int437, int551, int610, rbt]
+
+# Cells (DATA_PLAN.md) by route section
+cells: {0: C0, 1: C0, 2: C0, 3: C1, 4: C2, 5: C3, 6: C3, 7: C1, 8: C0, 9: C4, 10: C5, 11: C5, 12: C5, 13: C6, 14: C6, 15: C6, 16: C0}

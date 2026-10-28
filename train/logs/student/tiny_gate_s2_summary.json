@@ -1,0 +1,83 @@
+{
+ "teacher_ade": 4.545,
+ "teacher_fde": 11.794,
+ "teacher_minade": 3.072,
+ "student_ade": 2.438,
+ "student_fde": 6.505,
+ "student_minade": 1.422,
+ "st_ade": 3.1,
+ "n": 20,
+ "ratio": 0.536,
+ "by_cell": {
+  "C0": {
+   "teacher_ade": 6.419,
+   "teacher_fde": 19.001,
+   "teacher_minade": 4.869,
+   "student_ade": 3.601,
+   "student_fde": 10.423,
+   "student_minade": 2.57,
+   "st_ade": 4.69,
+   "n": 4
+  },
+  "C1": {
+   "teacher_ade": 0.888,
+   "teacher_fde": 2.154,
+   "teacher_minade": 0.215,
+   "student_ade": 0.786,
+   "student_fde": 1.877,
+   "student_minade": 0.307,
+   "st_ade": 0.445,
+   "n": 4
+  },
+  "C2": {
+   "teacher_ade": 1.43,
+   "teacher_fde": 3.091,
+   "teacher_minade": 0.643,
+   "student_ade": 0.834,
+   "student_fde": 2.055,
+   "student_minade": 0.292,
+   "st_ade": 0.925,
+   "n": 3
+  },
+  "C3": {
+   "teacher_ade": 8.243,
+   "teacher_fde": 17.603,
+   "teacher_minade": 7.399,
+   "student_ade": 6.098,
+   "student_fde": 16.838,
+   "student_minade": 5.168,
+   "st_ade": 5.107,
+   "n": 2
+  },
+  "C4": {
+   "teacher_ade": 1.658,
+   "teacher_fde": 3.921,
+   "teacher_minade": 0.573,
+   "student_ade": 0.959,
+   "student_fde": 2.211,
+   "student_minade": 0.241,
+   "st_ade": 0.826,
+   "n": 2
+  },
+  "C5": {
+   "teacher_ade": 7.114,
+   "teacher_fde": 18.8,
+   "teacher_minade": 4.156,
+   "student_ade": 2.599,
+   "student_fde": 6.597,
+   "student_minade": 1.501,
+   "st_ade": 5.3,
+   "n": 2
+  },
+  "C6": {
+   "teacher_ade": 7.786,
+   "teacher_fde": 20.448,
+   "teacher_minade": 4.973,
+   "student_ade": 3.132,
+   "student_fde": 7.815,
+   "student_minade": 0.743,
+   "st_ade": 5.408,
+   "n": 3
+  }
+ }
+}

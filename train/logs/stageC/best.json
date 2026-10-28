@@ -1,0 +1,37 @@
+{
+ "chosen": "anneal",
+ "metric": "discrete-token ADE (6.4 s, 1,000 fixed val+val_asset samples)",
+ "candidates": {
+  "step12000": {
+   "ce_on": 1.2611,
+   "ce_off": 1.2712,
+   "ade": 1.4879,
+   "fde": 4.4744,
+   "cv_ade": 5.1428,
+   "cv_fde": 12.7648,
+   "n": 1000,
+   "weights": "/workspace/out/stageC/t1t_snapshots/step-12000"
+  },
+  "anneal": {
+   "ce_on": 1.4033,
+   "ce_off": 1.4149,
+   "ade": 1.3244,
+   "fde": 3.9973,
+   "cv_ade": 5.1428,
+   "cv_fde": 12.7648,
+   "n": 1000,
+   "weights": "/workspace/out/stageC/t1t/anneal/final"
+  },
+  "ckpt16000": {
+   "ce_on": 1.3204,
+   "ce_off": 1.3311,
+   "ade": 1.5905,
+   "fde": 4.6705,
+   "cv_ade": 5.1428,
+   "cv_fde": 12.7648,
+   "n": 1000,
+   "weights": "/workspace/out/stageC/t1t/checkpoint-16000"
+  }
+ },
+ "ade_minus_cv": -3.8184000000000005
+}

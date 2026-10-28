@@ -1,0 +1,41 @@
+{
+ "history": [
+  {
+   "step": 10,
+   "ade": 6.08825,
+   "n": 16,
+   "tag": "main",
+   "seconds": 9.6,
+   "snapshot": "ade_snapshots/step-10.safetensors"
+  },
+  {
+   "step": 20,
+   "ade": 6.30067,
+   "n": 16,
+   "tag": "main",
+   "seconds": 4.5,
+   "snapshot": "ade_snapshots/step-20.safetensors"
+  },
+  {
+   "step": 25,
+   "ade": 5.97698,
+   "n": 16,
+   "tag": "after_decay",
+   "seconds": 29.2,
+   "snapshot": "ade_snapshots/step-25.safetensors"
+  }
+ ],
+ "stop_step": 20,
+ "decay_end": 25,
+ "lr_factor": 0.9939672868916175,
+ "min_step": 0,
+ "steps_per_epoch": 10,
+ "max_steps": 40,
+ "every_steps": 10,
+ "decay_steps": 5,
+ "rule": {
+  "rel_improve": 1.0,
+  "patience": 1,
+  "min_epochs": 0
+ }
+}

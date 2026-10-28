@@ -1,0 +1,44 @@
+# Local check (RTX 5080): a random-init model with the teacher's exact code path (camera ViT + LiDAR ViT with mergers and
+# DeepStack, Qwen3-VL LLM, expert reading the LLM KV) shrunk to ~90M params, overfitting 20 MORAI CoC keyframes with
+# every loss on (traj CE, CoC LM, flow matching). Inputs are fixed (no jitter) so the loss can reach ~0.
+defaults: [base, _self_]
+
+model:
+  init: random:${paths.alpamayo15}         # only the release config.json is read
+  attn_implementation: sdpa
+  dtype: float32
+  strict: true
+  vlm_overrides:
+    text_config: {hidden_size: 256, intermediate_size: 512, num_hidden_layers: 4, num_attention_heads: 4, num_key_value_heads: 2,
+                  head_dim: 64, rope_scaling: {rope_type: default, mrope_section: [12, 10, 10], mrope_interleaved: true}}
+    vision_config: {depth: 4, hidden_size: 128, intermediate_size: 256, num_heads: 4, out_hidden_size: 256,
+                    deepstack_visual_indexes: [1, 2, 3]}
+  expert_overrides: {hidden_size: 128, intermediate_size: 256, num_attention_heads: 4, head_dim: 64}
+  train_parts: [camera_vit, lidar, llm, lm_head, expert]
+  loss_weights: {traj_ce: 1.0, lm: 1.0, fm: 1.0}
+
+data:
+  train_dataset:
+    coc: true                              # Stage 1-C data: keyframes with their CoC
+    max_samples: 20
+    augment: false
+  val_dataset:
+    max_samples: 8
+
+trainer:
+  per_device_train_batch_size: 2           # padded batches: exercises the expert's padding mask
+  gradient_accumulation_steps: 1
+  learning_rate: 5e-4
+  warmup_steps: 20
+  lr_scheduler_kwargs: {min_lr: 1e-5}
+  lr_multiplier: null
+  max_steps: 2000
+  logging_steps: 10
+  save_steps: 1000
+  eval_steps: 1000
+  gradient_checkpointing: false            # flow matching reads the KV cache, which checkpointing drops
+  deepspeed: null                          # winpc has no nvcc for DeepSpeed
+  dataloader_num_workers: 4
+  dataloader_prefetch_factor: 2
+
+task_name: tiny_overfit

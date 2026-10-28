@@ -1,0 +1,25 @@
+{
+ "E": 380,
+ "val_episodes": 339,
+ "r1_download_episodes": 456,
+ "need_2hz": {
+  "red_approach": 4800,
+  "red_stop": 3200,
+  "highway": 3200,
+  "ring_entry": 1600
+ },
+ "have_2hz": {
+  "red_approach": 4979,
+  "red_stop": 37264,
+  "highway": 24141,
+  "ring_entry": 1607
+ },
+ "r2_aeb_rows": 4575,
+ "r2_yield_rows": 5682,
+ "r2_dynstop_val": 103,
+ "red_val": 300,
+ "ring_wait_rows": 16910,
+ "replay_exclude": 71195,
+ "old_recovery_rows": 37833,
+ "start_relabel_rows": 16229
+}

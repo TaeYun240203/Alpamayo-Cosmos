@@ -1,0 +1,26 @@
+{
+ "camera_vit": {
+  "max_abs": 0.02741,
+  "mean_abs": 0.001797
+ },
+ "expert": {
+  "max_abs": 0.0,
+  "mean_abs": 0.0
+ },
+ "kd_proj": {
+  "max_abs": 0.1469,
+  "mean_abs": 0.01552
+ },
+ "lidar": {
+  "max_abs": 0.2118,
+  "mean_abs": 0.004203
+ },
+ "llm": {
+  "max_abs": 0.2939,
+  "mean_abs": 0.07425
+ },
+ "other": {
+  "max_abs": 0.0,
+  "mean_abs": 0.0
+ }
+}

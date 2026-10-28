@@ -1,0 +1,39 @@
+[2026-10-25 20:39:23,955][morai_vla.model][INFO] - stage []: 0.000B trainable, losses {'kv': 1.0, 'vit': 1.0, 'fm': 1.0, 'traj_ce': 1.0, 'lm': 1.0, 'vkd': 0.0, 'coc_kl': 0.0}
+[2026-10-25 20:39:23,975][morai_vla.student][INFO] - transplanted 60 tensors (expert, action_in_proj, action_out_proj) from /home/taeyun_kim/morai-student/runs/dry_es/t2/final
+[2026-10-25 20:39:23,978][morai_vla.model][INFO] - stage ['camera_vit', 'lidar', 'llm', 'lm_head', 'kd_proj']: 0.035B trainable, losses {'kv': 1.0, 'vit': 10.0, 'fm': 1.0, 'traj_ce': 1.0, 'lm': 1.0, 'vkd': 0.0, 'coc_kl': 0.0}
+[2026-10-25 20:39:25,587][morai_vla.model][INFO] - loaded /home/taeyun_kim/morai-student/runs/dry_es/t2/final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+[2026-10-25 20:39:25,592][morai_vla.model][INFO] - stage []: 0.000B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 1.0}
+[2026-10-25 20:39:29,217][morai_vla.data][INFO] - MoraiDataset train coc=False: 20 samples from 19 episodes
+[2026-10-25 20:39:30,576][morai_vla.data][INFO] - MoraiDataset ['val', 'val_asset'] coc=False: 8 samples from 8 episodes
+[2026-10-25 20:39:30,648][alpamayo.common.config_utils][INFO] - [rank: 0] Config saved to /home/taeyun_kim/morai-student/runs/dry_es/s1/config.yaml
+  0%|          | 0/40 [00:00<?, ?it/s]Could not estimate the number of tokens of the input, floating-point operations will not be computed
+  2%|▎         | 1/40 [00:05<03:34,  5.51s/it]  5%|▌         | 2/40 [00:05<01:34,  2.49s/it]  8%|▊         | 3/40 [00:06<00:55,  1.51s/it] 10%|█         | 4/40 [00:06<00:38,  1.06s/it] 12%|█▎        | 5/40 [00:06<00:28,  1.24it/s] 15%|█▌        | 6/40 [00:07<00:22,  1.52it/s] 18%|█▊        | 7/40 [00:07<00:18,  1.81it/s] 20%|██        | 8/40 [00:08<00:15,  2.05it/s] 22%|██▎       | 9/40 [00:08<00:13,  2.23it/s][2026-10-25 20:39:41,699][morai_vla.data][INFO] - MoraiDataset ['val', 'val_asset'] coc=False: 16 samples from 16 episodes
+traj_early_stop {"step": 10, "ade": 6.08825, "n": 16, "tag": "main", "seconds": 9.6, "snapshot": "ade_snapshots/step-10.safetensors"}
+/home/taeyun_kim/claude-bench/venv-teacher/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+ 25%|██▌       | 10/40 [00:18<01:41,  3.39s/it]{"step": 10, "kv": 2.28707, "vit": 2.13334, "traj_ce": 11.45028, "lm": 9.79371, "fm": 2.68192, "peak_mem_gb": 1.9}
+                                               {'loss': 47.5464, 'grad_norm': 47.74372863769531, 'learning_rate': 2.5e-05, 'epoch': 1.0}
+ 25%|██▌       | 10/40 [00:18<01:41,  3.39s/it] 28%|██▊       | 11/40 [00:19<01:22,  2.83s/it] 30%|███       | 12/40 [00:20<00:58,  2.10s/it] 32%|███▎      | 13/40 [00:20<00:42,  1.57s/it] 35%|███▌      | 14/40 [00:21<00:31,  1.20s/it] 38%|███▊      | 15/40 [00:21<00:23,  1.05it/s] 40%|████      | 16/40 [00:21<00:18,  1.29it/s] 42%|████▎     | 17/40 [00:22<00:15,  1.49it/s] 45%|████▌     | 18/40 [00:22<00:12,  1.72it/s] 48%|████▊     | 19/40 [00:22<00:10,  1.94it/s]traj_early_stop {"step": 20, "ade": 6.30067, "n": 16, "tag": "main", "seconds": 4.5, "snapshot": "ade_snapshots/step-20.safetensors"}
+[2026-10-25 20:39:58,566][morai_vla.early_stop][INFO] - traj_early_stop: stop at 20, LR factor 0.994 -> 0 by step 25
+ 50%|█████     | 20/40 [00:27<00:36,  1.81s/it]{"step": 20, "kv": 1.60697, "vit": 1.11611, "traj_ce": 10.21319, "lm": 7.65652, "fm": 2.89755, "s_per_step": 0.942, "peak_mem_gb": 1.9}
+                                               {'loss': 33.5353, 'grad_norm': 23.314939498901367, 'learning_rate': 5e-05, 'epoch': 2.0}
+ 50%|█████     | 20/40 [00:27<00:36,  1.81s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 25%|██▌       | 2/8 [00:00<00:00,  9.71it/s][A
+ 38%|███▊      | 3/8 [00:00<00:00,  6.90it/s][A
+ 50%|█████     | 4/8 [00:00<00:00,  6.27it/s][A
+ 62%|██████▎   | 5/8 [00:00<00:00,  6.05it/s][A
+ 75%|███████▌  | 6/8 [00:00<00:00,  5.81it/s][A
+ 88%|████████▊ | 7/8 [00:01<00:00,  5.72it/s][A
+100%|██████████| 8/8 [00:01<00:00,  5.64it/s][A{"step": 20, "eval_kv": 1.11774, "eval_vit": 0.69499, "eval_traj_ce": 7.96309, "eval_lm": 6.82556, "eval_fm": 1.20379, "peak_mem_gb": 1.9}
+                                               
+                                             [A{'eval_loss': 24.06011199951172, 'eval_runtime': 3.1831, 'eval_samples_per_second': 2.513, 'eval_steps_per_second': 2.513, 'epoch': 2.0}
+ 50%|█████     | 20/40 [00:30<00:36,  1.81s/it]
+100%|██████████| 8/8 [00:01<00:00,  5.64it/s][A
+                                             [A 52%|█████▎    | 21/40 [00:35<01:07,  3.54s/it] 55%|█████▌    | 22/40 [00:35<00:46,  2.60s/it] 57%|█████▊    | 23/40 [00:36<00:33,  1.96s/it] 60%|██████    | 24/40 [00:36<00:24,  1.51s/it]traj_early_stop {"step": 25, "ade": 5.97698, "n": 16, "tag": "after_decay", "seconds": 29.2, "snapshot": "ade_snapshots/step-25.safetensors"}
+/home/taeyun_kim/claude-bench/venv-teacher/lib/python3.12/site-packages/torch/distributed/distributed_c10d.py:4807: UserWarning: No device id is provided via `init_process_group` or `barrier `. Using the current device set by the user. 
+  warnings.warn(  # warn only once
+ 62%|██████▎   | 25/40 [01:06<02:29,  9.96s/it]{"step": 25, "kv": 1.07296, "vit": 0.62018, "traj_ce": 9.18843, "lm": 6.56488, "fm": 2.1892, "s_per_step": 7.72, "peak_mem_gb": 1.9}
+                                               {'train_runtime': 66.3581, 'train_samples_per_second': 1.206, 'train_steps_per_second': 0.603, 'train_loss': 37.47614624023438, 'epoch': 2.5}
+ 62%|██████▎   | 25/40 [01:06<02:29,  9.96s/it] 62%|██████▎   | 25/40 [01:06<00:39,  2.65s/it]
+[2026-10-25 20:40:37,224][morai_vla.early_stop][INFO] - traj_early_stop: final = step 25 (after_decay), ADE 5.9770

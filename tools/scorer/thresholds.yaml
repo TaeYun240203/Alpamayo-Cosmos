@@ -1,0 +1,98 @@
+# Offline competition scorer v0 thresholds (PLAN.md §4.2, rules v1.2 §3-2).
+# Labels are recomputed from raw bags whenever this file changes; its hash goes into the parquet metadata.
+version: 0
+
+map:
+  dir: ../../../MORAI-Autonomous-Driving-System/src/map   # relative to this file
+  osm: kcity_lanelet2.osm
+  path: 2026_molit_comp_global_path.txt
+  checkpoints: checkpoints.csv
+
+topics:
+  # Ego Vehicle Status (UDP 9095, base_link = rear axle): pose for targets and judging, twist.linear.x = signed_velocity
+  # (the judged speed). The only privileged pose recorded.
+  ego_status: /collect_only/ego_status
+  ego_gt: /visualizer/gt                    # pose fallback for older bags (same packet, pose only)
+  speed: /vehicle/competition_status        # interfaces/CompetitionVehicleStatus: applied controls; speed fallback
+  gps: /sensors/gps/fix                     # sensor_msgs/NavSatFix; NO_FIX or (0, 0) = GPS blackout (lane-exempt zone)
+  section: /section_annotation              # interfaces/SectionAnnotation; stored only, judgments use the route section
+  collision: /CollisionData                 # morai_msgs/CollisionData from the UDP CollisionData receiver (sim 9091 -> 9092)
+  signal: /collect_only/traffic_light_gt    # morai_msgs/GetTrafficLightStatus; collection only, disqualifying in the final
+  noise: /collect_meta/noise_active         # std_msgs/Bool from the collect skill's wsl/noise-inject-node.py
+  driver: null                              # TODO: /collect_meta/driver (std_msgs/String "driver"|"student"); no publisher yet
+
+frame_hz: 10
+max_gt_gap_s: 0.1          # grid frames farther than this from a GT pose get no pose
+
+vehicle:                    # base_link = rear axle centre (spec/README.md)
+  front_axle_m: 3.0
+  # Wheel contact points (x forward, y left) added to the Ego Vehicle Status pose. The judge uses Ego Detail Status.
+  # TODO: receive one Ego Detail Status packet in a live run to fix these; until then wheelbase 3.0 m and the
+  # Ioniq5 published track ~1.63 m (255 mm tyres).
+  wheels_base_link_m: {fl: [3.0, 0.815], fr: [3.0, -0.815], rl: [0.0, 0.815], rr: [0.0, -0.815]}
+  tire_half_width_m: 0.1275
+
+time:                       # lap time: first GT movement -> last global path waypoint (MORAI replies 10/12, 9/30)
+  move_m: 0.05              # GT displacement that counts as "movement detected"
+  finish_m: 1.0             # base_link path progress within this of the last waypoint = reached
+  limit_s: 900              # 15 min limit -> failed
+
+collision:
+  penalty_s: 15             # per first contact; again after the object is absent from >= 1 CollisionData message
+  exclude_s: [3.0, 1.0]     # [before, after] each contact start
+  # CollisionData also reports collisions between other objects (e.g. NPCs piling up at a spawn point 570 m away,
+  # 2026-10-20); only records within this distance of the Ego GT position count. Ego bbox half-diagonal ~2.6 m +
+  # the largest obstacle (truck, 6.6 m) half-length.
+  max_dist_m: 8.0
+
+signal:
+  penalty_s: 30
+  # The 4 judged intersections: osm stop_line way id -> MGeo lights governing the route's movement through it.
+  # Route crossings at s=208.5/315.9/436.8/609.9 m (sections 3/4/5/7, = velocity_planner stop_line_cutoff sections).
+  # lights = MGeo traffic_light_set entries whose link_id_list holds the route's connector link right after the
+  # stop line (osm lanelet mgeo:link_id); movement = that link's MGeo related_signal. MGeo source:
+  # r_kr_pr_k-city_2025.scene (lanelet_editor/outputs/lanelet-map-repair/map/source, 2026-09-26).
+  stop_lines:
+    "7294": {section: 3, link: A2256W000215, movement: straight, lights: [C1256W000077, C1256W000098, C1256W000114]}
+    "6254": {section: 4, link: A2256W000222, movement: straight, lights: [C1256W000091]}
+    "4188": {section: 5, link: A2256W000599, movement: straight, lights: [C1256W000016, C1256W000018, C1256W000019, C1256W000099]}
+    "4356": {section: 7, link: A2256W000083, movement: left, lights: [C1256W000052]}
+  # straight goes on green (16), left only on the green-left arrow (32); yellow (4) crossings carry no penalty
+  # (MORAI reply 2026-08-24, Discord thread 1541042852912566283).
+  violating_states: [red]
+  max_age_s: 2.0            # TODO: light message older than this -> unknown; check against the measured publish rate
+  exclude_s: [4.0, 1.0]
+
+speed:
+  limit_kph: 60
+  penalty_s: 15
+  repeat_s: 3.0
+  # Rule exception: start of link A2256W000411 to end of link A2256W000153 (resolved to path s on load).
+  exempt_links: [A2256W000411, A2256W000153]
+  exclude_before_s: 2.0
+
+lane:
+  penalty_s: 5
+  period_s: 3.0             # +5 s per 3 s of continuous contact
+  # Lanelet2 standard tags only (no mgeo:* attributes): white/yellow solid lines incl. the yellow centre line.
+  subtypes: [solid, solid_solid, solid_dashed, dashed_solid]
+  line_widths_m: {line_thin: 0.15, line_thick: 0.30}   # painted width per Lanelet2 line type
+  exclude_before_s: 2.0     # exempt zone = GPS blackout frames of the same bag (rules: the shadow zone is where GPS blacks out)
+
+inoperable:                 # rules §2-2-3: all four wheels off the drivable area outside the shadow zone
+  min_s: 1.0                # shorter excursions are not flagged
+  route_corridor_m: 2.0     # the global path +- this counts as drivable (the lanelet map has gaps at s 346.7, 1612-1625)
+
+checkpoints:
+  radius_m: 3.0
+
+targets:
+  traj_points: 64           # future GT ego at frame_hz (10 Hz) = 6.4 s, relative to the current GT pose
+  ctrl_points: 20           # applied (steer, accel - brake) from competition_status at 20 Hz = 1.0 s
+  ctrl_dt_s: 0.05
+  ctrl_max_age_s: 0.1       # zero-order hold; older status samples leave the chunk invalid
+
+start:
+  within_s: 60.0
+  route_fraction: 0.05
+  applies_if_start_s_below_m: 20.0   # only full laps spawned at the route start get the start check

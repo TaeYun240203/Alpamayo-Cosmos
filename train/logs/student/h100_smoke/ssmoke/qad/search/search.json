@@ -1,0 +1,15 @@
+{
+ "effective_bits_target": 6.5,
+ "seconds": 77,
+ "layers": 600,
+ "count": {
+  "nvfp4": 240,
+  "fp8": 360
+ },
+ "effective_bits_searched": 6.498,
+ "scales": "NVFP4 per-tensor scale = amax / (6 * 448), block scale e4m3 per 16 values; FP8 scale = amax / 448",
+ "best": {
+  "score": 1.878444819645381,
+  "is_satisfied": true
+ }
+}

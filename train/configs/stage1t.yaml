@@ -1,0 +1,22 @@
+# MODEL_PLAN 4.3 Stage 1-T: the recipe's Stage 1 with CoC off. All usable rows as t0, supervision = traj_future.
+# Trains the whole VLM: camera ViT (0.1x via base lr_multiplier) and its mergers, LiDAR path, LLM incl. embeddings, LM head.
+# ~9.5B trainable: AdamW states alone are ~150 GB -> 8 GPUs with ZeRO-2 (zero2_offload.json on one GPU: slow, untested).
+defaults: [base, _self_]
+
+model:
+  init: ???                                # step-2 checkpoint dir (output_teacher_step2/checkpoint-N or final)
+  train_parts: [camera_vit, lidar, llm, lm_head]
+  loss_weights: {traj_ce: 1.0, lm: 1.0, fm: 0.0}
+
+trainer:
+  load_best_model_at_end: true             # user 10/25: final/ = the best eval_loss checkpoint (full epochs, no early stop);
+  metric_for_best_model: eval_loss         # HF picks among saved checkpoints, so the pipeline sets save_steps == eval_steps
+  greater_is_better: false
+
+callbacks:
+  stage1_eval:                             # expert-free monitor after each eval: CE LiDAR on/off, discrete-token ADE (README)
+    _target_: morai_vla.stage1_eval.Stage1EvalCallback
+    root: ${data.root}
+    n: 200
+
+task_name: teacher_stage1t

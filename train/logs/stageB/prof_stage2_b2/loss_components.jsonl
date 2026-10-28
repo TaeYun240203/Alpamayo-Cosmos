@@ -1,0 +1,3 @@
+{"step": 10, "fm": 0.62141, "peak_mem_gb": 51.65}
+{"step": 20, "fm": 0.47961, "s_per_step": 0.467, "peak_mem_gb": 51.65}
+{"step": 30, "fm": 1.43994, "s_per_step": 0.465, "peak_mem_gb": 51.65}

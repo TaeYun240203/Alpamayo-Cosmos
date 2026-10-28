@@ -1,0 +1,29 @@
+== step2 (tiny model, 30 steps, same random init)
+stage ['lidar']: 0.003B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+MoraiDataset train coc=False: 40 samples from 39 episodes
+{"step": 10, "traj_ce": 12.02356, "lm": 10.52741, "peak_mem_gb": 3.78}
+{"step": 20, "traj_ce": 11.85944, "lm": 8.50438, "s_per_step": 0.325, "peak_mem_gb": 3.78}
+{"step": 30, "traj_ce": 11.68198, "lm": 7.76965, "s_per_step": 0.428, "peak_mem_gb": 3.78}
+== stage1t (tiny model, 30 steps, same random init)
+stage ['camera_vit', 'lidar', 'llm', 'lm_head']: 0.087B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+MoraiDataset train coc=False: 40 samples from 39 episodes
+{"step": 10, "traj_ce": 11.63682, "lm": 8.99043, "peak_mem_gb": 4.51}
+{"step": 20, "traj_ce": 9.72935, "lm": 6.08622, "s_per_step": 0.304, "peak_mem_gb": 4.51}
+{"step": 30, "traj_ce": 8.15655, "lm": 4.45765, "s_per_step": 0.527, "peak_mem_gb": 4.51}
+== stage1c (tiny model, 30 steps, same random init)
+stage ['camera_vit', 'lidar', 'llm', 'lm_head']: 0.087B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+MoraiDataset train coc=True: 40 samples from 39 episodes
+{"step": 10, "traj_ce": 11.89453, "lm": 11.37805, "peak_mem_gb": 4.57}
+{"step": 20, "traj_ce": 11.20915, "lm": 9.96623, "s_per_step": 0.31, "peak_mem_gb": 4.59}
+{"step": 30, "traj_ce": 9.93732, "lm": 8.40651, "s_per_step": 0.511, "peak_mem_gb": 4.59}
+== stage2 (tiny model, 30 steps, same random init)
+stage ['expert']: 0.001B trainable, losses {'traj_ce': 0.0, 'lm': 0.0, 'fm': 1.0}
+MoraiDataset train coc=False: 40 samples from 39 episodes
+{"step": 10, "fm": 3.11789, "peak_mem_gb": 0.6}
+{"step": 20, "fm": 2.71739, "s_per_step": 0.195, "peak_mem_gb": 0.69}
+{"step": 30, "fm": 2.8876, "s_per_step": 0.377, "peak_mem_gb": 0.69}
+== max |weight change| per part vs the shared init
+step2 {'lidar': 0.007693, 'camera_vit': 0.0, 'llm': 0.0, 'lm_head': 0.0, 'expert': 0.0, 'other': 0.0}
+stage1t {'lidar': 0.005994, 'camera_vit': 0.000616, 'llm': 0.00828, 'lm_head': 0.00819, 'expert': 0.0, 'other': 0.0}
+stage1c {'lidar': 0.0056, 'camera_vit': 0.000636, 'llm': 0.008264, 'lm_head': 0.008279, 'expert': 0.0, 'other': 0.0}
+stage2 {'lidar': 0.0, 'camera_vit': 0.0, 'llm': 0.0, 'lm_head': 0.0, 'expert': 0.00658, 'other': 0.0}

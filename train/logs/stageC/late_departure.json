@@ -1,0 +1,125 @@
+{
+ "by_case": {
+  "other: t0 red -> red": {
+   "n": 8,
+   "pred_stays_2s": 0.75,
+   "lag_s_median": 4.65
+  },
+  "other: t0 unknown -> unknown": {
+   "n": 7,
+   "pred_stays_2s": 0.7142857142857143,
+   "lag_s_median": 4.7
+  },
+  "t0 green/yellow (real late start)": {
+   "n": 47,
+   "pred_stays_2s": 0.7872340425531915,
+   "lag_s_median": 4.7
+  },
+  "t0 red -> green after t0 (not foreseeable)": {
+   "n": 10,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.0
+  }
+ },
+ "by_fog": {
+  "clear": {
+   "n": 40,
+   "pred_stays_2s": 0.875,
+   "lag_s_median": 4.9
+  },
+  "fog": {
+   "n": 32,
+   "pred_stays_2s": 0.71875,
+   "lag_s_median": 4.65
+  }
+ },
+ "by_dist": {
+  "0-8m": {
+   "n": 1,
+   "pred_stays_2s": 0.0,
+   "lag_s_median": 0.1
+  },
+  "8-20m": {
+   "n": 2,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.5
+  },
+  "20-35m": {
+   "n": 3,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 4.5
+  },
+  "35-50m": {
+   "n": 35,
+   "pred_stays_2s": 0.7428571428571429,
+   "lag_s_median": 4.8
+  },
+  ">50m/none": {
+   "n": 26,
+   "pred_stays_2s": 0.8846153846153846,
+   "lag_s_median": 4.9
+  }
+ },
+ "by_case_dist": {
+  "other: t0 red -> red|8-20m": {
+   "n": 1,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.3
+  },
+  "other: t0 red -> red|20-35m": {
+   "n": 1,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 4.5
+  },
+  "other: t0 red -> red|35-50m": {
+   "n": 5,
+   "pred_stays_2s": 0.8,
+   "lag_s_median": 4.8
+  },
+  "other: t0 red -> red|>50m/none": {
+   "n": 1,
+   "pred_stays_2s": 0.0,
+   "lag_s_median": 0.1
+  },
+  "other: t0 unknown -> unknown|0-8m": {
+   "n": 1,
+   "pred_stays_2s": 0.0,
+   "lag_s_median": 0.1
+  },
+  "other: t0 unknown -> unknown|>50m/none": {
+   "n": 1,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.5
+  },
+  "t0 green/yellow (real late start)|8-20m": {
+   "n": 1,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.7
+  },
+  "t0 green/yellow (real late start)|20-35m": {
+   "n": 1,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 1.9
+  },
+  "t0 green/yellow (real late start)|35-50m": {
+   "n": 21,
+   "pred_stays_2s": 0.6190476190476191,
+   "lag_s_median": 2.2
+  },
+  "t0 green/yellow (real late start)|>50m/none": {
+   "n": 24,
+   "pred_stays_2s": 0.9166666666666666,
+   "lag_s_median": 4.9
+  },
+  "t0 red -> green after t0 (not foreseeable)|20-35m": {
+   "n": 1,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.0
+  },
+  "t0 red -> green after t0 (not foreseeable)|35-50m": {
+   "n": 9,
+   "pred_stays_2s": 1.0,
+   "lag_s_median": 5.0
+  }
+ }
+}

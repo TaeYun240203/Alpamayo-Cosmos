@@ -1,0 +1,29 @@
+# MODEL_PLAN 4.3 Stage 2: the recipe's Stage 2 (sft_stage2_nav). VLM frozen; expert + action_in/out_proj learn GT
+# (a, kappa) flow matching on the stop-gradient KV of the prefix WITHOUT CoC (coc false = the inference format), all usable
+# rows (the index holds only traj_ok rows). Recipe values: lr 1e-4, warmup 100, accumulation 1, no DeepSpeed, no
+# gradient checkpointing (it would also drop the KV cache the expert reads).
+defaults: [base, _self_]
+
+model:
+  init: ???                                # Stage 1-C checkpoint dir
+  train_parts: [expert]
+  master_fp32: true                        # our one deviation: fp32 expert weights + bf16 autocast (the recipe updates bf16 weights)
+  loss_weights: {traj_ce: 0.0, lm: 0.0, fm: 1.0}
+
+trainer:
+  load_best_model_at_end: false            # user 10/25 (later): final/ = the lowest trajectory-ADE measurement (traj_early_stop)
+  learning_rate: 1e-4
+  warmup_steps: 100
+  gradient_accumulation_steps: 1
+  lr_multiplier: null
+  gradient_checkpointing: false
+  deepspeed: null
+
+callbacks:
+  traj_early_stop:                         # user 10/25 rule (morai_vla/early_stop.py): 3 epochs cap, ADE every ~20 min on the
+    _target_: morai_vla.early_stop.TrajEarlyStop   # 1,000 fixed val samples, no stop before 0.5 epoch, 3 x not >2 % better -> stop,
+    root: ${data.root}                     # linear LR decay to 0, final = lower ADE of best / after decay
+    every_steps: 4000
+    decay_steps: 3000
+
+task_name: teacher_stage2

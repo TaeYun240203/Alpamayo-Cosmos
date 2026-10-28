@@ -1,0 +1,15 @@
+{
+ "ratio_vs_s2": 0.9938,
+ "qad_ade": 5.584,
+ "s2_ade": 5.619,
+ "teacher_ade": 4.124,
+ "qad_vs_teacher": 1.354,
+ "n": 16,
+ "layers": 600,
+ "count": {
+  "nvfp4": 240,
+  "fp8": 360
+ },
+ "effective_bits_searched": 6.498,
+ "scales": "NVFP4 per-tensor scale = amax / (6 * 448), block scale e4m3 per 16 values; FP8 scale = amax / 448"
+}

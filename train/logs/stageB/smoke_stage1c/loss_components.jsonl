@@ -1,0 +1,5 @@
+{"step": 2, "traj_ce": 2.68128, "lm": 2.164, "peak_mem_gb": 32.54}
+{"step": 4, "traj_ce": 2.41825, "lm": 2.39927, "s_per_step": 5.69, "peak_mem_gb": 32.54}
+{"step": 6, "traj_ce": 2.73923, "lm": 2.88461, "s_per_step": 5.63, "peak_mem_gb": 32.54}
+{"step": 8, "traj_ce": 2.77386, "lm": 2.10766, "s_per_step": 5.647, "peak_mem_gb": 32.54}
+{"step": 10, "traj_ce": 2.62825, "lm": 1.21716, "s_per_step": 5.885, "peak_mem_gb": 32.54}

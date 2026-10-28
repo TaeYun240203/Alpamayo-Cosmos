@@ -1,0 +1,65 @@
+{
+ "recorded": {
+  "all": {
+   "n": 151,
+   "agree": 0.6423841059602649,
+   "pred_go_when_gt_wait": 2,
+   "pred_wait_when_gt_go": 52,
+   "gt_depart_s_median": 1.2,
+   "pred_depart_s_median_when_gt_go": 6.5
+  },
+  "by_stop": {
+   "6254": {
+    "n": 151,
+    "agree": 0.6423841059602649,
+    "pred_go_when_gt_wait": 2,
+    "pred_wait_when_gt_go": 52,
+    "gt_depart_s_median": 1.2,
+    "pred_depart_s_median_when_gt_go": 6.5
+   }
+  },
+  "by_kind_fog": {
+   "go|clear": {
+    "n": 38,
+    "agree": 0.2894736842105263,
+    "pred_go_when_gt_wait": 1,
+    "pred_wait_when_gt_go": 26,
+    "gt_depart_s_median": 1.2,
+    "pred_depart_s_median_when_gt_go": 6.5
+   },
+   "go|fog": {
+    "n": 38,
+    "agree": 0.2894736842105263,
+    "pred_go_when_gt_wait": 1,
+    "pred_wait_when_gt_go": 26,
+    "gt_depart_s_median": 1.2,
+    "pred_depart_s_median_when_gt_go": 6.5
+   },
+   "wait|clear": {
+    "n": 38,
+    "agree": 1.0,
+    "pred_go_when_gt_wait": 0,
+    "pred_wait_when_gt_go": 0,
+    "gt_depart_s_median": null,
+    "pred_depart_s_median_when_gt_go": null
+   },
+   "wait|fog": {
+    "n": 37,
+    "agree": 1.0,
+    "pred_go_when_gt_wait": 0,
+    "pred_wait_when_gt_go": 0,
+    "gt_depart_s_median": null,
+    "pred_depart_s_median_when_gt_go": null
+   }
+  },
+  "red_violations": 0,
+  "crossings_on_unknown": 0,
+  "n": 151,
+  "late_departure_on_go": 52,
+  "n_go": 72,
+  "violations": []
+ },
+ "nf4": true,
+ "ckpt": "/home/taeyun_kim/ckpt/t1t_final",
+ "n_rows": 151
+}

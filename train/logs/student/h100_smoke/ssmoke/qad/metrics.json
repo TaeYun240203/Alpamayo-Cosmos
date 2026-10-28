@@ -1,0 +1,48 @@
+{
+ "final": {
+  "best_global_step": 15,
+  "best_metric": 4.753097541630268,
+  "best_model_checkpoint": "/workspace/out/ssmoke/qad/checkpoint-15"
+ },
+ "last_train": {
+  "step": 30,
+  "kv": 13.57095,
+  "vit": 0.25979,
+  "traj_ce": 22.14197,
+  "lm": 9.11109,
+  "fm": 3.76768,
+  "vkd": 2.42659,
+  "s_per_step": 3.59,
+  "peak_mem_gb": 79.88
+ },
+ "last_eval": {
+  "step": 30,
+  "eval_kv": 13.5672,
+  "eval_vit": 0.269,
+  "eval_traj_ce": 22.14415,
+  "eval_lm": 9.09577,
+  "eval_fm": 4.7531,
+  "peak_mem_gb": 79.88
+ },
+ "best_eval": {
+  "eval_fm": 4.27054,
+  "eval_traj_ce": 22.12145,
+  "eval_lm": 9.09577,
+  "eval_kv": 13.5672,
+  "eval_vkd": 2.2976,
+  "eval_vit": 0.25585
+ },
+ "ratio_vs_s2": 0.9938,
+ "qad_ade": 5.584,
+ "s2_ade": 5.619,
+ "teacher_ade": 4.124,
+ "qad_vs_teacher": 1.354,
+ "n": 16,
+ "layers": 600,
+ "count": {
+  "nvfp4": 240,
+  "fp8": 360
+ },
+ "effective_bits_searched": 6.498,
+ "scales": "NVFP4 per-tensor scale = amax / (6 * 448), block scale e4m3 per 16 values; FP8 scale = amax / 448"
+}

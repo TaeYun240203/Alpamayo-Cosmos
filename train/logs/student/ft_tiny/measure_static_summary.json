@@ -1,0 +1,26 @@
+{
+ "what": "static",
+ "backend": "bf16:/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/957fe2a8-4222-4686-b2c9-aa296ca88bb2/scratchpad/ft_tiny/ft/final",
+ "n": 4,
+ "k": 1,
+ "root": "/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/957fe2a8-4222-4686-b2c9-aa296ca88bb2/scratchpad/ft_tiny/root",
+ "keep": "/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/957fe2a8-4222-4686-b2c9-aa296ca88bb2/scratchpad/ft_tiny/root/_ft/old_static.parquet",
+ "split": [
+  "val",
+  "val_asset"
+ ],
+ "stride": 5,
+ "rows": 4,
+ "speed_pred": 2.7253,
+ "speed_gt": 6.7695,
+ "ade": 10.7423,
+ "near_obstacle": {
+  "n": 0,
+  "ade": null,
+  "clear_pred": null,
+  "clear_gt": null,
+  "clear_pred_p10": null,
+  "share_pred_clear_lt_0.3m": null,
+  "overlap_rate": null
+ }
+}

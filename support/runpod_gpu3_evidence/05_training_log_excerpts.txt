@@ -1,0 +1,321 @@
+/workspace/out/stageC/logs/pipeline.log:=== 2026-10-24 23:47:42 pipeline start: 8 GPUs, OUT=/workspace/out/stageC, B2=b2://morai2026-alpamayo/runs/stageC
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.32it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.22it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:31:43,660][morai_vla.model][INFO] - loaded /workspace/ckpt/step2_final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:31:43,669][morai_vla.model][INFO] - stage ['camera_vit', 'lidar', 'llm', 'lm_head']: 9.374B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.89it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.50it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.03it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.52it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.67it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 53.27it/s]
+/workspace/out/stageC/logs/t1t.log:  0%|          | 0/19218 [00:00<?, ?it/s]
+/workspace/out/stageC/logs/t1t.log:  0%|          | 0/74 [00:00<?, ?it/s][A
+/workspace/out/stageC/logs/t1t.log:  3%|▎         | 2/74 [00:00<00:06, 11.76it/s][A
+/workspace/out/stageC/logs/t1t.log:  5%|▌         | 4/74 [00:00<00:09,  7.08it/s][A
+/workspace/out/stageC/logs/t1t.log:  7%|▋         | 5/74 [00:00<00:10,  6.70it/s][A
+/workspace/out/stageC/logs/t1t.log:  8%|▊         | 6/74 [00:00<00:10,  6.55it/s][A
+/workspace/out/stageC/logs/t1t.log:  9%|▉         | 7/74 [00:01<00:10,  6.34it/s][A
+/workspace/out/stageC/logs/t1t.log: 11%|█         | 8/74 [00:01<00:11,  5.89it/s][A
+/workspace/out/stageC/logs/t1t.log: 12%|█▏        | 9/74 [00:01<00:10,  5.95it/s][A
+/workspace/out/stageC/logs/t1t.log: 14%|█▎        | 10/74 [00:01<00:10,  5.94it/s][A
+/workspace/out/stageC/logs/t1t.log: 15%|█▍        | 11/74 [00:01<00:11,  5.69it/s][A
+/workspace/out/stageC/logs/t1t.log: 16%|█▌        | 12/74 [00:01<00:11,  5.50it/s][A
+/workspace/out/stageC/logs/t1t.log: 18%|█▊        | 13/74 [00:02<00:10,  5.67it/s][A
+/workspace/out/stageC/logs/t1t.log: 19%|█▉        | 14/74 [00:02<00:10,  5.80it/s][A
+/workspace/out/stageC/logs/t1t.log: 20%|██        | 15/74 [00:02<00:10,  5.87it/s][A
+/workspace/out/stageC/logs/t1t.log: 22%|██▏       | 16/74 [00:02<00:10,  5.62it/s][A
+/workspace/out/stageC/logs/t1t.log: 23%|██▎       | 17/74 [00:02<00:09,  5.73it/s][A
+/workspace/out/stageC/logs/t1t.log: 24%|██▍       | 18/74 [00:02<00:09,  5.88it/s][A
+/workspace/out/stageC/logs/t1t.log: 26%|██▌       | 19/74 [00:03<00:09,  5.63it/s][A
+/workspace/out/stageC/logs/t1t.log: 27%|██▋       | 20/74 [00:03<00:09,  5.45it/s][A
+/workspace/out/stageC/logs/t1t.log: 28%|██▊       | 21/74 [00:03<00:09,  5.57it/s][A
+/workspace/out/stageC/logs/t1t.log: 30%|██▉       | 22/74 [00:03<00:09,  5.65it/s][A
+/workspace/out/stageC/logs/t1t.log: 31%|███       | 23/74 [00:03<00:08,  5.77it/s][A
+/workspace/out/stageC/logs/t1t.log: 32%|███▏      | 24/74 [00:04<00:09,  5.53it/s][A
+/workspace/out/stageC/logs/t1t.log: 34%|███▍      | 25/74 [00:04<00:08,  5.67it/s][A
+/workspace/out/stageC/logs/t1t.log: 35%|███▌      | 26/74 [00:04<00:08,  5.49it/s][A
+/workspace/out/stageC/logs/t1t.log: 36%|███▋      | 27/74 [00:04<00:08,  5.64it/s][A
+/workspace/out/stageC/logs/t1t.log: 38%|███▊      | 28/74 [00:04<00:08,  5.47it/s][A
+/workspace/out/stageC/logs/t1t.log: 39%|███▉      | 29/74 [00:04<00:07,  5.63it/s][A
+/workspace/out/stageC/logs/t1t.log: 41%|████      | 30/74 [00:05<00:07,  5.75it/s][A
+/workspace/out/stageC/logs/t1t.log: 42%|████▏     | 31/74 [00:05<00:07,  5.84it/s][A
+/workspace/out/stageC/logs/t1t.log: 43%|████▎     | 32/74 [00:05<00:07,  5.57it/s][A
+/workspace/out/stageC/logs/t1t.log: 45%|████▍     | 33/74 [00:05<00:07,  5.71it/s][A
+/workspace/out/stageC/logs/t1t.log: 46%|████▌     | 34/74 [00:05<00:07,  5.49it/s][A
+/workspace/out/stageC/logs/t1t.log: 47%|████▋     | 35/74 [00:06<00:06,  5.65it/s][A
+/workspace/out/stageC/logs/t1t.log: 49%|████▊     | 36/74 [00:06<00:06,  5.45it/s][A
+/workspace/out/stageC/logs/t1t.log: 50%|█████     | 37/74 [00:06<00:06,  5.62it/s][A
+/workspace/out/stageC/logs/t1t.log: 51%|█████▏    | 38/74 [00:06<00:06,  5.73it/s][A
+/workspace/out/stageC/logs/t1t.log: 53%|█████▎    | 39/74 [00:06<00:06,  5.81it/s][A
+/workspace/out/stageC/logs/t1t.log: 54%|█████▍    | 40/74 [00:06<00:06,  5.56it/s][A
+/workspace/out/stageC/logs/t1t.log: 55%|█████▌    | 41/74 [00:07<00:05,  5.69it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 53.01it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.17it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.98it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 50.93it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 50.89it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.60it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.39it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.95it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:  0%|          | 0/16816 [00:00<?, ?it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:  0%|          | 0/64 [00:00<?, ?it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  3%|▎         | 2/64 [00:00<00:05, 11.98it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  6%|▋         | 4/64 [00:00<00:08,  6.70it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  8%|▊         | 5/64 [00:00<00:09,  6.48it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  9%|▉         | 6/64 [00:00<00:09,  6.35it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 11%|█         | 7/64 [00:01<00:09,  6.28it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 12%|█▎        | 8/64 [00:01<00:09,  6.16it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 14%|█▍        | 9/64 [00:01<00:09,  6.11it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 16%|█▌        | 10/64 [00:01<00:09,  5.79it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 17%|█▋        | 11/64 [00:01<00:09,  5.84it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 19%|█▉        | 12/64 [00:01<00:08,  5.87it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 20%|██        | 13/64 [00:02<00:08,  5.81it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 22%|██▏       | 14/64 [00:02<00:08,  5.79it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 23%|██▎       | 15/64 [00:02<00:09,  5.22it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 25%|██▌       | 16/64 [00:02<00:08,  5.43it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 27%|██▋       | 17/64 [00:02<00:08,  5.48it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 28%|██▊       | 18/64 [00:03<00:09,  4.93it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 30%|██▉       | 19/64 [00:03<00:08,  5.14it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 31%|███▏      | 20/64 [00:03<00:08,  5.21it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 33%|███▎      | 21/64 [00:03<00:08,  5.15it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 34%|███▍      | 22/64 [00:03<00:08,  5.23it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 36%|███▌      | 23/64 [00:04<00:07,  5.29it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 38%|███▊      | 24/64 [00:04<00:07,  5.22it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 39%|███▉      | 25/64 [00:04<00:07,  5.07it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 41%|████      | 26/64 [00:04<00:07,  5.05it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 42%|████▏     | 27/64 [00:04<00:07,  5.03it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 44%|████▍     | 28/64 [00:05<00:07,  5.08it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 45%|████▌     | 29/64 [00:05<00:06,  5.08it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 47%|████▋     | 30/64 [00:05<00:06,  5.06it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 48%|████▊     | 31/64 [00:05<00:06,  4.99it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 50%|█████     | 32/64 [00:05<00:06,  4.84it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 52%|█████▏    | 33/64 [00:06<00:06,  4.62it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 53%|█████▎    | 34/64 [00:06<00:06,  4.64it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 55%|█████▍    | 35/64 [00:06<00:06,  4.74it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 56%|█████▋    | 36/64 [00:06<00:05,  4.92it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 58%|█████▊    | 37/64 [00:06<00:05,  5.07it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 59%|█████▉    | 38/64 [00:07<00:05,  5.09it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 61%|██████    | 39/64 [00:07<00:04,  5.11it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 62%|██████▎   | 40/64 [00:07<00:04,  5.02it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 64%|██████▍   | 41/64 [00:07<00:04,  4.96it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 66%|██████▌   | 42/64 [00:07<00:04,  4.93it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.21it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 50.89it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:28:25,983][morai_vla.model][INFO] - loaded /workspace/ckpt/step2_final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:28:25,991][morai_vla.model][INFO] - stage ['camera_vit', 'lidar', 'llm', 'lm_head']: 9.374B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.78it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.68it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.73it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.06it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.54it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.83it/s]
+/workspace/out/stageC/logs/t1t_noES.log:  0%|          | 0/19218 [00:00<?, ?it/s]
+/workspace/out/stageC/logs/t1t_noES.log:  0%|          | 0/74 [00:00<?, ?it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  3%|▎         | 2/74 [00:00<00:06, 11.68it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  5%|▌         | 4/74 [00:00<00:09,  7.16it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  7%|▋         | 5/74 [00:00<00:10,  6.76it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  8%|▊         | 6/74 [00:00<00:10,  6.59it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  9%|▉         | 7/74 [00:01<00:10,  6.41it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 11%|█         | 8/74 [00:01<00:10,  6.35it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 12%|█▏        | 9/74 [00:01<00:10,  6.21it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 14%|█▎        | 10/74 [00:01<00:10,  6.13it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 15%|█▍        | 11/74 [00:01<00:10,  6.15it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 16%|█▌        | 12/74 [00:01<00:10,  5.81it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 18%|█▊        | 13/74 [00:02<00:10,  5.92it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 19%|█▉        | 14/74 [00:02<00:09,  6.01it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 20%|██        | 15/74 [00:02<00:09,  6.06it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 22%|██▏       | 16/74 [00:02<00:09,  6.09it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 23%|██▎       | 17/74 [00:02<00:09,  6.12it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 24%|██▍       | 18/74 [00:02<00:09,  6.13it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 26%|██▌       | 19/74 [00:03<00:08,  6.16it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 27%|██▋       | 20/74 [00:03<00:09,  5.81it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 28%|██▊       | 21/74 [00:03<00:08,  5.93it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 30%|██▉       | 22/74 [00:03<00:08,  5.99it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 31%|███       | 23/74 [00:03<00:08,  6.08it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 32%|███▏      | 24/74 [00:03<00:08,  6.10it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 34%|███▍      | 25/74 [00:04<00:07,  6.13it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 35%|███▌      | 26/74 [00:04<00:07,  6.12it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 36%|███▋      | 27/74 [00:04<00:07,  6.12it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 38%|███▊      | 28/74 [00:04<00:07,  5.78it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 39%|███▉      | 29/74 [00:04<00:07,  5.91it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 41%|████      | 30/74 [00:04<00:07,  6.02it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 42%|████▏     | 31/74 [00:05<00:07,  6.08it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 43%|████▎     | 32/74 [00:05<00:06,  6.11it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 45%|████▍     | 33/74 [00:05<00:07,  5.75it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 46%|████▌     | 34/74 [00:05<00:06,  5.89it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 47%|████▋     | 35/74 [00:05<00:06,  5.62it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 49%|████▊     | 36/74 [00:05<00:06,  5.46it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 50%|█████     | 37/74 [00:06<00:06,  5.67it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 51%|█████▏    | 38/74 [00:06<00:06,  5.82it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 53%|█████▎    | 39/74 [00:06<00:05,  5.92it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 54%|█████▍    | 40/74 [00:06<00:05,  5.99it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 55%|█████▌    | 41/74 [00:06<00:05,  5.65it/s][A
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00, 32.10it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00, 26.24it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 22.41it/s]
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 17.63it/s]
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards:  60%|██████    | 3/5 [00:00<00:00,  5.63it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  9.58it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  9.58it/s]
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:00,  3.25it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:02,  1.39it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.94it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.37it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  6.02it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.55it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:00<00:00,  5.63it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.43it/s]
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.60it/s]
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.75it/s]
+/workspace/out/smoke/logs/smoke8.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  5.87it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00,  6.84it/s]
+/workspace/out/smoke/logs/smoke8.log:  0%|          | 0/10 [00:00<?, ?it/s]Could not estimate the number of tokens of the input, floating-point operations will not be computed
+/workspace/out/smoke/logs/smoke8.log: 20%|██        | 2/10 [00:14<00:49,  6.17s/it] 30%|███       | 3/10 [00:16<00:31,  4.54s/it] 40%|████      | 4/10 [00:20<00:24,  4.12s/it]{"step": 4, "traj_ce": 1.15606, "lm": 0.0, "s_per_step": 2.7, "peak_mem_gb": 121.49}
+/workspace/out/smoke/logs/smoke8.log:  0%|          | 0/2 [00:00<?, ?it/s][A
+/workspace/out/smoke/logs/smoke8.log:100%|██████████| 2/2 [00:00<00:00, 11.70it/s][A{"step": 5, "eval_traj_ce": 1.2017, "eval_lm": 0.0, "peak_mem_gb": 121.49}
+/workspace/out/smoke/logs/smoke8.log:100%|██████████| 2/2 [00:00<00:00, 11.70it/s][A[2026-10-24 23:44:43,787][morai_vla.data][WARNING] - MoraiDataset: skipped 43 episodes with missing or incomplete step-0 files
+/workspace/out/smoke/logs/smoke8.log:100%|██████████| 2/2 [00:11<00:00, 11.70it/s][A{"step": 5, "ce_on": 1.0889, "ce_off": 1.3807, "ade": 4.1051, "fde": 11.9747, "cv_ade": 5.1354, "cv_fde": 12.8931, "n": 16}
+/workspace/out/smoke/logs/smoke8.log:                                             [A 60%|██████    | 6/10 [00:44<00:39,  9.82s/it]{"step": 6, "traj_ce": 1.18303, "lm": 5e-05, "s_per_step": 12.328, "peak_mem_gb": 121.49}
+/workspace/out/smoke/logs/smoke8.log: 60%|██████    | 6/10 [00:44<00:39,  9.82s/it] 70%|███████   | 7/10 [00:48<00:23,  7.85s/it] 80%|████████  | 8/10 [00:52<00:13,  6.54s/it]{"step": 8, "traj_ce": 1.57294, "lm": 0.0, "s_per_step": 3.774, "peak_mem_gb": 121.49}
+/workspace/out/smoke/logs/smoke8.log: 80%|████████  | 8/10 [00:52<00:13,  6.54s/it] 90%|█████████ | 9/10 [00:56<00:05,  5.75s/it]100%|██████████| 10/10 [01:00<00:00,  5.29s/it]{"step": 10, "traj_ce": 1.56683, "lm": 0.0, "s_per_step": 4.123, "peak_mem_gb": 121.49}
+/workspace/out/smoke/logs/smoke8.log:  0%|          | 0/2 [00:00<?, ?it/s][A
+/workspace/out/smoke/logs/smoke8.log:100%|██████████| 2/2 [00:00<00:00,  6.25it/s][A{"step": 10, "eval_traj_ce": 1.07631, "eval_lm": 0.0, "peak_mem_gb": 121.49}
+/workspace/out/smoke/logs/smoke8.log:100%|██████████| 2/2 [00:00<00:00,  6.25it/s][A{"step": 10, "ce_on": 1.0893, "ce_off": 1.3807, "ade": 3.8385, "fde": 10.9098, "cv_ade": 5.1354, "cv_fde": 12.8931, "n": 16}
+/workspace/out/stageC/logs/pipeline.log:=== 2026-10-24 23:47:42 pipeline start: 8 GPUs, OUT=/workspace/out/stageC, B2=b2://morai2026-alpamayo/runs/stageC
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.32it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.22it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:31:43,660][morai_vla.model][INFO] - loaded /workspace/ckpt/step2_final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:31:43,669][morai_vla.model][INFO] - stage ['camera_vit', 'lidar', 'llm', 'lm_head']: 9.374B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.89it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.50it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.03it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.52it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.67it/s]
+/workspace/out/stageC/logs/t1t.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 53.27it/s]
+/workspace/out/stageC/logs/t1t.log:  0%|          | 0/19218 [00:00<?, ?it/s]
+/workspace/out/stageC/logs/t1t.log:  0%|          | 0/74 [00:00<?, ?it/s][A
+/workspace/out/stageC/logs/t1t.log:  3%|▎         | 2/74 [00:00<00:06, 11.76it/s][A
+/workspace/out/stageC/logs/t1t.log:  5%|▌         | 4/74 [00:00<00:09,  7.08it/s][A
+/workspace/out/stageC/logs/t1t.log:  7%|▋         | 5/74 [00:00<00:10,  6.70it/s][A
+/workspace/out/stageC/logs/t1t.log:  8%|▊         | 6/74 [00:00<00:10,  6.55it/s][A
+/workspace/out/stageC/logs/t1t.log:  9%|▉         | 7/74 [00:01<00:10,  6.34it/s][A
+/workspace/out/stageC/logs/t1t.log: 11%|█         | 8/74 [00:01<00:11,  5.89it/s][A
+/workspace/out/stageC/logs/t1t.log: 12%|█▏        | 9/74 [00:01<00:10,  5.95it/s][A
+/workspace/out/stageC/logs/t1t.log: 14%|█▎        | 10/74 [00:01<00:10,  5.94it/s][A
+/workspace/out/stageC/logs/t1t.log: 15%|█▍        | 11/74 [00:01<00:11,  5.69it/s][A
+/workspace/out/stageC/logs/t1t.log: 16%|█▌        | 12/74 [00:01<00:11,  5.50it/s][A
+/workspace/out/stageC/logs/t1t.log: 18%|█▊        | 13/74 [00:02<00:10,  5.67it/s][A
+/workspace/out/stageC/logs/t1t.log: 19%|█▉        | 14/74 [00:02<00:10,  5.80it/s][A
+/workspace/out/stageC/logs/t1t.log: 20%|██        | 15/74 [00:02<00:10,  5.87it/s][A
+/workspace/out/stageC/logs/t1t.log: 22%|██▏       | 16/74 [00:02<00:10,  5.62it/s][A
+/workspace/out/stageC/logs/t1t.log: 23%|██▎       | 17/74 [00:02<00:09,  5.73it/s][A
+/workspace/out/stageC/logs/t1t.log: 24%|██▍       | 18/74 [00:02<00:09,  5.88it/s][A
+/workspace/out/stageC/logs/t1t.log: 26%|██▌       | 19/74 [00:03<00:09,  5.63it/s][A
+/workspace/out/stageC/logs/t1t.log: 27%|██▋       | 20/74 [00:03<00:09,  5.45it/s][A
+/workspace/out/stageC/logs/t1t.log: 28%|██▊       | 21/74 [00:03<00:09,  5.57it/s][A
+/workspace/out/stageC/logs/t1t.log: 30%|██▉       | 22/74 [00:03<00:09,  5.65it/s][A
+/workspace/out/stageC/logs/t1t.log: 31%|███       | 23/74 [00:03<00:08,  5.77it/s][A
+/workspace/out/stageC/logs/t1t.log: 32%|███▏      | 24/74 [00:04<00:09,  5.53it/s][A
+/workspace/out/stageC/logs/t1t.log: 34%|███▍      | 25/74 [00:04<00:08,  5.67it/s][A
+/workspace/out/stageC/logs/t1t.log: 35%|███▌      | 26/74 [00:04<00:08,  5.49it/s][A
+/workspace/out/stageC/logs/t1t.log: 36%|███▋      | 27/74 [00:04<00:08,  5.64it/s][A
+/workspace/out/stageC/logs/t1t.log: 38%|███▊      | 28/74 [00:04<00:08,  5.47it/s][A
+/workspace/out/stageC/logs/t1t.log: 39%|███▉      | 29/74 [00:04<00:07,  5.63it/s][A
+/workspace/out/stageC/logs/t1t.log: 41%|████      | 30/74 [00:05<00:07,  5.75it/s][A
+/workspace/out/stageC/logs/t1t.log: 42%|████▏     | 31/74 [00:05<00:07,  5.84it/s][A
+/workspace/out/stageC/logs/t1t.log: 43%|████▎     | 32/74 [00:05<00:07,  5.57it/s][A
+/workspace/out/stageC/logs/t1t.log: 45%|████▍     | 33/74 [00:05<00:07,  5.71it/s][A
+/workspace/out/stageC/logs/t1t.log: 46%|████▌     | 34/74 [00:05<00:07,  5.49it/s][A
+/workspace/out/stageC/logs/t1t.log: 47%|████▋     | 35/74 [00:06<00:06,  5.65it/s][A
+/workspace/out/stageC/logs/t1t.log: 49%|████▊     | 36/74 [00:06<00:06,  5.45it/s][A
+/workspace/out/stageC/logs/t1t.log: 50%|█████     | 37/74 [00:06<00:06,  5.62it/s][A
+/workspace/out/stageC/logs/t1t.log: 51%|█████▏    | 38/74 [00:06<00:06,  5.73it/s][A
+/workspace/out/stageC/logs/t1t.log: 53%|█████▎    | 39/74 [00:06<00:06,  5.81it/s][A
+/workspace/out/stageC/logs/t1t.log: 54%|█████▍    | 40/74 [00:06<00:06,  5.56it/s][A
+/workspace/out/stageC/logs/t1t.log: 55%|█████▌    | 41/74 [00:07<00:05,  5.69it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 53.01it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.17it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.98it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 50.93it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 50.89it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.60it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.39it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.95it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:  0%|          | 0/16816 [00:00<?, ?it/s]
+/workspace/out/stageC/logs/t1t_hang1.log:  0%|          | 0/64 [00:00<?, ?it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  3%|▎         | 2/64 [00:00<00:05, 11.98it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  6%|▋         | 4/64 [00:00<00:08,  6.70it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  8%|▊         | 5/64 [00:00<00:09,  6.48it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log:  9%|▉         | 6/64 [00:00<00:09,  6.35it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 11%|█         | 7/64 [00:01<00:09,  6.28it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 12%|█▎        | 8/64 [00:01<00:09,  6.16it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 14%|█▍        | 9/64 [00:01<00:09,  6.11it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 16%|█▌        | 10/64 [00:01<00:09,  5.79it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 17%|█▋        | 11/64 [00:01<00:09,  5.84it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 19%|█▉        | 12/64 [00:01<00:08,  5.87it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 20%|██        | 13/64 [00:02<00:08,  5.81it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 22%|██▏       | 14/64 [00:02<00:08,  5.79it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 23%|██▎       | 15/64 [00:02<00:09,  5.22it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 25%|██▌       | 16/64 [00:02<00:08,  5.43it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 27%|██▋       | 17/64 [00:02<00:08,  5.48it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 28%|██▊       | 18/64 [00:03<00:09,  4.93it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 30%|██▉       | 19/64 [00:03<00:08,  5.14it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 31%|███▏      | 20/64 [00:03<00:08,  5.21it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 33%|███▎      | 21/64 [00:03<00:08,  5.15it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 34%|███▍      | 22/64 [00:03<00:08,  5.23it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 36%|███▌      | 23/64 [00:04<00:07,  5.29it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 38%|███▊      | 24/64 [00:04<00:07,  5.22it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 39%|███▉      | 25/64 [00:04<00:07,  5.07it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 41%|████      | 26/64 [00:04<00:07,  5.05it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 42%|████▏     | 27/64 [00:04<00:07,  5.03it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 44%|████▍     | 28/64 [00:05<00:07,  5.08it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 45%|████▌     | 29/64 [00:05<00:06,  5.08it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 47%|████▋     | 30/64 [00:05<00:06,  5.06it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 48%|████▊     | 31/64 [00:05<00:06,  4.99it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 50%|█████     | 32/64 [00:05<00:06,  4.84it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 52%|█████▏    | 33/64 [00:06<00:06,  4.62it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 53%|█████▎    | 34/64 [00:06<00:06,  4.64it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 55%|█████▍    | 35/64 [00:06<00:06,  4.74it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 56%|█████▋    | 36/64 [00:06<00:05,  4.92it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 58%|█████▊    | 37/64 [00:06<00:05,  5.07it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 59%|█████▉    | 38/64 [00:07<00:05,  5.09it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 61%|██████    | 39/64 [00:07<00:04,  5.11it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 62%|██████▎   | 40/64 [00:07<00:04,  5.02it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 64%|██████▍   | 41/64 [00:07<00:04,  4.96it/s][A
+/workspace/out/stageC/logs/t1t_hang1.log: 66%|██████▌   | 42/64 [00:07<00:04,  4.93it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.21it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 50.89it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:28:25,983][morai_vla.model][INFO] - loaded /workspace/ckpt/step2_final: missing params 0 (lidar 0), config-derived buffers 0, unexpected 0, mismatched 0
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s][2026-10-25 00:28:25,991][morai_vla.model][INFO] - stage ['camera_vit', 'lidar', 'llm', 'lm_head']: 9.374B trainable, losses {'traj_ce': 1.0, 'lm': 1.0, 'fm': 0.0}
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.78it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 49.68it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 51.73it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.06it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.54it/s]
+/workspace/out/stageC/logs/t1t_noES.log:Loading checkpoint shards: 100%|██████████| 5/5 [00:00<00:00, 52.83it/s]
+/workspace/out/stageC/logs/t1t_noES.log:  0%|          | 0/19218 [00:00<?, ?it/s]
+/workspace/out/stageC/logs/t1t_noES.log:  0%|          | 0/74 [00:00<?, ?it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  3%|▎         | 2/74 [00:00<00:06, 11.68it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  5%|▌         | 4/74 [00:00<00:09,  7.16it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  7%|▋         | 5/74 [00:00<00:10,  6.76it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  8%|▊         | 6/74 [00:00<00:10,  6.59it/s][A
+/workspace/out/stageC/logs/t1t_noES.log:  9%|▉         | 7/74 [00:01<00:10,  6.41it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 11%|█         | 8/74 [00:01<00:10,  6.35it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 12%|█▏        | 9/74 [00:01<00:10,  6.21it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 14%|█▎        | 10/74 [00:01<00:10,  6.13it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 15%|█▍        | 11/74 [00:01<00:10,  6.15it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 16%|█▌        | 12/74 [00:01<00:10,  5.81it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 18%|█▊        | 13/74 [00:02<00:10,  5.92it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 19%|█▉        | 14/74 [00:02<00:09,  6.01it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 20%|██        | 15/74 [00:02<00:09,  6.06it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 22%|██▏       | 16/74 [00:02<00:09,  6.09it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 23%|██▎       | 17/74 [00:02<00:09,  6.12it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 24%|██▍       | 18/74 [00:02<00:09,  6.13it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 26%|██▌       | 19/74 [00:03<00:08,  6.16it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 27%|██▋       | 20/74 [00:03<00:09,  5.81it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 28%|██▊       | 21/74 [00:03<00:08,  5.93it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 30%|██▉       | 22/74 [00:03<00:08,  5.99it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 31%|███       | 23/74 [00:03<00:08,  6.08it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 32%|███▏      | 24/74 [00:03<00:08,  6.10it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 34%|███▍      | 25/74 [00:04<00:07,  6.13it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 35%|███▌      | 26/74 [00:04<00:07,  6.12it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 36%|███▋      | 27/74 [00:04<00:07,  6.12it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 38%|███▊      | 28/74 [00:04<00:07,  5.78it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 39%|███▉      | 29/74 [00:04<00:07,  5.91it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 41%|████      | 30/74 [00:04<00:07,  6.02it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 42%|████▏     | 31/74 [00:05<00:07,  6.08it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 43%|████▎     | 32/74 [00:05<00:06,  6.11it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 45%|████▍     | 33/74 [00:05<00:07,  5.75it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 46%|████▌     | 34/74 [00:05<00:06,  5.89it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 47%|████▋     | 35/74 [00:05<00:06,  5.62it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 49%|████▊     | 36/74 [00:05<00:06,  5.46it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 50%|█████     | 37/74 [00:06<00:06,  5.67it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 51%|█████▏    | 38/74 [00:06<00:06,  5.82it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 53%|█████▎    | 39/74 [00:06<00:05,  5.92it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 54%|█████▍    | 40/74 [00:06<00:05,  5.99it/s][A
+/workspace/out/stageC/logs/t1t_noES.log: 55%|█████▌    | 41/74 [00:06<00:05,  5.65it/s][A

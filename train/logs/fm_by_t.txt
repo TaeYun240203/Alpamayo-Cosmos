@@ -1,0 +1,17 @@
+# earlier run (10/24 afternoon, before the switch to the recipe CoC modes: 10 keyframes + 10 plain rows); same model code
+# FM loss on the 20 training samples of each tiny overfit run, t fixed, one noise draw per sample (winpc, 2026-10-24).
+# FM = MSE(pred, x - noise); MSE(pred, x) ~ 0 means the expert outputs the GT action from context and ignores the noise in x_t.
+ckpt tiny_long (expert hidden 128, lr 5e-4, 2000 steps)
+t=0.02: FM 0.749  MSE(pred, x) 0.458  E[x^2] 3.098
+t=0.2: FM 0.691  MSE(pred, x) 0.434  E[x^2] 3.098
+t=0.5: FM 0.709  MSE(pred, x) 0.353  E[x^2] 3.098
+t=0.8: FM 0.849  MSE(pred, x) 0.243  E[x^2] 3.098
+t=0.95: FM 0.995  MSE(pred, x) 0.144  E[x^2] 3.098
+sampled-trajectory ADE on the same samples: plain rows 1.14 m, keyframe rows 7.61 m (FM trained with CoC in the prefix)
+ckpt tiny_expert256 (expert hidden 256 / mlp 1024, lr 1e-3, 1500 steps)
+t=0.02: FM 1.036  MSE(pred, x) 0.042  E[x^2] 3.098
+t=0.2: FM 1.035  MSE(pred, x) 0.046  E[x^2] 3.098
+t=0.5: FM 1.043  MSE(pred, x) 0.042  E[x^2] 3.098
+t=0.8: FM 1.014  MSE(pred, x) 0.057  E[x^2] 3.098
+t=0.95: FM 1.037  MSE(pred, x) 0.043  E[x^2] 3.098
+sampled-trajectory ADE on the same samples: plain rows 1.36 m, keyframe rows 9.90 m

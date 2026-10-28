@@ -1,0 +1,32 @@
+# R2 QAD (user 10/28: "QAD도 ft와 같은 데이터 혼합(옛 기다림 행 제외)으로", hard targets, no T*): student_qad's
+# quantization and schedule (4.75 bits AutoQuantize, 800 steps, lr 1e-6, final/ = best eval_fm under fake quant) on the
+# R2 mixture and losses of student_ft (GT rows fm + traj_ce, replay rows + lm; replay without the start-relabelled rows).
+# Two steps, as student_qad (scripts/pipeline_student.sh qad, QAD_FROM=ft):
+#   python scripts/qad_search.py --config-name student_qad_r2 ... model.init=<ft final> +out=<search dir>   (one GPU)
+#   torchrun ... -m morai_vla.train --config-name student_qad_r2 ... model.init=<search dir>              (QAD training)
+defaults: [student_ft, _self_]
+
+model:
+  init: ???                                # ft/final for the search, then the search dir (has modelopt_state.pth)
+
+quant:                                     # = student_qad
+  effective_bits: 4.75
+  calib_samples: 128                       # spread evenly over the mixture schedule (qad_search.py)
+  num_calib_steps: 64
+  num_score_steps: 32
+
+trainer:                                   # = student_qad
+  max_steps: 800
+  learning_rate: 1e-6
+  lr_multiplier: null
+  warmup_steps: 50
+  eval_steps: 200
+  save_steps: 200
+  load_best_model_at_end: true             # final/ = best eval_fm (student1 / student_qad rule)
+  metric_for_best_model: eval_fm
+  greater_is_better: false
+
+callbacks:
+  ft_select: null                          # ft's measurements, stop switch and final/ rule do not apply to QAD
+
+task_name: student_qad_r2

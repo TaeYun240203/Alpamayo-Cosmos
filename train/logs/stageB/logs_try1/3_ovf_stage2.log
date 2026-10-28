@@ -1,0 +1,40 @@
+Could not override 'data.train_dataset.max_samples'.
+To append to your config use +data.train_dataset.max_samples=20
+Key 'max_samples' is not in struct
+    full_key: data.train_dataset.max_samples
+    object_type=dict
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
+E1024 17:39:00.130000 3135 torch/distributed/elastic/multiprocessing/api.py:874] failed (exitcode: 1) local_rank: 0 (pid: 3176) of binary: /workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/bin/python
+Traceback (most recent call last):
+  File "/workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/bin/torchrun", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 357, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/lib/python3.12/site-packages/torch/distributed/run.py", line 901, in main
+    run(args)
+  File "/workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/lib/python3.12/site-packages/torch/distributed/run.py", line 892, in run
+    elastic_launch(
+  File "/workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 143, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/alpamayo-recipes/recipes/alpamayo1_5_sft/a1_5_sft/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 277, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+morai_vla.train FAILED
+------------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-10-24_17:39:00
+  host      : C.57543085
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 3176)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

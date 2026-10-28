@@ -1,0 +1,30 @@
+Loading checkpoint shards:   0%|          | 0/5 [00:00<?, ?it/s]Loading checkpoint shards:  20%|██        | 1/5 [00:00<00:01,  2.26it/s]Loading checkpoint shards:  40%|████      | 2/5 [00:00<00:01,  2.27it/s]Loading checkpoint shards:  60%|██████    | 3/5 [00:01<00:00,  2.28it/s]Loading checkpoint shards:  80%|████████  | 4/5 [00:01<00:00,  2.22it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  2.44it/s]Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  2.35it/s]
+MoraiDataset: skipped 1 episodes with missing or incomplete step-0 files
+{
+ "k": 6,
+ "b1_steps1_s": 0.18209171295166016,
+ "b1_steps10_s": 0.4376332759857178,
+ "b1": {
+  "euler10_ms_per_sample": 438,
+  "prefill_ms_per_sample": 154,
+  "expert_call_ms_per_sample": 28.4,
+  "velocity_eval_ms_per_sample": 182
+ },
+ "b4_steps1_s": 0.6664862632751465,
+ "b4_steps10_s": 1.4013278484344482,
+ "b4": {
+  "euler10_ms_per_sample": 350,
+  "prefill_ms_per_sample": 146,
+  "expert_call_ms_per_sample": 20.4,
+  "velocity_eval_ms_per_sample": 167
+ },
+ "b8_steps1_s": 1.295778751373291,
+ "b8_steps10_s": 2.7803244590759277,
+ "b8": {
+  "euler10_ms_per_sample": 348,
+  "prefill_ms_per_sample": 141,
+  "expert_call_ms_per_sample": 20.6,
+  "velocity_eval_ms_per_sample": 162
+ },
+ "peak_mem_gb": 41.19
+}

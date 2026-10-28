@@ -1,0 +1,2 @@
+== soft ok in 53 s: {"samples":64,"parts":1,"ms_per_sample_per_rank":445.0}
+HALT: s1 exited non-zero (/workspace/out/ssmoke/logs/s1.log)

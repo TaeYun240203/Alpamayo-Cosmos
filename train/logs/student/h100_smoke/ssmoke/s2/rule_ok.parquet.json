@@ -1,0 +1,66 @@
+{
+ "n": 64,
+ "rule_ok": 0.7656,
+ "fail_speed": 0.0938,
+ "fail_lane": 0.0312,
+ "fail_signal": 0.125,
+ "fail_obstacle": 0.0156,
+ "by_cell": {
+  "C0": {
+   "n": 7,
+   "rule_ok": 0.5714,
+   "fail_speed": 0.4286,
+   "fail_lane": 0.0,
+   "fail_signal": 0.1429,
+   "fail_obstacle": 0.0
+  },
+  "C1": {
+   "n": 14,
+   "rule_ok": 0.5,
+   "fail_speed": 0.0,
+   "fail_lane": 0.0714,
+   "fail_signal": 0.5,
+   "fail_obstacle": 0.0
+  },
+  "C2": {
+   "n": 15,
+   "rule_ok": 0.8667,
+   "fail_speed": 0.0,
+   "fail_lane": 0.0667,
+   "fail_signal": 0.0,
+   "fail_obstacle": 0.0667
+  },
+  "C3": {
+   "n": 11,
+   "rule_ok": 0.9091,
+   "fail_speed": 0.0909,
+   "fail_lane": 0.0,
+   "fail_signal": 0.0,
+   "fail_obstacle": 0.0
+  },
+  "C4": {
+   "n": 10,
+   "rule_ok": 1.0,
+   "fail_speed": 0.0,
+   "fail_lane": 0.0,
+   "fail_signal": 0.0,
+   "fail_obstacle": 0.0
+  },
+  "C5": {
+   "n": 6,
+   "rule_ok": 0.6667,
+   "fail_speed": 0.3333,
+   "fail_lane": 0.0,
+   "fail_signal": 0.0,
+   "fail_obstacle": 0.0
+  },
+  "C6": {
+   "n": 1,
+   "rule_ok": 1.0,
+   "fail_speed": 0.0,
+   "fail_lane": 0.0,
+   "fail_signal": 0.0,
+   "fail_obstacle": 0.0
+  }
+ }
+}

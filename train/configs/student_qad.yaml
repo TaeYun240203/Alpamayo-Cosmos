@@ -1,0 +1,28 @@
+# MODEL_PLAN 4.6 QAD: the stage-2 student fake-quantized at its deployment precision (morai_vla/qad.py: LLM + expert
+# NVFP4/FP8 by AutoQuantize under quant.effective_bits, camera ViT FP8, the rest BF16), trained briefly with stage 2's
+# losses (T* BF16 in the loop, vkd at stage 2's final lambda_v). Two steps (README student runbook):
+#   python scripts/qad_search.py --config-name student_qad ... model.init=<s2 final> +out=<search dir>   (one GPU)
+#   torchrun ... -m morai_vla.train --config-name student_qad ... model.init=<search dir>              (QAD training)
+defaults: [student2, _self_]
+
+model:
+  init: ???                                # s2/final for the search, then the search dir (has modelopt_state.pth)
+
+quant:
+  effective_bits: 4.75                     # LLM + expert budget over NVFP4 (4.5) / FP8 (8); user 10/26: ~7 % FP8, the rest NVFP4 (5080 benchmark layout)
+  calib_samples: 128                       # train batches held for the search (calibration + sensitivity scores)
+  num_calib_steps: 64
+  num_score_steps: 32
+
+trainer:
+  max_steps: 800                           # ~0.1 epoch: 800 x 4 accumulation x 8 GPUs = 25.6k samples
+  learning_rate: 1e-6                      # stage 2's cosine floor; every part adapts to its own quantization
+  lr_multiplier: null
+  warmup_steps: 50
+  eval_steps: 200                          # final/ = best eval_fm under fake quant (student1)
+  save_steps: 200
+
+callbacks:
+  vkd_weight: {start: 0.2, end: 0.2}       # stage 2 ends at lambda_v = 0.2
+
+task_name: student_qad

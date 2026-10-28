@@ -1,0 +1,3 @@
+{"step": 10, "traj_ce": 1.58727, "lm": 0.0, "peak_mem_gb": 32.68}
+{"step": 20, "traj_ce": 1.32667, "lm": 0.0, "s_per_step": 0.914, "peak_mem_gb": 32.68}
+{"step": 30, "traj_ce": 1.30217, "lm": 0.0, "s_per_step": 0.903, "peak_mem_gb": 32.68}

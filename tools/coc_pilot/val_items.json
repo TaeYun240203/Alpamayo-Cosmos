@@ -1,0 +1,614 @@
+[
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p00",
+  "dir": "p00",
+  "ep": "run1021i-w1-006",
+  "tau0": 12.1,
+  "label": "Decelerate to a stop and remain stopped for the red traffic light at the intersection after following the left-curving approach road."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p00",
+  "dir": "p00",
+  "ep": "run1021i-w1-006",
+  "tau0": 12.1,
+  "label": "Decelerate to a stop because the traffic light ahead is red."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p01",
+  "dir": "p01",
+  "ep": "run1021i-w1-006",
+  "tau0": 67.7,
+  "label": "Adapt speed for the leftward road curve while proceeding toward the intersection under the green traffic light."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p01",
+  "dir": "p01",
+  "ep": "run1021i-w1-006",
+  "tau0": 67.7,
+  "label": "Accelerate toward the intersection as the traffic light turns green."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p02",
+  "dir": "p02",
+  "ep": "run1021i-w1-006",
+  "tau0": 84.3,
+  "label": "Decelerate to a stop and remain stopped for the red traffic light at the intersection ahead."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p02",
+  "dir": "p02",
+  "ep": "run1021i-w1-006",
+  "tau0": 84.3,
+  "label": "Slow down and stop before the intersection for the red traffic light."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p03",
+  "dir": "p03",
+  "ep": "run1021i-w1-006",
+  "tau0": 122.3,
+  "label": "Resume speed and proceed straight through the intersection as the traffic light changes from red to green."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p03",
+  "dir": "p03",
+  "ep": "run1021i-w1-006",
+  "tau0": 122.3,
+  "label": "Accelerate toward the intersection as the traffic light turns green."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p04",
+  "dir": "p04",
+  "ep": "run1021i-w1-006",
+  "tau0": 72.8,
+  "label": "Nudge left and adapt speed to create clearance from the oncoming vehicle ahead on the right while navigating the curved approach through the green-light intersection."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p04",
+  "dir": "p04",
+  "ep": "run1021i-w1-006",
+  "tau0": 72.8,
+  "label": "Slow down and nudge left out of the lane to pass the parked vehicle on the right."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p05",
+  "dir": "p05",
+  "ep": "run1021i-w2-010",
+  "tau0": 23.2,
+  "label": "Decelerate to a stop for the red traffic light at the intersection while following the gently curving road."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p06",
+  "dir": "p06",
+  "ep": "run1021i-w2-010",
+  "tau0": 98.5,
+  "label": "Resume speed toward the intersection as the traffic light changes from red to green, remaining in the straight-through lane."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p06",
+  "dir": "p06",
+  "ep": "run1021i-w2-010",
+  "tau0": 98.5,
+  "label": "Accelerate toward the intersection as the traffic light turns green."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p07",
+  "dir": "p07",
+  "ep": "run1021i-w2-010",
+  "tau0": 120.5,
+  "label": "Stop and hold before the intersection after following the right-curving approach, with construction cones along the right side and the traffic light changing from green to yellow while stationary."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p07",
+  "dir": "p07",
+  "ep": "run1021i-w2-010",
+  "tau0": 120.5,
+  "label": "Stop for the red traffic light ahead."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p08",
+  "dir": "p08",
+  "ep": "run1021i-w2-010",
+  "tau0": 11.1,
+  "label": "Change lanes to the left to overtake the slower moving vehicle through the green-light intersection on the curving road."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p08",
+  "dir": "p08",
+  "ep": "run1021i-w2-010",
+  "tau0": 11.1,
+  "label": "Slow down and nudge left out of the lane to pass the parked vehicle on the right."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p09",
+  "dir": "p09",
+  "ep": "run1021i-w2-010",
+  "tau0": 103.2,
+  "label": "Adapt speed through the green-light intersection to maintain safe clearance from the cyclist waiting at the right-side curb."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p09",
+  "dir": "p09",
+  "ep": "run1021i-w2-010",
+  "tau0": 103.2,
+  "label": "Decelerate to yield to the pedestrian crossing ahead."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p10",
+  "dir": "p10",
+  "ep": "run1021h-w2-001",
+  "tau0": 25.9,
+  "label": "Decelerate to a stop and remain stopped before the intersection for the red traffic light."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p11",
+  "dir": "p11",
+  "ep": "run1021h-w2-001",
+  "tau0": 107.4,
+  "label": "Resume speed as the traffic light turns green, accelerating straight toward the intersection within the current lane."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p11",
+  "dir": "p11",
+  "ep": "run1021h-w2-001",
+  "tau0": 107.4,
+  "label": "Resume speed through the intersection because the light has turned green."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p12",
+  "dir": "p12",
+  "ep": "run1021h-w2-001",
+  "tau0": 128.2,
+  "label": "Decelerate to a stop on the right-curving approach to the green-light intersection as visibility deteriorates, with construction cones along the right side."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p12",
+  "dir": "p12",
+  "ep": "run1021h-w2-001",
+  "tau0": 128.2,
+  "label": "Decelerate to a stop because the traffic light ahead is red."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p13",
+  "dir": "p13",
+  "ep": "run1021h-w2-001",
+  "tau0": 10.9,
+  "label": "Nudge left around the construction barricade blocking the lane and adapt speed for safe clearance on the curved approach to the green-light intersection."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p13",
+  "dir": "p13",
+  "ep": "run1021h-w2-001",
+  "tau0": 10.9,
+  "label": "Slow down and nudge left out of the lane to pass the obstacle on the right."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "codex_sol",
+  "key": "p14",
+  "dir": "p14",
+  "ep": "run1021v-w1-018",
+  "tau0": 107.5,
+  "label": "Nudge left around the construction barrel blocking the right lane while adapting speed for the gently curving road through the covered section."
+ },
+ {
+  "set": "C1C6",
+  "labeler": "privileged",
+  "key": "p14",
+  "dir": "p14",
+  "ep": "run1021v-w1-018",
+  "tau0": 107.5,
+  "label": "Nudge left out of the lane to pass the obstacle on the right in the tunnel."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "00",
+  "dir": "00",
+  "ep": "run1021v-w1-018",
+  "tau0": 8.0,
+  "label": "Yield to the circulating vehicle at the roundabout entry while approaching the intersection."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "00",
+  "dir": "00",
+  "ep": "run1021v-w1-018",
+  "tau0": 8.0,
+  "label": "Turn right into the roundabout and adapt speed for its curved entry while allowing the circulating vehicle ahead to clear."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "01",
+  "dir": "01",
+  "ep": "run1021v-w1-018",
+  "tau0": 17.0,
+  "label": "Adapt speed while following the curving roadway around the junction."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "01",
+  "dir": "01",
+  "ep": "run1021v-w1-018",
+  "tau0": 17.0,
+  "label": "Adapt speed for the curving road through the junction, slowing as the lane bends left."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "02",
+  "dir": "02",
+  "ep": "run1021v-w1-018",
+  "tau0": 28.4,
+  "label": "Change lanes to the left while adjusting speed to follow the left-curving ramp; the ego decelerates as it negotiates the curve."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "02",
+  "dir": "02",
+  "ep": "run1021v-w1-018",
+  "tau0": 28.4,
+  "label": "Change lanes to the left as the roadway narrows and adapt speed for the tightening right-hand curve."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "03",
+  "dir": "03",
+  "ep": "run1021v-w1-018",
+  "tau0": 36.7,
+  "label": "Adapt speed through the right-curving ramp while following the roadway onto the highway."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "03",
+  "dir": "03",
+  "ep": "run1021v-w1-018",
+  "tau0": 36.7,
+  "label": "Adapt speed for the right-curving entrance ramp while approaching the main road."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "04",
+  "dir": "04",
+  "ep": "run1021v-w1-018",
+  "tau0": 45.4,
+  "label": "Decelerate to maintain a safe distance from the vehicle ahead, then accelerate as the road remains clear."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "04",
+  "dir": "04",
+  "ep": "run1021v-w1-018",
+  "tau0": 45.4,
+  "label": "Change lanes to the left while adjusting speed to find a safe gap behind the vehicle occupying the target lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "05",
+  "dir": "05",
+  "ep": "run1021s-w1-004",
+  "tau0": 7.9,
+  "label": "Yield to crossing traffic before entering the roundabout."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "05",
+  "dir": "05",
+  "ep": "run1021s-w1-004",
+  "tau0": 7.9,
+  "label": "Turn right into the roundabout and adapt speed for the curved entry while maintaining clearance from the vehicle circulating ahead."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "06",
+  "dir": "06",
+  "ep": "run1021s-w1-004",
+  "tau0": 17.3,
+  "label": "Adapt speed while following the curving roadway, decelerating through the leftward bend and accelerating gently as the road curves right."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "06",
+  "dir": "06",
+  "ep": "run1021s-w1-004",
+  "tau0": 17.3,
+  "label": "Adapt speed for the curving approach to the intersection, slowing through the leftward bend."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "07",
+  "dir": "07",
+  "ep": "run1021s-w1-004",
+  "tau0": 29.7,
+  "label": "Adapt speed for the right-curving road, slowing as the curve tightens."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "07",
+  "dir": "07",
+  "ep": "run1021s-w1-004",
+  "tau0": 29.7,
+  "label": "Adapt speed by slowing down for the tightening right-hand curve on the ramp."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "08",
+  "dir": "08",
+  "ep": "run1021s-w1-004",
+  "tau0": 39.1,
+  "label": "Adapt speed for the right-curving ramp while following the route; accelerate as the ramp straightens and remain in lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "08",
+  "dir": "08",
+  "ep": "run1021s-w1-004",
+  "tau0": 39.1,
+  "label": "Merge left into the mainline from the right-curving entrance ramp while adjusting speed to find a safe gap in the adjacent traffic."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "09",
+  "dir": "09",
+  "ep": "run1021s-w1-004",
+  "tau0": 47.7,
+  "label": "Decelerate while maintaining a safe distance from traffic ahead, then accelerate as the road clears; remain in lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "09",
+  "dir": "09",
+  "ep": "run1021s-w1-004",
+  "tau0": 47.7,
+  "label": "Resume speed as the lead vehicle pulls farther ahead on the straight road."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "10",
+  "dir": "10",
+  "ep": "run1021i-w1-007",
+  "tau0": 7.9,
+  "label": "Stop for cross-traffic at the intersection, then turn right onto the curved roadway while accelerating as the white vehicle clears."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "10",
+  "dir": "10",
+  "ep": "run1021i-w1-007",
+  "tau0": 7.9,
+  "label": "Turn right into the roundabout intersection while adapting speed for the curved entry and the vehicle circulating ahead from the left."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "11",
+  "dir": "11",
+  "ep": "run1021i-w1-007",
+  "tau0": 16.0,
+  "label": "Adapt speed while following the right-curving roadway around the island, keeping a safe distance from the vehicle ahead."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "11",
+  "dir": "11",
+  "ep": "run1021i-w1-007",
+  "tau0": 16.0,
+  "label": "Turn right through the channelized intersection while adapting speed to the road curvature and maintaining clearance from the construction barrier near the entry."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "12",
+  "dir": "12",
+  "ep": "run1021i-w1-007",
+  "tau0": 25.4,
+  "label": "Accelerate through the right-curving roadway while following the marked route."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "12",
+  "dir": "12",
+  "ep": "run1021i-w1-007",
+  "tau0": 25.4,
+  "label": "Resume speed along the clear, right-curving road while staying in the current lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "13",
+  "dir": "13",
+  "ep": "run1021i-w1-007",
+  "tau0": 34.1,
+  "label": "Adapt speed through the pronounced right-hand curve, slowing as the road bends."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "13",
+  "dir": "13",
+  "ep": "run1021i-w1-007",
+  "tau0": 34.1,
+  "label": "Adapt speed for the right-curving entrance ramp, slowing to negotiate the curve safely."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "14",
+  "dir": "14",
+  "ep": "run1021i-w1-007",
+  "tau0": 43.4,
+  "label": "Adapt speed for the right-curving roadway while staying in the right-side lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "14",
+  "dir": "14",
+  "ep": "run1021i-w1-007",
+  "tau0": 43.4,
+  "label": "Change lanes to the left to merge onto the mainline from the gently curving entry lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "15",
+  "dir": "15",
+  "ep": "run1021v-w1-144",
+  "tau0": 8.0,
+  "label": "Yield to the white vehicle crossing from left to right at the roundabout entrance, then proceed into the roundabout."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "15",
+  "dir": "15",
+  "ep": "run1021v-w1-144",
+  "tau0": 8.0,
+  "label": "Turn right into the roundabout and adapt speed for the curved entry and the circulating vehicle ahead."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "16",
+  "dir": "16",
+  "ep": "run1021v-w1-144",
+  "tau0": 17.3,
+  "label": "Adapt speed through the curving roadway and follow the marked route around the interchange."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "16",
+  "dir": "16",
+  "ep": "run1021v-w1-144",
+  "tau0": 17.3,
+  "label": "Adapt speed for the curving approach to the intersection, slowing as the roadway bends left."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "17",
+  "dir": "17",
+  "ep": "run1021v-w1-144",
+  "tau0": 28.8,
+  "label": "Make a left lane change while adapting speed for the tightening right-hand curve."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "17",
+  "dir": "17",
+  "ep": "run1021v-w1-144",
+  "tau0": 28.8,
+  "label": "Change lanes to the left as the roadway narrows while adapting speed for the right-hand curve."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "18",
+  "dir": "18",
+  "ep": "run1021v-w1-144",
+  "tau0": 37.4,
+  "label": "Adjust speed to find a safe opening to merge onto the highway from the right-curving ramp while monitoring traffic in the adjacent lane."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "18",
+  "dir": "18",
+  "ep": "run1021v-w1-144",
+  "tau0": 37.4,
+  "label": "Merge onto the mainline from the entrance ramp while adapting speed for the ramp\u2019s right-hand curve."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_luna",
+  "key": "19",
+  "dir": "19",
+  "ep": "run1021v-w1-144",
+  "tau0": 45.6,
+  "label": "Resume speed on the straight highway after slowing, with no clear nearby hazard or lateral maneuver."
+ },
+ {
+  "set": "C4C5",
+  "labeler": "codex_sol",
+  "key": "19",
+  "dir": "19",
+  "ep": "run1021v-w1-144",
+  "tau0": 45.6,
+  "label": "Change lanes to the left while adjusting speed to find a safe gap in the main traffic stream."
+ }
+]

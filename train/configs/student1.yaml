@@ -1,0 +1,17 @@
+# MODEL_PLAN 4.5 student stage 1: Qwen3-VL-4B + LiDAR ViT copy + T*'s expert (frozen). T* runs frozen in the same step on
+# the same batch. Losses: per-layer KV MSE, ViT feature KD (camera + LiDAR), GT flow matching through the frozen expert
+# (gradient into the student KV), discrete-trajectory CE. No velocity KD yet (stage 2).
+# Launch (cwd = train/): torchrun --nproc_per_node 8 -m morai_vla.train --config-name student1 paths.teacher=<T*> data.root=<share>
+defaults: [student_base, _self_]
+
+trainer:
+  load_best_model_at_end: false            # user 10/25 (MODEL_PLAN 3.4): final/ = the lowest trajectory-ADE measurement
+
+callbacks:
+  traj_early_stop:                         # user 10/25 rule (morai_vla/early_stop.py): 2 epochs cap, ADE of the frozen expert
+    _target_: morai_vla.early_stop.TrajEarlyStop   # on the student KV (= the gate's metric) on the fixed 1,000 val samples;
+    root: ${data.root}                     # no stop before 0.5 epoch, 3 measurements in a row not >2 % below the best -> stop,
+    every_steps: 600                       # ~20 min at ~2.2 s/step (H200; the step time does not depend on the GPU count)
+    decay_steps: 500                       # linear LR -> 0; ~3 % of the 2-epoch run (~16.8k steps on 8 GPUs), Stage 2's ratio (~3k of ~100k)
+
+task_name: student_stage1

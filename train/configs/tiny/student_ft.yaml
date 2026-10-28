@@ -1,0 +1,46 @@
+# @package _global_
+# CPU check of the R2 fine-tune (Mac, scripts/ft_tiny.sh), added to student_ft with `+tiny=student_ft`: the real code
+# path (mixture, per-row losses, history dropout, ft_select, final/) on a synthetic step-0 root (tests/ft_synth.py) with
+# a tiny random T* and s2 student of the +tiny=student architecture. The recipe values (shares, row density, offsets, LR
+# schedule shape, multipliers, dropout, selection rule) stay; only the size, the device and the step count change.
+model:
+  attn_implementation: sdpa
+  dtype: float32
+  teacher_vlm: Qwen/Qwen3-VL-4B-Instruct   # the Mac HF cache holds the 4B only; tokenizer and processor equal the 8B's (tests)
+
+data:
+  train_dataset:
+    common: {lidar_dropout: 0.15, jitter: [0.08, 0.12], augment: true}
+  val_dataset:
+    max_samples: 4
+
+trainer:
+  use_cpu: true
+  bf16: false
+  per_device_train_batch_size: 2           # padded batches mixing GT and replay rows (sdpa)
+  gradient_accumulation_steps: 1
+  warmup_steps: 4
+  max_steps: 12                            # the mixture is ~150 samples; a few steps are enough to cross every branch
+  logging_steps: 2
+  eval_steps: 6
+  save_strategy: "no"
+  deepspeed: null
+  dataloader_num_workers: 0
+  dataloader_persistent_workers: false
+  dataloader_prefetch_factor: null
+  dataloader_pin_memory: false
+
+callbacks:
+  ft_select:
+    every_steps: 4
+    num_workers: 0
+    sets:
+      general:
+        - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, n: 4}
+      dynamic:
+        - {root: "${paths.r2_root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/r2_AB.parquet", n: 4}
+      static:
+        - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/old_static.parquet", n: 3}
+      curve:
+        - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/old_curve.parquet", n: 2}
+        - {root: "${paths.r2_root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/r2_D.parquet", n: 2}

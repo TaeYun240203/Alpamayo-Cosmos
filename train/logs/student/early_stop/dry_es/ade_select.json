@@ -1,0 +1,31 @@
+{
+ "chosen_step": 25,
+ "chosen_ade": 5.97698,
+ "chosen_tag": "after_decay",
+ "history": [
+  {
+   "step": 10,
+   "ade": 6.08825,
+   "n": 16,
+   "tag": "main",
+   "seconds": 9.6,
+   "snapshot": "ade_snapshots/step-10.safetensors"
+  },
+  {
+   "step": 20,
+   "ade": 6.30067,
+   "n": 16,
+   "tag": "main",
+   "seconds": 4.5,
+   "snapshot": "ade_snapshots/step-20.safetensors"
+  },
+  {
+   "step": 25,
+   "ade": 5.97698,
+   "n": 16,
+   "tag": "after_decay",
+   "seconds": 29.2,
+   "snapshot": "ade_snapshots/step-25.safetensors"
+  }
+ ]
+}

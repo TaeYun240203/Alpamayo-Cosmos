@@ -1,0 +1,42 @@
+# Shared by the student runs (student1, student2 -> student_qad): Qwen3-VL-4B + LiDAR ViT copy + T*'s expert, T* frozen
+# in the same step on the same batch. This file alone is stage 1's model, losses and data with final/ = best eval_fm.
+defaults: [base, _self_]
+
+paths:
+  alpamayo15: null                         # teacher runs only
+  teacher: ???                             # T* checkpoint dir (until T* exists: the 1.5 release or step 2, development only)
+
+model:
+  _target_: morai_vla.student.StudentVLA.build
+  teacher: ${paths.teacher}
+  init: null                               # null = new student from vlm_name_or_path; a dir = a saved student
+  vlm_name_or_path: Qwen/Qwen3-VL-4B-Instruct
+  teacher_vlm: Qwen/Qwen3-VL-8B-Instruct   # T*'s public VLM (tokenizer and processor are identical to the 4B's)
+  train_parts: [camera_vit, lidar, llm, lm_head, kd_proj]
+  # starting values from the real-weight smoke (README): at init kv (layer mean) ~13.5, traj CE ~22, fm 5-16; the ViT
+  # targets are LayerNorm outputs with mean square 0.07, so vit x10 starts near 1
+  loss_weights: {kv: 1.0, vit: 10.0, fm: 1.0, traj_ce: 1.0, lm: 1.0, vkd: 0.0, coc_kl: 0.0}
+
+trainer:
+  num_train_epochs: 2
+  gradient_checkpointing: false            # the expert reads the student KV cache with its gradient; checkpointing drops it
+  # final/ = the checkpoint with the lowest eval GT flow-matching loss (through the expert; eval noise fixed per sample):
+  # a fixed-weight component, the weighted total moves with stage 2's lambda_v. Only evaluations at a save can be kept,
+  # so eval_steps = save_steps.
+  load_best_model_at_end: true
+  metric_for_best_model: eval_fm
+  greater_is_better: false
+  eval_steps: 2000
+  save_steps: 2000
+
+callbacks:
+  eval_fm:                                 # puts eval_fm (all ranks) into the evaluation metrics for the selection
+    _target_: morai_vla.student.EvalComponentMetric
+    key: fm
+
+speed:                                     # morai_vla/speed.py: math unchanged; on only after scripts/ft_speed_probe.py on a GPU
+  vit_sdpa_grouped: false                  #   (r2ft_chain.sh FAST=1 turns all three on)
+  teacher_vit_only: false
+  lazy_loss_log: false
+
+task_name: student

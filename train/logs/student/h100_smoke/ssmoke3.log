@@ -1,0 +1,6 @@
+pass
+== s2 ok in 168 s: {"final":{"best_global_step":15,"best_metric":4.876254700124264,"best_model_checkpoint":"/workspace/out/ssmoke/s2/checkpoint-15"},"last_train":{"step":30,"kv":13.54828,"vit":0.26107,"traj_ce":22.33464,"lm":9.76243,"fm":4.27683,"vkd":2.55702,"s_per_step":2.579,"peak_mem_gb":66.58},"last_eval":{"step":30,"eval_kv":13.53089,"eval_vit":0.27067,"eval_traj_ce":22.31928,"eval_lm":9.69204,"eval_fm":4.8763
+pass
+pass
+== qad ok in 502 s: {"final":{"best_global_step":15,"best_metric":4.753097541630268,"best_model_checkpoint":"/workspace/out/ssmoke/qad/checkpoint-15"},"last_train":{"step":30,"kv":13.57095,"vit":0.25979,"traj_ce":22.14197,"lm":9.11109,"fm":3.76768,"vkd":2.42659,"s_per_step":3.59,"peak_mem_gb":79.88},"last_eval":{"step":30,"eval_kv":13.5672,"eval_vit":0.269,"eval_traj_ce":22.14415,"eval_lm":9.09577,"eval_fm":4.7531,"p
+== deliver ok in 2 s: {"files":["CONTENTS.txt","final/config.json","final/model-00001-of-00003.safetensors","final/model-00002-of-00003.safetensors","final/model-00003-of-00003.safetensors","final/model.safetensors.index.json","final/modelopt_state.pth","final/training_args.bin","quant_manifest.json","summary.json"],"bytes":14292777491}

@@ -1,0 +1,147 @@
+# DRAFT (10/28, user confirms the table in reports/dyn_relabel_20261028.md 6): dynamic-obstacle stop fine-tune of WoWmayo
+# from the R2 ft final (user 10/28: the morning's R2 delivery before QAD, BF16), then QAD as the stop round
+# (student_qad_stop.yaml with init = this run's final). 1,000 steps x 32 = 32,000 samples.
+# R2 A / B original rows are not used: their synthetic labels replace them (dyn stop, dyn pass, static avoidance incl.
+# tunnel props). No old_curve, no start relabel. Sources = scripts/dyn_mix.py (one sub-source per axis cell, keep lists in
+# _dyn_relabel/mix/, shares in mix/mix.json). The loader is unchanged: the synthetic stops are virtual episodes listed in
+# _dyn_relabel/dyn_index.parquet. BEFORE training: `python scripts/dyn_stage.py $R2_ROOT` (links; B2 keeps none), then
+# `python scripts/dyn_load_check.py $R2_ROOT` (CPU).
+# History: stop / slow-down sources (dyn_stop, red) want real 50 / synth 50 with speed-preserving synthetic histories
+# (scripts/dyn_synth_hist.py -> paths.synth_dyn): MixtureDataset hist "real_synth" (finetune.py, 2 lines added 10/28, main
+# session OK; thirds / default unchanged). paths.hist_real_synth: thirds switches them to real / zero / synth. Lane sources: thirds with the
+# lane histories of the R2 round (ft_synth_hist.py, constant speed); the rest: real / zero by hist_dropout 0.5.
+defaults: [student_base, ft_reset, _self_]
+
+paths:
+  teacher: null
+  s2: ???                                  # START = R2 ft final: b2://morai2026-alpamayo/runs/r2ft/ft/final (the pipeline stages it at $OUT/s2/final)
+  r2_root: ???                             # step-0 root of the R2 collection (with _dyn_relabel/ staged)
+  stop_pools: assets/stop                  # the stop round's pools (val lists)
+  ft_pools: assets/ft
+  dyn: ${paths.r2_root}/_dyn_relabel      # B2 step0_r2/_dyn_relabel/
+  mix: ${paths.dyn}/mix                   # scripts/dyn_mix.py keep lists (rows already minus the replay exclusions)
+  synth_dyn: ${paths.dyn}/synth_hist_dyn.parquet   # speed-preserving lane histories: dyn_stop virtual rows + red 2 Hz rows
+  synth_hist: ${paths.ft_pools}/synth_hist.parquet # the R2 round's lane histories (R2 D, old recovery)
+  hist_real_synth: real_synth              # dyn_stop + red: real 50 / synth 50, no zero history (thirds: real / zero / synth 1/3)
+  start_relabel: ${data.root}/_start_relabel/start_relabel_index.parquet   # stop switch reference set only
+
+model:
+  init: ${paths.s2}
+  train_parts: [camera_vit, lidar, llm, lm_head, expert]
+  loss_weights: {kv: 0.0, vit: 0.0, fm: 1.0, traj_ce: 1.0, lm: 1.0, vkd: 0.0, coc_kl: 0.0}
+
+data:
+  train_dataset:
+    _target_: morai_vla.finetune.MixtureDataset
+    _recursive_: false
+    frame_stride: 5
+    epochs: 1
+    extra_offsets: [2, 3]
+    hist_dropout: 0.5
+    seed: 0
+    common: {lidar_dropout: 0.15, jitter: [0.08, 0.12], augment: true}
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+    sources:                               # scripts/dyn_mix.py (reports/dyn_relabel_20261028.md 6): dyn stop 17, dyn pass 5, static 15, red 10, lane 15, replay 38
+      dyn_stop_A_soft:
+        {share: 0.05525, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_soft.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_hard:
+        {share: 0.03315, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hard.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_popout:
+        {share: 0.01326, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_popout.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_hold:
+        {share: 0.00884, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hold.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_soft:
+        {share: 0.03381, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_soft.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_hard:
+        {share: 0.02028, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hard.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_hold:
+        {share: 0.00541, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hold.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_pass_A_along:
+        {share: 0.01300, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_along.parquet"}}
+      dyn_pass_A_late_cross:
+        {share: 0.00975, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_late_cross.parquet"}}
+      dyn_pass_A_crossed:
+        {share: 0.00975, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_crossed.parquet"}}
+      dyn_pass_B_along:
+        {share: 0.00700, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_B_along.parquet"}}
+      dyn_pass_B_late_cross:
+        {share: 0.00525, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_B_late_cross.parquet"}}
+      dyn_pass_B_crossed:
+        {share: 0.00525, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_B_crossed.parquet"}}
+      static_general_r1_03_06:
+        {share: 0.00066, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_general_r1_03_06.parquet"}}
+      static_general_r1_10p:
+        {share: 0.07434, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_general_r1_10p.parquet"}}
+      static_tunnel_r1_03_06:
+        {share: 0.00328, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_tunnel_r1_03_06.parquet"}}
+      static_tunnel_r1_06_10:
+        {share: 0.00694, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_tunnel_r1_06_10.parquet"}}
+      static_tunnel_r1_10p:
+        {share: 0.00478, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_tunnel_r1_10p.parquet"}}
+      static_tunnel_r2_06_10:
+        {share: 0.03169, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/static_tunnel_r2_06_10.parquet"}}
+      static_tunnel_r2_10p:
+        {share: 0.02831, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/static_tunnel_r2_10p.parquet"}}
+      red_approach_7294:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_7294.parquet", synth: "${paths.synth_dyn}"}}
+      red_approach_6254:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_6254.parquet", synth: "${paths.synth_dyn}"}}
+      red_approach_4188:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_4188.parquet", synth: "${paths.synth_dyn}"}}
+      red_approach_4356:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_4356.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_7294:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_7294.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_6254:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_6254.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_4188:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_4188.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_4356:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_4356.parquet", synth: "${paths.synth_dyn}"}}
+      lane_r2_D:
+        {share: 0.10000, loss: gt, new: true, hist: thirds, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/lane_r2_D.parquet", synth: "${paths.synth_hist}"}}
+      lane_old_recovery:
+        {share: 0.05000, loss: gt, hist: thirds, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/lane_old_recovery.parquet", synth: "${paths.synth_hist}"}}
+      replay:
+        {share: 0.38000, loss: distill, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/replay.parquet", cell_keep: {C0: 0.4, C3: 0.65, C5: 0.55}}}
+  val_dataset:
+    coc: false
+
+trainer:
+  learning_rate: 1e-6                      # as the stop round
+  warmup_steps: 50
+  lr_scheduler_type: cosine_warmup_with_min_lr
+  lr_scheduler_kwargs: {min_lr: 3e-7}
+  lr_multiplier: {vlm.model.visual: 0.1, expert: 0.3, action_in_proj: 0.3, action_out_proj: 0.3}
+  num_train_epochs: 1
+  max_steps: 1000                          # 32,000 samples
+  load_best_model_at_end: false
+  eval_steps: 500
+  save_steps: 500
+  save_total_limit: 3
+
+callbacks:
+  ft_select:
+    _target_: morai_vla.finetune.FtSelect
+    every_steps: 500
+    ref: general
+    rel_worse: null
+    stop_rel_worse: 1.0                    # as the stop round (lateral ADE on general_wo_relabel, 2 in a row)
+    stop_metric: lat
+    stop_patience: 2
+    stop_ref: general_wo_relabel
+    stop_exclude: ${paths.start_relabel}
+    stop_base: null                        # null: the start's own step-0 value (= R2 ft final)
+    sets:
+      general:
+        - {root: "${data.root}", split: [val, val_asset], keep: "${paths.stop_pools}/general_val.parquet", n: 1000}
+      red_stop:
+        - {root: "${data.root}", split: [val, val_asset], keep: "${paths.stop_pools}/red_val.parquet", n: 300}
+      dynamic_stop:                        # synthetic labels of held-out R2 A + B (virtual episodes, every 5th: 187 rows)
+        - {root: "${paths.r2_root}", split: [val, val_asset], index: _dyn_relabel/dyn_index.parquet, keep: "${paths.dyn}/dyn_val.parquet", n: 187}
+      curve:
+        - {root: "${data.root}", split: [val, val_asset], keep: "${paths.stop_pools}/curve_val.parquet", n: 300}
+        - {root: "${paths.r2_root}", split: [val, val_asset], keep: "${paths.stop_pools}/curve_val_r2.parquet", n: 300}
+
+task_name: student_dyn

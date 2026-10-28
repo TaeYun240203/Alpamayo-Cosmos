@@ -1,0 +1,28 @@
+# MODEL_PLAN 4.3 Stage 1-C: the recipe's Stage 1 with CoC on (alpamayo1_sft README "CoC reasoning enabled"): the dataset
+# is only the CoC keyframes (use == True), t0 = each keyframe's tau0; supervision = cot + traj_future. Short run, early
+# stop on held-out: ~10.7k usable keyframes with 877 distinct sentences are memorised quickly.
+defaults: [base, _self_]
+
+model:
+  init: ???                                # Stage 1-T checkpoint dir
+  train_parts: [camera_vit, lidar, llm, lm_head]
+  loss_weights: {traj_ce: 1.0, lm: 1.0, fm: 0.0}
+
+data:
+  train_dataset:
+    coc: true
+
+trainer:
+  load_best_model_at_end: true             # user 10/25: final/ = the best eval_loss checkpoint (full epochs, no early stop);
+  metric_for_best_model: eval_loss         # HF picks among saved checkpoints, so the pipeline sets save_steps == eval_steps
+  greater_is_better: false
+  eval_steps: 200
+  save_steps: 200
+
+callbacks:
+  stage1_eval:                             # expert-free monitor after each eval: CE LiDAR on/off, discrete-token ADE (README)
+    _target_: morai_vla.stage1_eval.Stage1EvalCallback
+    root: ${data.root}
+    n: 200
+
+task_name: teacher_stage1c

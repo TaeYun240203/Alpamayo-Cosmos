@@ -1,0 +1,36 @@
+{
+ "final": {
+  "chosen_step": 10,
+  "chosen_ade": 6.08944,
+  "chosen_tag": "main",
+  "stop_step": 40,
+  "decay_end": 40,
+  "min_step": 5
+ },
+ "last_train": {
+  "step": 40,
+  "kv": 0.77685,
+  "vit": 0.30248,
+  "traj_ce": 8.01494,
+  "lm": 5.11491,
+  "fm": 2.79328,
+  "s_per_step": 1.023,
+  "peak_mem_gb": 1.9
+ },
+ "last_eval": {
+  "step": 40,
+  "eval_kv": 0.73039,
+  "eval_vit": 0.26562,
+  "eval_traj_ce": 6.50219,
+  "eval_lm": 4.97564,
+  "eval_fm": 1.23877,
+  "peak_mem_gb": 1.9
+ },
+ "best_eval": {
+  "eval_vit": 0.26562,
+  "eval_fm": 1.20381,
+  "eval_kv": 0.73039,
+  "eval_traj_ce": 6.50219,
+  "eval_lm": 4.97564
+ }
+}

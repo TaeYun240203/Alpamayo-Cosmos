@@ -1,0 +1,36 @@
+# Local check (RTX 5080) of Stage 2's trajectory-ADE early stop (morai_vla/early_stop.py): the stage2 config with the
+# tiny_overfit model shrink (random init, Stage 2 dtypes: bf16 + fp32 expert), 3 epochs of 48 rows, ADE every 8 steps on
+# 16 val samples, 10 decay steps. scripts/es_test.sh runs it.
+defaults: [stage2, _self_]
+
+model:
+  init: random:${paths.alpamayo15}         # only the release config.json is read
+  attn_implementation: sdpa
+  vlm_overrides:
+    text_config: {hidden_size: 256, intermediate_size: 512, num_hidden_layers: 4, num_attention_heads: 4, num_key_value_heads: 2,
+                  head_dim: 64, rope_scaling: {rope_type: default, mrope_section: [12, 10, 10], mrope_interleaved: true}}
+    vision_config: {depth: 4, hidden_size: 128, intermediate_size: 256, num_heads: 4, out_hidden_size: 256,
+                    deepstack_visual_indexes: [1, 2, 3]}
+  expert_overrides: {hidden_size: 128, intermediate_size: 256, num_attention_heads: 4, head_dim: 64}
+
+data:
+  train_dataset:
+    max_samples: 48
+  val_dataset:
+    max_samples: 8
+
+trainer:
+  learning_rate: 5e-4
+  logging_steps: 8
+  save_steps: 16
+  eval_steps: 16
+  save_total_limit: 1
+  dataloader_num_workers: 4
+
+callbacks:
+  traj_early_stop:
+    every_steps: 8
+    decay_steps: 10
+    n: 16
+
+task_name: tiny_stage2

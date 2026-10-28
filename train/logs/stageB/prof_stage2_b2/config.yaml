@@ -1,0 +1,239 @@
+paths:
+  alpamayo15: /workspace/ckpt/Alpamayo-1.5-10B
+  output_dir: /workspace/out/prof_stage2_b2
+data:
+  root: /data/step0
+  coc_parquet: /data/coc/coc_v1_1/coc_dataset.parquet
+  collate_fn:
+    _target_: morai_vla.processor.collate_fn
+    _partial_: true
+  train_dataset:
+    _target_: morai_vla.data.MoraiDataset
+    _recursive_: false
+    root: ${data.root}
+    split: train
+    coc: false
+    coc_parquet: ${data.coc_parquet}
+    frame_stride: 5
+    cell_keep:
+      C0: 0.4
+      C3: 0.65
+      C5: 0.55
+    lidar_dropout: 0.15
+    max_samples: null
+    augment: true
+    seed: 0
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+  val_dataset:
+    _target_: morai_vla.data.MoraiDataset
+    _recursive_: false
+    root: ${data.root}
+    split:
+    - val
+    - val_asset
+    coc: ${data.train_dataset.coc}
+    coc_parquet: ${data.coc_parquet}
+    frame_stride: 10
+    max_samples: 512
+    lidar_dropout: 0.0
+    augment: false
+    seed: 0
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+model:
+  _target_: morai_vla.model.TeacherVLA.build
+  init: /workspace/ckpt/Alpamayo-1.5-10B
+  vlm_name_or_path: Qwen/Qwen3-VL-8B-Instruct
+  attn_implementation: sdpa
+  dtype: bfloat16
+  strict: true
+  train_parts:
+  - expert
+  loss_weights:
+    traj_ce: 0.0
+    lm: 0.0
+    fm: 1.0
+  master_fp32: true
+callbacks:
+  loss_components:
+    _target_: morai_vla.model.LossComponentsCallback
+trainer:
+  output_dir: ${paths.output_dir}
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 1
+  learning_rate: 0.0001
+  warmup_steps: 100
+  lr_scheduler_type: cosine_warmup_with_min_lr
+  lr_scheduler_kwargs:
+    min_lr: 1.0e-06
+  num_train_epochs: 3
+  max_steps: 30
+  logging_steps: 10
+  save_strategy: 'no'
+  save_steps: 500
+  save_total_limit: 3
+  eval_strategy: 'no'
+  eval_steps: 500
+  bf16: true
+  dataloader_num_workers: 8
+  dataloader_persistent_workers: true
+  dataloader_prefetch_factor: 4
+  dataloader_pin_memory: true
+  remove_unused_columns: false
+  report_to: none
+  lr_multiplier: null
+  ddp_find_unused_parameters: true
+  gradient_checkpointing: false
+  gradient_checkpointing_kwargs:
+    use_reentrant: false
+  deepspeed: null
+performance:
+  zip_cache: false
+  collate_cache: false
+  tf32: true
+  cudnn_benchmark: false
+task_name: teacher_stage2
+resume: null
+hydra:
+  run:
+    dir: outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  sweep:
+    dir: multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${hydra.job.num}
+  launcher:
+    _target_: hydra._internal.core_plugins.basic_launcher.BasicLauncher
+  sweeper:
+    _target_: hydra._internal.core_plugins.basic_sweeper.BasicSweeper
+    max_batch_size: null
+    params: null
+  help:
+    app_name: ${hydra.job.name}
+    header: '${hydra.help.app_name} is powered by Hydra.
+
+      '
+    footer: 'Powered by Hydra (https://hydra.cc)
+
+      Use --hydra-help to view Hydra specific help
+
+      '
+    template: '${hydra.help.header}
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (group=option)
+
+
+      $APP_CONFIG_GROUPS
+
+
+      == Config ==
+
+      Override anything in the config (foo.bar=value)
+
+
+      $CONFIG
+
+
+      ${hydra.help.footer}
+
+      '
+  hydra_help:
+    template: 'Hydra (${hydra.runtime.version})
+
+      See https://hydra.cc for more info.
+
+
+      == Flags ==
+
+      $FLAGS_HELP
+
+
+      == Configuration groups ==
+
+      Compose your configuration from those groups (For example, append hydra/job_logging=disabled
+      to command line)
+
+
+      $HYDRA_CONFIG_GROUPS
+
+
+      Use ''--cfg hydra'' to Show the Hydra config.
+
+      '
+    hydra_help: ???
+  hydra_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][HYDRA] %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+    root:
+      level: INFO
+      handlers:
+      - console
+    loggers:
+      logging_example:
+        level: DEBUG
+    disable_existing_loggers: false
+  job_logging:
+    version: 1
+    formatters:
+      simple:
+        format: '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s'
+    handlers:
+      console:
+        class: logging.StreamHandler
+        formatter: simple
+        stream: ext://sys.stdout
+      file:
+        class: logging.FileHandler
+        formatter: simple
+        filename: ${hydra.runtime.output_dir}/${hydra.job.name}.log
+    root:
+      level: INFO
+      handlers:
+      - console
+      - file
+    disable_existing_loggers: false
+  env: {}
+  mode: RUN
+  searchpath: []
+  callbacks: {}
+  output_subdir: .hydra
+  overrides:
+    hydra:
+    - hydra.mode=RUN
+    task:
+    - paths.alpamayo15=/workspace/ckpt/Alpamayo-1.5-10B
+    - data.root=/data/step0
+    - data.coc_parquet=/data/coc/coc_v1_1/coc_dataset.parquet
+    - model.init=/workspace/ckpt/Alpamayo-1.5-10B
+    - paths.output_dir=/workspace/out/prof_stage2_b2
+    - trainer.per_device_train_batch_size=2
+    - model.attn_implementation=sdpa
+    - trainer.max_steps=30
+    - trainer.logging_steps=10
+    - trainer.gradient_accumulation_steps=1
+    - trainer.eval_strategy=no
+    - trainer.save_strategy=no
+  job:
+    name: train
+    chdir: null
+    override_dirname: data.coc_parquet=/data/coc/coc_v1_1/coc_dataset.parquet,data.root=/data/step0,model.attn_implementation=sdpa,model.init=/workspace/ckpt/Alpamayo-1.5-10B,paths.alpamayo15=/workspace/ckpt/Alpamayo-1.5-10B,paths.output_dir=/workspace/out/prof_stage2_b2,trainer.eval_strategy=no,trainer.gradient_accumulation_steps=1,trainer.logging_steps=10,trainer.max_steps=30,trainer.per_device_train_batch_size=2,trainer.save_strategy=no
+    id: ???
+    num: ???
+    config_name: stage2
+    env_set: {}
+    env_copy: []
+    config:
+      override_dirname:
+        kv_sep: '='
+        item_sep: ','
+        exclude_keys: []
+  verbose: false

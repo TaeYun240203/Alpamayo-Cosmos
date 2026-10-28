@@ -1,0 +1,246 @@
+{
+ "n_rows": 1390,
+ "gt_stopped_6.4s": {
+  "pred_travel_6.4s": {
+   "n": 514,
+   "median": 0.008409369736909866,
+   "p90": 0.008426590822637081,
+   "max": 43.677581787109375
+  },
+  "pred_travel_first3s": {
+   "n": 514,
+   "median": 0.0018479764694347978,
+   "p90": 0.0018560491735115647,
+   "max": 17.223920822143555
+  },
+  "share_first3s_gt_0.5m": 0.007782101167315175,
+  "share_first3s_gt_1m": 0.0019455252918287938,
+  "share_first3s_gt_3m": 0.0019455252918287938,
+  "by_cell_share_first3s_gt_1m": {
+   "C0": 0.0,
+   "C1": 0.0,
+   "C2": 0.0,
+   "C3": 0.0,
+   "C4": 0.0,
+   "C6": 0.03225806451612903
+  },
+  "worst": [
+   {
+    "episode": "run1020h-w1-005",
+    "i": 3250,
+    "cell": "C6",
+    "nav_text": "Follow the road. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 1.4573469161987305,
+    "pred_3s": 17.223920822143555,
+    "pred_6s": 43.677581787109375
+   },
+   {
+    "episode": "run1021d-w2-006",
+    "i": 1370,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 40m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 1.4705181121826172,
+    "pred_3s": 0.5963964462280273,
+    "pred_6s": 0.7887060046195984
+   },
+   {
+    "episode": "run1020o-w2-004",
+    "i": 670,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 37m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 0.7367959022521973,
+    "pred_3s": 0.59105384349823,
+    "pred_6s": 0.8239021897315979
+   },
+   {
+    "episode": "run1021n-w1-022",
+    "i": 5380,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 42m. Speed limit 60 km/h",
+    "fog": true,
+    "v0": 1.424136996269226,
+    "pred_3s": 0.5108464956283569,
+    "pred_6s": 0.586318850517273
+   },
+   {
+    "episode": "run1020o-w1-002",
+    "i": 840,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 40m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 1.259502649307251,
+    "pred_3s": 0.47658488154411316,
+    "pred_6s": 0.6233670711517334
+   },
+   {
+    "episode": "run1020k-w1-014",
+    "i": 5840,
+    "cell": "C4",
+    "nav_text": "Enter the roundabout in 2m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 0.031771715730428696,
+    "pred_3s": 0.3525997996330261,
+    "pred_6s": 0.771440327167511
+   }
+  ]
+ },
+ "gt_stopped_first3s": {
+  "pred_travel_6.4s": {
+   "n": 632,
+   "median": 0.008409109897911549,
+   "p90": 0.008473914116621017,
+   "max": 43.677581787109375
+  },
+  "pred_travel_first3s": {
+   "n": 632,
+   "median": 0.0018476542318239808,
+   "p90": 0.0018565347418189049,
+   "max": 17.223920822143555
+  },
+  "share_first3s_gt_0.5m": 0.007911392405063292,
+  "share_first3s_gt_1m": 0.0015822784810126582,
+  "share_first3s_gt_3m": 0.0015822784810126582,
+  "by_cell_share_first3s_gt_1m": {
+   "C0": 0.0,
+   "C1": 0.0,
+   "C2": 0.0,
+   "C3": 0.0,
+   "C4": 0.0,
+   "C6": 0.03125
+  },
+  "worst": [
+   {
+    "episode": "run1020h-w1-005",
+    "i": 3250,
+    "cell": "C6",
+    "nav_text": "Follow the road. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 1.4573469161987305,
+    "pred_3s": 17.223920822143555,
+    "pred_6s": 43.677581787109375
+   },
+   {
+    "episode": "run1021d-w2-006",
+    "i": 1370,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 40m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 1.4705181121826172,
+    "pred_3s": 0.5963964462280273,
+    "pred_6s": 0.7887060046195984
+   },
+   {
+    "episode": "run1020o-w2-004",
+    "i": 670,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 37m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 0.7367959022521973,
+    "pred_3s": 0.59105384349823,
+    "pred_6s": 0.8239021897315979
+   },
+   {
+    "episode": "run1021g-w2-003",
+    "i": 2770,
+    "cell": "C6",
+    "nav_text": "Follow the road. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 0.16737611591815948,
+    "pred_3s": 0.5372339487075806,
+    "pred_6s": 0.9201189279556274
+   },
+   {
+    "episode": "run1021n-w1-022",
+    "i": 5380,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 42m. Speed limit 60 km/h",
+    "fog": true,
+    "v0": 1.424136996269226,
+    "pred_3s": 0.5108464956283569,
+    "pred_6s": 0.586318850517273
+   },
+   {
+    "episode": "run1020o-w1-002",
+    "i": 840,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 40m. Speed limit 60 km/h",
+    "fog": false,
+    "v0": 1.259502649307251,
+    "pred_3s": 0.47658488154411316,
+    "pred_6s": 0.6233670711517334
+   }
+  ]
+ },
+ "late_departure": {
+  "n_gt_departs_within_2s": 72,
+  "share_pred_stays_2s": 0.8055555555555556,
+  "gt_depart_s_median": 1.25,
+  "pred_depart_s_median": 6.5,
+  "lag_s_median": 4.85,
+  "worst": [
+   {
+    "episode": "run1021v-w1-245",
+    "i": 1145,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 42m. Speed limit 60 km/h",
+    "fog": false,
+    "lag": 5.9,
+    "pred_2s": 0.0008141634752973914,
+    "gt_2s": 6.6729865074157715
+   },
+   {
+    "episode": "run1021v-w1-252",
+    "i": 1040,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 41m. Speed limit 60 km/h",
+    "fog": true,
+    "lag": 5.9,
+    "pred_2s": 0.0008223046897910535,
+    "gt_2s": 6.6751790046691895
+   },
+   {
+    "episode": "run1021f-w2-011",
+    "i": 960,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 40m. Speed limit 60 km/h",
+    "fog": true,
+    "lag": 5.8,
+    "pred_2s": 0.0008222884498536587,
+    "gt_2s": 6.350908279418945
+   },
+   {
+    "episode": "run1021g-w2-002",
+    "i": 610,
+    "cell": "C2",
+    "nav_text": "Go straight through the intersection in 10m. Speed limit 60 km/h",
+    "fog": true,
+    "lag": 5.7,
+    "pred_2s": 0.0007475099992007017,
+    "gt_2s": 5.836154460906982
+   },
+   {
+    "episode": "run1021g-w2-002",
+    "i": 1025,
+    "cell": "C3",
+    "nav_text": "Go straight through the intersection in 41m. Speed limit 60 km/h",
+    "fog": false,
+    "lag": 5.6,
+    "pred_2s": 0.0008188476203940809,
+    "gt_2s": 5.095808982849121
+   },
+   {
+    "episode": "run1021v-w1-184",
+    "i": 665,
+    "cell": "C2",
+    "nav_text": "Go straight through the intersection in 41m. Speed limit 60 km/h",
+    "fog": false,
+    "lag": 5.6,
+    "pred_2s": 0.0008189769578166306,
+    "gt_2s": 5.083078384399414
+   }
+  ]
+ }
+}

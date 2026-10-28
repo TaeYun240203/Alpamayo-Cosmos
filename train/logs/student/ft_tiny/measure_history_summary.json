@@ -1,0 +1,97 @@
+{
+ "what": "history",
+ "backend": "bf16:/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/957fe2a8-4222-4686-b2c9-aa296ca88bb2/scratchpad/ft_tiny/ft/final",
+ "n": 4,
+ "k": 1,
+ "root": "/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/957fe2a8-4222-4686-b2c9-aa296ca88bb2/scratchpad/ft_tiny/root",
+ "keep": null,
+ "split": [
+  "val",
+  "val_asset"
+ ],
+ "stride": 10,
+ "base_ade": {
+  "mean": 4.1767,
+  "p90": 4.6751
+ },
+ "base_fde": {
+  "mean": 11.8597,
+  "p90": 13.7201
+ },
+ "base_lat_1s": {
+  "mean": 0.51,
+  "p90": 0.6959
+ },
+ "base_lat_2s": {
+  "mean": 1.5698,
+  "p90": 2.1062
+ },
+ "base_lat_3s": {
+  "mean": 3.0247,
+  "p90": 3.8653
+ },
+ "swap_ade": {
+  "mean": 4.1767,
+  "p90": 4.6751
+ },
+ "swap_fde": {
+  "mean": 11.8597,
+  "p90": 13.7201
+ },
+ "swap_lat_1s": {
+  "mean": 0.51,
+  "p90": 0.6959
+ },
+ "swap_lat_2s": {
+  "mean": 1.5698,
+  "p90": 2.1062
+ },
+ "swap_lat_3s": {
+  "mean": 3.0247,
+  "p90": 3.8653
+ },
+ "swap_move": {
+  "mean": 0.0,
+  "p90": 0.0
+ },
+ "swap_dlat_2s": {
+  "mean": 0.0,
+  "p90": 0.0
+ },
+ "swap_dlat_3s": {
+  "mean": 0.0,
+  "p90": 0.0
+ },
+ "nocam_ade": {
+  "mean": 4.1444,
+  "p90": 4.6585
+ },
+ "nocam_fde": {
+  "mean": 11.785,
+  "p90": 13.6649
+ },
+ "nocam_lat_1s": {
+  "mean": 0.51,
+  "p90": 0.6862
+ },
+ "nocam_lat_2s": {
+  "mean": 1.5552,
+  "p90": 2.0953
+ },
+ "nocam_lat_3s": {
+  "mean": 3.0003,
+  "p90": 3.852
+ },
+ "nocam_move": {
+  "mean": 0.065,
+  "p90": 0.1185
+ },
+ "nocam_dlat_2s": {
+  "mean": 0.0269,
+  "p90": 0.0446
+ },
+ "nocam_dlat_3s": {
+  "mean": 0.0267,
+  "p90": 0.0619
+ }
+}

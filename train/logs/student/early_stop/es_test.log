@@ -1,0 +1,15 @@
+== forced stop 20:39:15
+pass
+== s1 ok in 91 s: {"final":{"chosen_step":25,"chosen_ade":5.97698,"chosen_tag":"after_decay","stop_step":20,"decay_end":25,"min_step":0},"last_train":{"step":25,"kv":1.07296,"vit":0.62018,"traj_ce":9.18843,"lm":6.56488,"fm":2.1892,"s_per_step":7.72,"peak_mem_gb":1.9},"last_eval":{"step":20,"eval_kv":1.11774,"eval_vit":0.69499,"eval_traj_ce":7.96309,"eval_lm":6.82556,"eval_fm":1.20379,"peak_mem_gb":1.9},"best_eval":
+pass
+== sgate ok in 17 s: {"teacher_ade":7.331,"teacher_fde":17.436,"teacher_minade":5.531,"student_ade":6.724,"student_fde":15.324,"student_minade":5.245,"st_ade":3.502,"n":8,"ratio":0.917,"by_cell":{"C0":{"teacher_ade":8.215,"teacher_fde":23.728,"teacher_minade":5.027,"student_ade":8.228,"student_fde":21.757,"student_minade":5.419,"st_ade":1.698,"n":2},"C2":{"teacher_ade":1.1,"teacher_fde":2.496,"teacher_minade":0.586,"s
+== rule as is 20:41:03
+pass
+== s1 ok in 80 s: {"final":{"chosen_step":10,"chosen_ade":6.08944,"chosen_tag":"main","stop_step":40,"decay_end":40,"min_step":5},"last_train":{"step":40,"kv":0.77685,"vit":0.30248,"traj_ce":8.01494,"lm":5.11491,"fm":2.79328,"s_per_step":1.023,"peak_mem_gb":1.9},"last_eval":{"step":40,"eval_kv":0.73039,"eval_vit":0.26562,"eval_traj_ce":6.50219,"eval_lm":4.97564,"eval_fm":1.23877,"peak_mem_gb":1.9},"best_eval":{"eva
+== pytest 20:42:23
+  /home/taeyun_kim/morai-student/pylib/pulp/pulp.py:318: DeprecationWarning: Constructing LpVariable(name, ...) directly is deprecated; in PuLP 4.0 use prob.add_variable(name, lowBound, upBound, cat=...). Variables are then attached to the model when created.
+    _v4_deprecation(msg, stacklevel=2)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+58 passed, 130 warnings in 85.87s (0:01:25)
+== done 20:43:52

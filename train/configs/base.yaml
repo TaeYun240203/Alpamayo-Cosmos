@@ -1,0 +1,99 @@
+# Shared by all teacher runs; trainer values are the recipe's Stage 1 (alpamayo1_5_sft @2e907da: sft_base + sft_stage1_nav).
+# Launch (cwd = train/):
+#   python -m morai_vla.train --config-name step2 paths.alpamayo15=<release dir> data.root=<step-0 share> [resume=true]
+# (the recipe's alpamayo1_5_sft.train_hf also runs these configs, without resume)
+paths:
+  alpamayo15: ???                          # Alpamayo-1.5-10B release dir (HF snapshot: config.json + model-0000x-of-00005.safetensors)
+  output_dir: ./output_${task_name}
+
+data:
+  root: ???                                # step-0 share: <ep>/{cams.bin,cams_index.npz,lidar.bin,lidar_index.npz}, _ego/, _index/
+  coc_parquet: ${data.root}/_coc/coc_dataset.parquet   # CoC labels (tools/coc_labeler); v1.1: ~/coc_runs/coc_v1_1/coc_dataset.parquet
+  collate_fn:
+    _target_: morai_vla.processor.collate_fn
+    _partial_: true
+  train_dataset:
+    _target_: morai_vla.data.MoraiDataset
+    _recursive_: false
+    root: ${data.root}
+    split: train
+    coc: false                             # recipe CoC mode off: all rows, trajectory only. true: CoC keyframes only
+    coc_parquet: ${data.coc_parquet}
+    frame_stride: 5                        # 2 Hz rows; neighbouring 0.1 s rows are near duplicates
+    cell_keep: {C0: 0.4, C3: 0.65, C5: 0.55}   # overfull cells (DATA_PLAN 7: C0 12.1/4 h, C3 13.5/7, C5 11.3/5) down to ~C1's share
+    lidar_dropout: 0.15                    # MODEL_PLAN 4.3: every run; morai_vla.data.lidar_dropped = the shared mask
+    max_samples: null                      # set for overfit/smoke runs
+    augment: true
+    seed: 0
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+  val_dataset:
+    _target_: morai_vla.data.MoraiDataset
+    _recursive_: false
+    root: ${data.root}
+    split: [val, val_asset]                # scene-seed holdout + rows near held-out assets (splits.json)
+    coc: ${data.train_dataset.coc}
+    coc_parquet: ${data.coc_parquet}
+    frame_stride: 10
+    max_samples: 512
+    lidar_dropout: 0.0
+    augment: false
+    seed: 0
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+
+model:
+  _target_: morai_vla.model.TeacherVLA.build
+  init: ${paths.alpamayo15}
+  vlm_name_or_path: Qwen/Qwen3-VL-8B-Instruct   # public; same tokenizer as the release's gated nvidia/Cosmos-Reason2-8B (checked)
+  attn_implementation: flash_attention_2
+  dtype: bfloat16
+  strict: true
+  train_parts: ???
+  loss_weights: ???
+
+callbacks:
+  loss_components:
+    _target_: morai_vla.model.LossComponentsCallback
+  nonfinite_stop:                          # first NaN/inf loss or grad norm ends the run (pipeline gate halts on it)
+    _target_: morai_vla.guards.NonFiniteStop
+
+trainer:
+  output_dir: ${paths.output_dir}
+  per_device_train_batch_size: 1
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 4
+  learning_rate: 1e-5
+  warmup_steps: 500
+  lr_scheduler_type: cosine_warmup_with_min_lr
+  lr_scheduler_kwargs: {min_lr: 1e-6}
+  num_train_epochs: 3                      # recipe default; early-stop on the val loss (MODEL_PLAN 4.3)
+  max_steps: -1                            # > 0 overrides the epochs (step 2, smoke runs)
+  logging_steps: 10
+  save_strategy: steps
+  save_steps: 500
+  save_total_limit: 3
+  eval_strategy: steps
+  eval_steps: 500
+  bf16: true
+  dataloader_num_workers: 8
+  dataloader_persistent_workers: true
+  dataloader_prefetch_factor: 4
+  dataloader_pin_memory: true
+  remove_unused_columns: false
+  report_to: none
+  lr_multiplier: {vlm.model.visual: 0.1}   # recipe sft_stage1_nav: camera ViT incl. its mergers at 0.1x
+  ddp_find_unused_parameters: true         # a micro-batch with LiDAR dropped leaves the LiDAR ViT without grads
+  gradient_checkpointing: true
+  gradient_checkpointing_kwargs: {use_reentrant: false}
+  deepspeed: configs/deepspeed/zero2.json
+
+performance:                               # read by the recipe's train_hf; its PAI-only caches stay off
+  zip_cache: false
+  collate_cache: false
+  tf32: true
+  cudnn_benchmark: false
+
+task_name: teacher
+resume: null                               # checkpoint dir, or true = latest checkpoint in output_dir
+save_final: true                           # save output_dir/final at the end (false for smoke runs)

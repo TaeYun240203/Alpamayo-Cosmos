@@ -1,0 +1,109 @@
+# Stop-reinforcement fine-tune of WoWmayo (user 10/28 09:10; doc "와우마요 정지 보강 학습 계획", reports/r2ft_regression_analysis.md:
+# the R2 round stopped braking for red lights and dynamic obstacles; R2 had no red at all). A short hard-target run from the
+# R2 ft final (BF16): stopping behaviour 50 % (R2 A AEB / yield stops, R1 red approach / red stop), keeping 50 % (highway,
+# lane following, ring entry, replay without long ring waits, start relabel). Rows: scripts/stop_pools.py -> assets/stop/.
+# paths.s2 = the STARTING checkpoint of this round (R2 ft final; the pipeline stages it at $OUT/s2/final). The stop switch
+# compares with the real s2's lateral ADE on the same 1,000 general rows (stop_base, 10/28 R2 run step 0).
+defaults: [student_base, ft_reset, _self_]   # ft_reset: the mixture replaces base.yaml's single train dataset
+
+paths:
+  teacher: null                            # user 10/28: no T* (student_base: ???)
+  s2: ???                                  # s2 final (B2 runs/stageC/s2/final)
+  r2_root: ???                             # step-0 root of the R2 collection (its own _index/index.parquet, README "R2 미세조정")
+  stop_pools: assets/stop                  # scripts/stop_pools.py (this round's rows and val lists)
+  ft_pools: assets/ft                      # scripts/ft_pools.py: old-data pools (in the repo) + R2 episode lists (after the collection)
+  # start relabel of the old data (episode, i, src_i; 10 Hz rows, 54,285), confirmed by the user 10/27; in the step-0 mirror
+  # (B2 step0/_start_relabel/, winpc D:/share/2026_MORAI_step0/_start_relabel/). Also the replay's exclude list.
+  start_relabel: ${data.root}/_start_relabel/start_relabel_index.parquet
+  # user 10/28: lane-shaped 1.5 s histories (scripts/ft_synth_hist.py: R2 D train rows, old recovery 2 Hz train rows, R2 D
+  # start rows i < 15) next to the pools, shipped with the code; _ego and the index stay as they are
+  synth_hist: ${paths.ft_pools}/synth_hist.parquet
+
+model:
+  init: ${paths.s2}
+  # recipe: everything trains; kd_proj (the ViT KD map) only fed the T* ViT KD, frozen now that it is off
+  train_parts: [camera_vit, lidar, llm, lm_head, expert]
+  # user 10/28: GT only. GT rows: fm, traj_ce (no lm: the R2 data has no CoC labels); replay rows ("distill" source kind,
+  # the name kept for the code path): fm, traj_ce, lm (the answer's end token: coc false, as s2)
+  loss_weights: {kv: 0.0, vit: 0.0, fm: 1.0, traj_ce: 1.0, lm: 1.0, vkd: 0.0, coc_kl: 0.0}
+
+data:
+  train_dataset:
+    _target_: morai_vla.finetune.MixtureDataset
+    _recursive_: false
+    # recipe (DATA_PLAN_R2 7 "길이", corrected 10/27): one epoch; the NEW data (A + B + D) read twice as dense as before,
+    # ~4 Hz = the 2 Hz rows + per 0.5 s the row 0.2 or 0.3 s later, no sample twice; old sources from their 2 Hz rows only;
+    # samples = (new ~4 Hz rows) / 0.60 (= "2 Hz rows, 2 passes")
+    frame_stride: 5                        # the 2 Hz rows of the earlier stages
+    epochs: 1                              # total = new (R2) ~4 Hz rows / 0.30 (~40k); trainer.max_steps 1000 (32k) cuts it
+    extra_offsets: [2, 3]                  # grid rows (0.1 s) after each 2 Hz row: one of them per period (hash)
+    hist_dropout: 0.5                      # recipe: GT rows only (~40 % of all samples), zero-displacement history tokens
+    seed: 0                                # also the LiDAR dropout mask seed (= s2's): replay rows drop LiDAR exactly as in s2
+    common: {lidar_dropout: 0.15, jitter: [0.08, 0.12], augment: true}
+    vla_preprocess_args:
+      _target_: morai_vla.processor.get_preprocess_fn
+    sources:                               # user 10/28 09:10 (doc table + ring entry 5 % from replay)
+      r2_aeb:                              # R2 A AEB stops: 6.4 s before the stop to the stop (moving-prop-only episodes out, net rule)
+        {share: 0.15, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.stop_pools}/r2_aeb.parquet"}}
+      r2_yield:                            # R2 A yield stops, same window
+        {share: 0.10, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.stop_pools}/r2_yield.parquet"}}
+      red_approach:                        # R1 red light (signal 1), decelerating approach (v >= 1, v(+3 s) < v - 1)
+        {share: 0.15, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.stop_pools}/red_approach.parquet"}}
+      red_stop:                            # R1 red light, standing / waiting (incl. after a respawn)
+        {share: 0.10, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.stop_pools}/red_stop.parquet"}}
+      highway:                             # R1 CP10-CP12 (s 1118.7-1741.7)
+        {share: 0.10, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.stop_pools}/highway.parquet"}}
+      new_d:                               # lane following: R2 D, history real / zero / lane-shaped a third each (as the R2 round)
+        {share: 0.05, loss: gt, new: true, hist: thirds, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.ft_pools}/r2_D.parquet",
+                                                                  synth: "${paths.synth_hist}"}}
+      old_recovery:                        # lane following: old recovery rows (of the downloaded episodes), thirds
+        {share: 0.05, loss: gt, hist: thirds, dataset: {root: "${data.root}", split: train, keep: "${paths.stop_pools}/old_recovery.parquet",
+                                                       synth: "${paths.synth_hist}"}}
+      ring_entry:                          # R1 rows entering the ring without stopping (s 860-885, reports/ring_entry_20261028.md)
+        {share: 0.05, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.stop_pools}/ring_entry.parquet"}}
+      start_relabel:                       # as the R2 round (rows of the downloaded episodes)
+        {share: 0.05, loss: gt, dataset: {root: "${data.root}", split: train, keep: "${paths.stop_pools}/start_relabel.parquet"}}
+      replay:                              # s2 rows of the downloaded episodes (same cell balance), GT losses + lm, without the
+        # start-relabelled rows and without rows standing > 5 s at the ring entry (s 870-886)
+        {share: 0.20, loss: distill, dataset: {root: "${data.root}", split: train, cell_keep: {C0: 0.4, C3: 0.65, C5: 0.55},
+                                               keep: "${paths.stop_pools}/replay_episodes.parquet", exclude: "${paths.stop_pools}/replay_exclude.parquet"}}
+  val_dataset:                             # HF eval: base.yaml's old val 512 (replay-style rows: every loss), CoC off
+    coc: false                             # (base.yaml took it from the single train dataset ft_reset removed)
+
+trainer:
+  learning_rate: 1e-6                      # user 10/28: peak 1e-6, 50 warmup steps, cosine to 3e-7
+  warmup_steps: 50
+  lr_scheduler_type: cosine_warmup_with_min_lr
+  lr_scheduler_kwargs: {min_lr: 3e-7}      # HF: a ratio of the base LR (0.3), every group ends at 0.3 x its peak
+  lr_multiplier: {vlm.model.visual: 0.1, expert: 0.3, action_in_proj: 0.3, action_out_proj: 0.3}   # as the R2 round
+  num_train_epochs: 1
+  max_steps: 1000                          # user 10/28: 1,000 steps (32k samples)
+  load_best_model_at_end: false            # final/ = the last measurement (ft_select), as the R2 round
+  eval_steps: 500
+  save_steps: 500
+  save_total_limit: 3
+
+callbacks:
+  ft_select:                               # recipe: every ~500 steps the 4 validation sets; final = last measurement whose
+    _target_: morai_vla.finetune.FtSelect  # general ADE is not > 2 % above s2 final's (step 0), else the last one that is
+    every_steps: 500
+    ref: general
+    rel_worse: null                        # user 10/27 21h: final = the last checkpoint (was: last within +2 % general ADE); the 4 sets are records
+    stop_rel_worse: 1.0                    # user 10/28 04:1x "중단 스위치를 횡방향 ADE 기준으로 바꿔. general_wo_relabel 횡오차가 s2의
+    stop_metric: lat                       #   2배(+100 %)를 2번 연속 넘으면 멈춤" (was ade +25 %, before +10 %; null = off)
+    stop_patience: 2                       #   in 2 measurements in a row -> checkpoint + stop; pipeline gate_ft halts
+    stop_ref: general_wo_relabel           # user 10/28: the stop switch reads general without the start-relabelled rows (old
+    stop_exclude: ${paths.start_relabel}   #   "wait" GT, ~9 of the 1,000); final/ and the gate keep general
+    stop_base: 0.230                       # s2 final's general_wo_relabel lateral ADE on these rows (R2 run step 0): limit 0.460 m
+    sets:                                  # user 10/28: red stop (incl. standing), dynamic stop, general, curve
+      general:                             # the R2 run's exact 1,000 rows (assets/stop/general_val.parquet), = the gate set
+        - {root: "${data.root}", split: [val, val_asset], keep: "${paths.stop_pools}/general_val.parquet", n: 1000}
+      red_stop:                            # R1 held-out red-light rows: 150 decelerating approach + 150 standing
+        - {root: "${data.root}", split: [val, val_asset], keep: "${paths.stop_pools}/red_val.parquet", n: 300}
+      dynamic_stop:                        # R2 A held-out AEB / yield stop windows (2 Hz rows)
+        - {root: "${paths.r2_root}", split: [val, val_asset], keep: "${paths.stop_pools}/r2_dynstop_val.parquet", n: 300}
+      curve:                               # the R2 run's curve rows (old curve + R2 D held-out)
+        - {root: "${data.root}", split: [val, val_asset], keep: "${paths.stop_pools}/curve_val.parquet", n: 300}
+        - {root: "${paths.r2_root}", split: [val, val_asset], keep: "${paths.stop_pools}/curve_val_r2.parquet", n: 300}
+
+task_name: student_stop
