@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR\"/tools/cloud/tailnet_up.sh",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
+  }
+}
