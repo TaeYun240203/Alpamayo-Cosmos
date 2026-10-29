@@ -1,0 +1,51 @@
+# @package _global_
+# dyn-stop sources of student_lwf (pop-out + R2): scripts/lwf_mix.py --popout ~/lwf_check/step0_popout/_dyn_relabel --popout-ego ~/lwf_check/step0_popout/_ego --r2 ~/lwf_check/step0_r2/_dyn_relabel --r2-mix ~/lwf_check/step0_r2/_dyn_relabel/mix_ring --r2-ego ~/lwf_check/step0_r2/_ego --rowvis ~/lwf_check/rowvis.parquet --popout-index dyn_index_nav.parquet --drop-rh --near-passes 8 --out-popout /tmp/lwfb/p --out-r2 /tmp/lwfb/r --popout-share 0.35 --weight 8 --write-config ~/lwf_check/lwf_dynstop_boost.yaml
+data:
+  train_dataset:
+    sources:
+      popout_dyn_far_hard_onset:
+        {share: 0.025162, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_dyn_far_hard_onset.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_far_hard_rest:
+        {share: 0.003661, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_dyn_far_hard_rest.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_hidden_hard_onset:
+        {share: 0.103010, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_dyn_hidden_hard_onset.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_hidden_hard_rest:
+        {share: 0.000617, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_dyn_hidden_hard_rest.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_near_hard_onset:
+        {share: 0.017493, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_dyn_near_hard_onset.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_near_hard_rest:
+        {share: 0.000132, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_dyn_near_hard_rest.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_far_hard_onset:
+        {share: 0.149574, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_tunnel_far_hard_onset.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_far_hard_rest:
+        {share: 0.010871, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_tunnel_far_hard_rest.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_hidden_hard_onset:
+        {share: 0.038033, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_tunnel_hidden_hard_onset.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_hidden_hard_rest:
+        {share: 0.000197, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_tunnel_hidden_hard_rest.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_near_hard_onset:
+        {share: 0.001250, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index_nav.parquet, keep: "${paths.mix_lwf_popout}/popout_tunnel_near_hard_onset.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      dyn_stop_A_hard_onset:
+        {share: 0.008888, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_A_hard_onset.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_hard_rest:
+        {share: 0.000862, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_A_hard_rest.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_hold:
+        {share: 0.002600, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hold.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_popout_onset:
+        {share: 0.001655, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_A_popout_onset.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_popout_rest:
+        {share: 0.002245, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_A_popout_rest.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_soft_onset:
+        {share: 0.006926, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_A_soft_onset.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_A_soft_rest:
+        {share: 0.009324, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_A_soft_rest.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_hard_onset:
+        {share: 0.005519, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_B_hard_onset.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_hard_rest:
+        {share: 0.000445, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_B_hard_rest.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_hold:
+        {share: 0.001591, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hold.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_soft_onset:
+        {share: 0.006317, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_B_soft_onset.parquet", synth: "${paths.synth_dyn}"}}
+      dyn_stop_B_soft_rest:
+        {share: 0.003627, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix_lwf_r2}/dyn_stop_B_soft_rest.parquet", synth: "${paths.synth_dyn}"}}

@@ -1,0 +1,102 @@
+mix_lwf r2 10 popout 21 sync rc=0
+popout_mix stage: 0 virtual ego tables linked
+dyn_stage: 8508 virtual episodes staged, 0 skipped (original episode or ego table missing)
+dyn_stage: 10576 virtual episodes staged, 0 skipped (original episode or ego table missing)
+28 of 40 staged rows usable
+OK: 28 virtual rows through the unchanged loader, path error max 1.0e-05 m, history and sensors as the original
+40 of 40 staged rows usable
+OK: 40 virtual rows through the unchanged loader, path error max 1.3e-05 m, history and sensors as the original
+MixtureDataset popout_dyn_far_hard_onset: share 0.008 needs 858 samples, 74 rows: 103 from other offsets, 533 repeated
+MixtureDataset popout_dyn_far_rh: share 0.002 needs 202 samples, 32 rows: 38 from other offsets, 68 repeated
+MixtureDataset popout_dyn_hidden_hard_onset: share 0.039 needs 3936 samples, 518 rows: 796 from other offsets, 1586 repeated
+MixtureDataset popout_dyn_hidden_rh: share 0.022 needs 2268 samples, 318 rows: 466 from other offsets, 848 repeated
+MixtureDataset popout_dyn_near_hard_onset: share 0.004 needs 402 samples, 53 rows: 80 from other offsets, 163 repeated
+MixtureDataset popout_dyn_near_rh: share 0.001 needs 150 samples, 17 rows: 35 from other offsets, 64 repeated
+MixtureDataset popout_tunnel_far_hard_onset: share 0.062 needs 6315 samples, 860 rows: 1271 from other offsets, 2464 repeated
+MixtureDataset popout_tunnel_far_rh: share 0.019 needs 1921 samples, 358 rows: 537 from other offsets, 310 repeated
+MixtureDataset popout_tunnel_hidden_hard_onset: share 0.017 needs 1706 samples, 304 rows: 467 from other offsets, 327 repeated
+MixtureDataset popout_tunnel_hidden_rh: share 0.012 needs 1221 samples, 235 rows: 334 from other offsets, 182 repeated
+MixtureDataset popout_tunnel_near_hard_onset: share 0.000 needs 21 samples, 3 rows: 7 from other offsets, 5 repeated
+MixtureDataset popout_tunnel_near_rh: share 0.001 needs 60 samples, 12 rows: 16 from other offsets, 8 repeated
+MixtureDataset dyn_stop_A_hard_onset: share 0.008 needs 829 samples, 138 rows: 211 from other offsets, 204 repeated
+MixtureDataset dyn_stop_A_popout_onset: share 0.001 needs 107 samples, 19 rows: 20 from other offsets, 30 repeated
+MixtureDataset dyn_stop_A_soft_onset: share 0.004 needs 447 samples, 98 rows: 153 from other offsets, 0 repeated
+MixtureDataset dyn_stop_B_hard_onset: share 0.005 needs 521 samples, 51 rows: 57 from other offsets, 311 repeated
+MixtureDataset dyn_stop_B_soft_onset: share 0.005 needs 470 samples, 51 rows: 75 from other offsets, 242 repeated
+MixtureDataset dyn_pass_A_along: share 0.013 needs 1319 samples, 132 rows: 192 from other offsets, 731 repeated
+MixtureDataset dyn_pass_B_along: share 0.007 needs 710 samples, 20 rows: 36 from other offsets, 614 repeated
+MixtureDataset dyn_pass_B_late_cross: share 0.005 needs 533 samples, 61 rows: 95 from other offsets, 255 repeated
+MixtureDataset static_general_r1_03_06: share 0.001 needs 67 samples, 7 rows: 0 from other offsets, 60 repeated
+MixtureDataset static_general_r1_10p: share 0.074 needs 7545 samples, 2711 rows: 0 from other offsets, 4834 repeated
+MixtureDataset static_tunnel_r1_03_06: share 0.003 needs 333 samples, 35 rows: 0 from other offsets, 298 repeated
+MixtureDataset static_tunnel_r1_06_10: share 0.007 needs 704 samples, 72 rows: 0 from other offsets, 632 repeated
+MixtureDataset static_tunnel_r2_06_10: share 0.032 needs 3216 samples, 133 rows: 193 from other offsets, 2624 repeated
+MixtureDataset static_tunnel_r2_10p: share 0.028 needs 2873 samples, 631 rows: 943 from other offsets, 37 repeated
+MixtureDataset red_approach_6254: share 0.015 needs 1522 samples, 1157 rows: 0 from other offsets, 365 repeated
+MixtureDataset red_approach_4188: share 0.015 needs 1522 samples, 735 rows: 0 from other offsets, 787 repeated
+MixtureDataset red_approach_4356: share 0.015 needs 1522 samples, 1359 rows: 0 from other offsets, 163 repeated
+MixtureDataset lane_old_recovery: share 0.050 needs 5075 samples, 4695 rows: 0 from other offsets, 380 repeated
+mixture: 53 sources, shares 0.999998, schedule 101494, built in 480 s
+source popout_dyn_far_hard_onset: rows 177, samples 858, sampled 3 ok (synth hist 1)
+source popout_dyn_far_hard_rest: rows 206, samples 250, sampled 3 ok (synth hist 2)
+source popout_dyn_far_rh: rows 70, samples 202, sampled 3 ok (synth hist 0)
+source popout_dyn_hidden_hard_onset: rows 1314, samples 3936, sampled 3 ok (synth hist 1)
+source popout_dyn_hidden_hard_rest: rows 63, samples 47, sampled 3 ok (synth hist 1)
+source popout_dyn_hidden_rh: rows 784, samples 2268, sampled 3 ok (synth hist 0)
+source popout_dyn_near_hard_onset: rows 133, samples 402, sampled 3 ok (synth hist 0)
+source popout_dyn_near_hard_rest: rows 8, samples 6, sampled 3 ok (synth hist 1)
+source popout_dyn_near_rh: rows 52, samples 150, sampled 3 ok (synth hist 0)
+source popout_tunnel_far_hard_onset: rows 2131, samples 6315, sampled 3 ok (synth hist 1)
+source popout_tunnel_far_hard_rest: rows 1239, samples 918, sampled 3 ok (synth hist 3)
+source popout_tunnel_far_rh: rows 895, samples 1921, sampled 3 ok (synth hist 0)
+source popout_tunnel_hidden_hard_onset: rows 771, samples 1706, sampled 3 ok (synth hist 0)
+source popout_tunnel_hidden_hard_rest: rows 32, samples 18, sampled 3 ok (synth hist 0)
+source popout_tunnel_hidden_rh: rows 569, samples 1221, sampled 3 ok (synth hist 0)
+source popout_tunnel_near_hard_onset: rows 10, samples 21, sampled 3 ok (synth hist 1)
+source popout_tunnel_near_rh: rows 28, samples 60, sampled 3 ok (synth hist 0)
+source dyn_stop_A_hard_onset: rows 349, samples 829, sampled 3 ok (synth hist 1)
+source dyn_stop_A_hard_rest: rows 266, samples 161, sampled 3 ok (synth hist 1)
+source dyn_stop_A_hold: rows 358, samples 264, sampled 3 ok (synth hist 1)
+source dyn_stop_A_popout_onset: rows 39, samples 107, sampled 3 ok (synth hist 1)
+source dyn_stop_A_popout_rest: rows 584, samples 289, sampled 3 ok (synth hist 2)
+source dyn_stop_A_soft_onset: rows 253, samples 447, sampled 3 ok (synth hist 2)
+source dyn_stop_A_soft_rest: rows 2876, samples 1203, sampled 3 ok (synth hist 1)
+source dyn_stop_B_hard_onset: rows 108, samples 521, sampled 3 ok (synth hist 0)
+source dyn_stop_B_hard_rest: rows 79, samples 84, sampled 3 ok (synth hist 0)
+source dyn_stop_B_hold: rows 473, samples 161, sampled 3 ok (synth hist 1)
+source dyn_stop_B_soft_onset: rows 126, samples 470, sampled 3 ok (synth hist 0)
+source dyn_stop_B_soft_rest: rows 569, samples 539, sampled 3 ok (synth hist 1)
+source dyn_pass_A_along: rows 324, samples 1319, sampled 3 ok (synth hist 0)
+source dyn_pass_A_late_cross: rows 2101, samples 990, sampled 3 ok (synth hist 0)
+source dyn_pass_A_crossed: rows 2994, samples 990, sampled 3 ok (synth hist 0)
+source dyn_pass_B_along: rows 56, samples 710, sampled 3 ok (synth hist 0)
+source dyn_pass_B_late_cross: rows 156, samples 533, sampled 3 ok (synth hist 0)
+source dyn_pass_B_crossed: rows 697, samples 533, sampled 3 ok (synth hist 0)
+source static_general_r1_03_06: rows 34, samples 67, sampled 3 ok (synth hist 0), kd rows 34
+source static_general_r1_10p: rows 13561, samples 7545, sampled 3 ok (synth hist 0), kd rows 12282
+source static_tunnel_r1_03_06: rows 169, samples 333, sampled 3 ok (synth hist 0), kd rows 169
+source static_tunnel_r1_06_10: rows 365, samples 704, sampled 3 ok (synth hist 0), kd rows 365
+source static_tunnel_r1_10p: rows 4538, samples 485, sampled 3 ok (synth hist 0), kd rows 4538
+source static_tunnel_r2_06_10: rows 326, samples 3216, sampled 3 ok (synth hist 0), kd rows 326
+source static_tunnel_r2_10p: rows 1574, samples 2873, sampled 3 ok (synth hist 0), kd rows 1574
+source red_approach_7294: rows 8386, samples 1522, sampled 3 ok (synth hist 0)
+source red_approach_6254: rows 5730, samples 1522, sampled 3 ok (synth hist 1)
+source red_approach_4188: rows 3667, samples 1522, sampled 3 ok (synth hist 2)
+source red_approach_4356: rows 6793, samples 1522, sampled 3 ok (synth hist 1)
+source red_wait_7294: rows 77322, samples 1015, sampled 3 ok (synth hist 0)
+source red_wait_6254: rows 45089, samples 1015, sampled 3 ok (synth hist 1)
+source red_wait_4188: rows 33250, samples 1015, sampled 3 ok (synth hist 0)
+source red_wait_4356: rows 25681, samples 1015, sampled 3 ok (synth hist 1)
+source lane_r2_D: rows 15982, samples 10150, sampled 3 ok (synth hist 3), kd rows 15982
+source lane_old_recovery: rows 23452, samples 5075, sampled 3 ok (synth hist 1), kd rows 17721
+source replay: rows 461624, samples 30449, sampled 3 ok (synth hist 0), kd rows 251844
+set general: 1000 rows (assets/stop/general_val.parquet), first row ok
+set red_stop: 294 rows (assets/stop/red_val.parquet), first row ok
+set dynamic_stop: 156 rows (/home/taeyun_kim/lwf_check/step0_r2/_dyn_relabel/dyn_val.parquet), first row ok
+set curve: 300 rows (assets/stop/curve_val.parquet), first row ok
+set curve: 54 rows (assets/stop/curve_val_r2.parquet), first row ok
+set popout_onset: 197 rows (/home/taeyun_kim/lwf_check/step0_popout/_dyn_relabel/mix_lwf/popout_val_onset.parquet), first row ok
+set static: 300 rows (assets/ft/old_static.parquet), first row ok
+{"total": 101498, "new_rows_4hz": 15563, "gt_share": 0.7, "hist_drop_share": 0.4064, "hist_synth_share": 0.1865, "kd_share": 0.4448}
+lwf_load_check done in 541 s rc=0
+all loader checks: PASS rc=0

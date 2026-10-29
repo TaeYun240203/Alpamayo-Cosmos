@@ -157,8 +157,9 @@ class MoraiDataset(torch.utils.data.Dataset):
         self.synth = {}
         if synth:
             sy = pd.read_parquet(synth).astype({"episode": str}); sy = sy[sy.episode.isin(set(df.episode.astype(str)))]
-            df = pd.concat([df.astype({c: str for c in ("episode", "cell", "split", "nav_text")}).assign(synth_only=False),
-                            sy[sy.extra][["episode", "i", "cell", "split", "nav_text"]].assign(synth_only=True)], ignore_index=True)
+            ex = sy[sy.extra]                    # synth files without extra rows (dyn_synth_hist) carry no index columns (pandas 3: KeyError)
+            df = pd.concat([df.astype({c: str for c in ("episode", "cell", "split", "nav_text")}).assign(synth_only=False)]
+                           + ([ex[["episode", "i", "cell", "split", "nav_text"]].assign(synth_only=True)] if len(ex) else []), ignore_index=True)
             self.synth = {(e, int(i)): (x, y, h) for e, i, x, y, h in zip(sy.episode, sy.i, sy.hist_x, sy.hist_y, sy.hist_yaw)}
             log.info("synth %s: %d histories, %d extra rows", synth, len(self.synth), int(sy.extra.sum()))
         if keep:

@@ -54,6 +54,8 @@ SEE_M, SEE_DEG, H, N, DT = 50.0, 100.0, 6.4, 64, 0.1
 VIS_CFG = dict(bev_m=[20.0, 60.0, 20.0], lidar_x_m=1.4, occluder_m=2.0)
 CAR_M = (4.6, 1.9)
 STOP_KINDS = ["soft", "hard", "hold", "popout_soft", "popout_hard"]
+SEEN = None                                               # optional (track, tau) -> bool in place of the 50 m / 100 deg / LiDAR-ray
+# test (popout_relabel: the mover on the Front input, popout audit 10/29)
 
 
 def disp_series(path):
@@ -155,7 +157,9 @@ def one(args):
         for m, o in enumerate(elig):
             s, l, vs, vl, started = (q[i] for q in st[m])
             if not started or (o["cls"] != "person" and vs == 0 and vl == 0): continue   # a prop at rest = standing: avoid, never stop
-            if m not in seen_at:
+            if m not in seen_at and SEEN is not None:
+                if SEEN(o, tau[i]): seen_at[m] = i
+            elif m not in seen_at:
                 ce, se = math.cos(yaw[i]), math.sin(yaw[i]); ox, oy, _ = data.route_point(s, l)
                 fx, fy = ce * (ox - x_e[i]) + se * (oy - y_e[i]), -se * (ox - x_e[i]) + ce * (oy - y_e[i])
                 if (math.hypot(fx - 1.4, fy) <= SEE_M and abs(math.degrees(math.atan2(fy, fx - 1.4))) <= SEE_DEG

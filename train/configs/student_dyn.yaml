@@ -16,10 +16,11 @@ paths:
   teacher: null
   s2: ???                                  # START = R2 ft final: b2://morai2026-alpamayo/runs/r2ft/ft/final (the pipeline stages it at $OUT/s2/final)
   r2_root: ???                             # step-0 root of the R2 collection (with _dyn_relabel/ staged)
+  popout_root: /data/step0_popout                       # step-0 root of the near pop-out collection (B2 step0_popout, user 10/29), staged on the box
   stop_pools: assets/stop                  # the stop round's pools (val lists)
   ft_pools: assets/ft
   dyn: ${paths.r2_root}/_dyn_relabel      # B2 step0_r2/_dyn_relabel/
-  mix: ${paths.dyn}/mix                   # scripts/dyn_mix.py keep lists (rows already minus the replay exclusions)
+  mix: ${paths.dyn}/mix_ring              # scripts/dyn_mix.py keep lists minus the replay exclusions + ring stops (user 10/29: 링 안 정지 빼기; replay 660,537 -> 644,058 rows, other lists unchanged)
   synth_dyn: ${paths.dyn}/synth_hist_dyn.parquet   # speed-preserving lane histories: dyn_stop virtual rows + red 2 Hz rows
   synth_hist: ${paths.ft_pools}/synth_hist.parquet # the R2 round's lane histories (R2 D, old recovery)
   hist_real_synth: real_synth              # dyn_stop + red: real 50 / synth 50, no zero history (thirds: real / zero / synth 1/3)
@@ -43,20 +44,46 @@ data:
     vla_preprocess_args:
       _target_: morai_vla.processor.get_preprocess_fn
     sources:                               # scripts/dyn_mix.py (reports/dyn_relabel_20261028.md 6): dyn stop 17, dyn pass 5, static 15, red 10, lane 15, replay 38
+      # user 10/29 "돌출 70 %": R2 dyn stop = 30 % of the 17 % (5.1 % of all, every R2 sub-source x0.3); near pop-outs 11.9 % (step0_popout)
       dyn_stop_A_soft:
-        {share: 0.05525, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_soft.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.016575, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_soft.parquet", synth: "${paths.synth_dyn}"}}
       dyn_stop_A_hard:
-        {share: 0.03315, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hard.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.009945, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hard.parquet", synth: "${paths.synth_dyn}"}}
       dyn_stop_A_popout:
-        {share: 0.01326, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_popout.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.003978, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_popout.parquet", synth: "${paths.synth_dyn}"}}
       dyn_stop_A_hold:
-        {share: 0.00884, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hold.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.002652, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_A_hold.parquet", synth: "${paths.synth_dyn}"}}
       dyn_stop_B_soft:
-        {share: 0.03381, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_soft.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.010143, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_soft.parquet", synth: "${paths.synth_dyn}"}}
       dyn_stop_B_hard:
-        {share: 0.02028, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hard.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.006084, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hard.parquet", synth: "${paths.synth_dyn}"}}
       dyn_stop_B_hold:
-        {share: 0.00541, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hold.parquet", synth: "${paths.synth_dyn}"}}
+        {share: 0.001623, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.r2_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.mix}/dyn_stop_B_hold.parquet", synth: "${paths.synth_dyn}"}}
+      # near pop-outs (step0_popout, reports/popout_collect_plan_20261029.md): natural shares, zones >= 40 %, visible / hidden >= 35 %
+      popout_dyn_far_hard:
+        {share: 0.011081, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_ra_far_hard.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_far_rh:
+        {share: 0.001741, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_ra_far_rh.parquet"}}
+      popout_dyn_hidden_hard:
+        {share: 0.022015, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_ra_hidden_hard.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_hidden_rh:
+        {share: 0.009659, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_ra_hidden_rh.parquet"}}
+      popout_dyn_near_hard:
+        {share: 0.004879, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_ra_near_hard.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_dyn_near_rh:
+        {share: 0.001324, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_ra_near_rh.parquet"}}
+      popout_tunnel_far_hard:
+        {share: 0.040574, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_rb_far_hard.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_far_rh:
+        {share: 0.008581, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_rb_far_rh.parquet"}}
+      popout_tunnel_hidden_hard:
+        {share: 0.011449, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_rb_hidden_hard.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_hidden_rh:
+        {share: 0.006031, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_rb_hidden_rh.parquet"}}
+      popout_tunnel_near_hard:
+        {share: 0.000907, loss: gt, new: true, hist: "${paths.hist_real_synth}", dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_rb_near_hard.parquet", synth: "${paths.popout_root}/_dyn_relabel/synth_hist_popout.parquet"}}
+      popout_tunnel_near_rh:
+        {share: 0.000760, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: _dyn_relabel/dyn_index.parquet, keep: "${paths.popout_root}/_dyn_relabel/mix/popout_rb_near_rh.parquet"}}
       dyn_pass_A_along:
         {share: 0.01300, loss: gt, new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_along.parquet"}}
       dyn_pass_A_late_cross:

@@ -1,0 +1,26 @@
+# Emergency LwF variant (main 10/29; the user decides whether to run it): when step 1000's pop-out braking-onset rate is
+# less than +10 pp above step 0, 1,000 more steps from the main run's checkpoint-1000 with pop-outs 35 %, decision rows x8
+# and replay 10 % (main 10/29: replay 10 keeps the pop-outs at 35 %; dyn stop 40 / cruise 5 / pass 5 / static 15 / red 10 /
+# lane 15 / replay 10 = 100; the teacher still sees ~40 % of the rows). configs/lwf_dynstop_boost.yaml = scripts/lwf_mix.py
+# --popout-share 0.35 --weight 8 --drop-rh --near-passes 8, written by tools/vast/lwf_box.sh next to lwf_dynstop.yaml.
+# Launch (on the box, after the main ft stopped at or past checkpoint-1000):
+#   STAGES="ft qad deliver qgate" FT_CFG=student_lwf_boost QAD_CFG=student_qad_lwf \
+#   FTEXTRA="paths.ft_ckpt=$OUT/ft/checkpoint-1000 callbacks.ft_select.stop_base=<step 0 general_wo_relabel lat of the main run>"
+#   (OUT for this run: a new dir, so the main run's ft/ stays)
+defaults: [student_lwf, lwf_dynstop_boost, _self_]
+
+paths:
+  ft_ckpt: ???                             # the main run's <OUT>/ft/checkpoint-1000
+
+model:
+  init: ${paths.ft_ckpt}                   # the teacher stays the R2 ft final (model.teacher = paths.s2)
+
+data:
+  train_dataset:
+    sources:
+      replay: {share: 0.10000}
+
+trainer:
+  max_steps: 1000
+
+task_name: student_lwf_boost

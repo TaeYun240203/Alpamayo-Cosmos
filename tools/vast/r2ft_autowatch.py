@@ -17,7 +17,8 @@ from ~/.claude/channels/discord/.env), touches ~/.r2ft-watch.hb, and keeps going
          last metrics sync > 30 min ago | free disk < 50 GB | idle watchdog not running
   STAGE  ft start (first s/step, steps, ETA) | QAD start | delivery done (B2 path) | qgate result | done + destroy result
   STATUS every 30 min (user 10/28 "주기적으로 보고 받고 싶어"): phase, step / steps, s/step, ETA, last 4 val ADEs and the
-         stop-switch margin, GPU min-max util, cost so far
+         stop-switch margin, braking onset (popout_onset brake, general / static false_brake, each with step 0's; 10/29,
+         shown only, no alert), GPU min-max util, cost so far
 Every STAGE / ALERT / STATUS line also goes to ~/.r2ft-watch.events (time-stamped), which the main session reads.
 End (user 10/28 "다 되면 바로 인스턴스 지우고"): on PIPELINE_DONE only (never after HALT / stop switch: those stay resumable)
 it checks B2 from the box (deliver/final file count + bytes = the box's, deliver/gate.json, qgate/summary.json, metrics),
@@ -38,6 +39,7 @@ echo now=$(date +%s)
 pgrep -f "scripts/[p]ipeline.sh" > /dev/null && echo pipe=1 || echo pipe=0
 echo r1=$(ep "$(grep -m1 "R1 step0 sync done" $C 2>/dev/null | cut -c1-19)")
 echo pstart=$(ep "$(grep -m1 "pipeline start" $C 2>/dev/null | cut -c1-19)")
+echo gpufail=$([ -e /workspace/GPU_CHECK_FAIL ] && echo 1 || echo 0)   # r2ft_stage.sh gpu_check.py
 echo chainfail=$(grep -c "FAILED" $C 2>/dev/null)      # a non-zero pipeline exit shows as HALT / pipe_gone (and a resume is not the chain's)
 echo ftstarts=$(grep -cE " ft start$" $P 2>/dev/null)
 st=$(grep -E "^=== [0-9-]+ [0-9:]+ [a-z0-9_]+ (start|done in)" $P 2>/dev/null | grep -v "pipeline start" | tail -1)
@@ -56,7 +58,8 @@ echo val=$(python3 -c "
 import json; d = json.load(open('$O/ft/ft_select.json')); h = sorted(d['history'], key=lambda x: x['step'])
 r, m = d.get('stop_ref', 'general_wo_relabel'), d.get('stop_metric', 'ade')      # the live run's switch (user 10/28: lat +100 %)
 g = lambda x: x['ade'].get(r) if m == 'ade' else (x.get('metrics') or {}).get(r, {}).get(m)
-print(json.dumps(dict(step=h[-1]['step'], ade=h[-1]['ade'], base=h[0]['ade'], sm=m, sr=d.get('stop_rel_worse'), sv=g(h[-1]), s0=d.get('stop_base') or g(h[0])), separators=(',', ':')))" 2>/dev/null)
+k = lambda x: {s: {q: e[q] for q in ('brake', 'false_brake') if q in e} for s, e in (x.get('metrics') or {}).items() if s in ('popout_onset', 'popout_pre', 'general', 'static')}
+print(json.dumps(dict(step=h[-1]['step'], ade=h[-1]['ade'], base=h[0]['ade'], sm=m, sr=d.get('stop_rel_worse'), sv=g(h[-1]), s0=d.get('stop_base') or g(h[0]), bk=k(h[-1]), bk0=k(h[0])), separators=(',', ':')))" 2>/dev/null)
 echo stopm=$(python3 -c "import json; print(json.load(open('$O/ft/ft_stop.json')).get('stop_metric', 'ade'))" 2>/dev/null)
 echo speed_n=$(cat /workspace/out/speed/loss_components.jsonl 2>/dev/null | grep -c s_per_step)
 echo speed_sps=$(grep -o '"s_per_step_median": [0-9.]*' /workspace/out/speed/SPEED.json 2>/dev/null | awk '{print $2}')
@@ -138,6 +141,13 @@ def status(p, s, now, cfg):
         if v.get("sv") is not None and v.get("s0"):                # the switch the running FtSelect uses (ft_select.json)
             r = v["sv"] / v["s0"] - 1; name = {"ade": "ADE", "lat": "횡오차"}.get(v.get("sm"), v.get("sm"))
             txt += f", 중단 기준 {name} s2 대비 {100 * r:+.1f} %" + (" (스위치 꺼짐)" if v.get("sr") is None else f" (한계 +{100 * v['sr']:.0f} %)")
+        bk, b0 = v.get("bk") or {}, v.get("bk0") or {}               # braking onset (FtSelect brake_rates; absent in old runs)
+        f = lambda st, q: f"{bk[st][q]:.2f} (s0 {b0[st][q]:.2f})" if q in b0.get(st, {}) else f"{bk[st][q]:.2f}"
+        pc = lambda d: f"{100 * d['popout_onset']['brake']:.0f} %" + (f" / pre {100 * d['popout_pre']['brake']:.0f} %" if "brake" in d.get("popout_pre", {}) else "")
+        if "brake" in bk.get("popout_onset", {}):                   # 10/29: onset vs pre-onset rows (a place shortcut brakes on both)
+            txt += f", 제동 onset {pc(bk)}" + (f" (s0 {pc(b0)})" if "brake" in b0.get("popout_onset", {}) else "")
+        fb = [f"{k2} {f(k, 'false_brake')}" for k, k2 in (("general", "일반"), ("static", "정적")) if "false_brake" in bk.get(k, {})]
+        if fb: txt += ", 오제동 " + "·".join(fb)
         parts.append(f"검증(step {v['step']}) {txt}")
     u = [int(x) for x in p.get("gpu", "").split(",") if x.strip().isdigit()]
     if u: parts.append(f"GPU {min(u)}–{max(u)} %")
@@ -158,6 +168,7 @@ def decide(p, s, now, cfg):
     age = now - cfg["rented"]
     if s.get("vast") not in (None, "running"): A("vast", f"vast 상태가 running이 아님: {s['vast']}")
     if num(p, "chainfail", int): A("chainfail", "체인 FAILED (chain.log)")
+    if num(p, "gpufail", int) and not num(p, "pstart", int): A("gpufail", "GPU 점검 FAIL — 학습 전이라 상자를 바로 지움")   # user 10/29: "바로 껐어야지"
     ft_n, qad_n = num(p, "ft_n", int, 0), num(p, "qad_n", int, 0)
     if age > 1800 and not num(p, "speed_n", int) and not ft_n: A("stoploss", "대여 30분이 지나도 속도 측정·본 학습 step 없음 (손절 기준)")
     r1 = num(p, "r1", int, 0)
@@ -299,6 +310,10 @@ def main():
             s["dph"] = vast(cfg, "dph_total") or s.get("dph")
         p = probe(cfg); k += 1
         evs = decide(p, s, now, cfg)
+        if any(key == "gpufail" for _, key, _ in evs):   # no training yet, nothing to sync: destroy at once (user 10/29)
+            r = subprocess.run(["vastai", "destroy", "instance", a.id, "-y"], capture_output=True, text=True)
+            t = f"GPU 점검 FAIL: 학습 전이라 상자 {a.id} 바로 삭제 {'완료' if r.returncode == 0 else '실패 — 직접 지울 것'}"
+            log_event("ALERT", t); dm(f"[r2ft {a.run}] 🚨 {t}"); return
         active = {key for _, key, _ in evs}
         logged = s.setdefault("logged", [])
         for kind, key, text in evs:

@@ -1,0 +1,5 @@
+# Used by student_lwf only: drops student_dyn's sources so student_lwf lists its own mixture (onset / rest splits) instead
+# of adding to it. OmegaConf merges dicts key by key; a null in between replaces the node (as ft_reset).
+data:
+  train_dataset:
+    sources: null

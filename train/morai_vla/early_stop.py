@@ -19,7 +19,7 @@ import numpy as np, torch
 from safetensors.torch import load_file, save_file
 from transformers.trainer_callback import TrainerCallback
 
-from morai_vla.data import MoraiDataset
+from morai_vla.data import DT, MoraiDataset
 from morai_vla.processor import collate_fn, get_preprocess_fn
 
 log = logging.getLogger(__name__)
@@ -40,9 +40,21 @@ class TrajSamples(torch.utils.data.Dataset):
         return {key: v for key, v in d.items() if key not in ("camera_frames", "bev_frames")}
 
 
-def expert_ade(model, samples, num_samples=6, num_workers=4, detail=False, batch=1):
+def brake_drops(hist_xy, pred_xy, gt_xy, window=1.0):
+    """braking onset of one row (reports/lwf_dynstop_recipe_20261029.md section 6): v0 = the last history step / DT (history[-1]
+    is the origin, points DT apart); a path's drop = v0 - its lowest speed over the first `window` s (speed of each DT step,
+    the first one from the origin). hist_xy (16, 2), pred_xy (K, 64, 2), gt_xy (64, 2) -> {v0, pred_drop, gt_drop}.
+    pred_drop = the mean of the K per-sample drops (= v0 - the mean of the per-sample minima): a braking share of the samples
+    shows as a partial drop instead of one outlier sample deciding it."""
+    n, v0 = round(window / DT), float((hist_xy[-1] - hist_xy[-2]).norm()) / DT
+    low = lambda xy: (torch.diff(xy[..., :n, :], dim=-2, prepend=torch.zeros_like(xy[..., :1, :])).norm(dim=-1) / DT).amin(-1)
+    return {"v0": v0, "pred_drop": v0 - float(low(pred_xy).mean()), "gt_drop": v0 - float(low(gt_xy))}
+
+
+def expert_ade(model, samples, num_samples=6, num_workers=4, detail=False, batch=1, brake_s=1.0):
     """[(key, ADE over 6.4 s averaged over num_samples)]: check_release's traj_ade per row. detail: [(key, {ade, fde, lat,
-    lon})], lat / lon = mean |error| across / along the GT path (GT heading per point, scripts/lateral_error.split_error).
+    lon, v0, pred_drop, gt_drop})], lat / lon = mean |error| across / along the GT path (GT heading per point,
+    scripts/lateral_error.split_error); v0 / pred_drop / gt_drop = brake_drops over the first brake_s s.
     batch > 1: rows share one prefill and one Euler loop (left padded); each row starts from the noise it draws alone
     (seed 0), so only the padding can move the numbers (README "R2 속도 최적화": checked against batch 1 on a GPU)."""
     m = getattr(model, "module", model); was_training = m.training; m.eval(); out = []
@@ -59,7 +71,9 @@ def expert_ade(model, samples, num_samples=6, num_workers=4, detail=False, batch
                     out.append((item["key"], float(err.mean()))); continue
                 r = b["ego_future_rot"][j, 0].float(); c, s = r[:, 0, 0], r[:, 1, 0]                        # GT heading cos, sin (64,)
                 out.append((item["key"], {"ade": float(err.mean()), "fde": float(err[:, -1].mean()),
-                                          "lat": float((c * d[..., 1] - s * d[..., 0]).abs().mean()), "lon": float((c * d[..., 0] + s * d[..., 1]).abs().mean())}))
+                                          "lat": float((c * d[..., 1] - s * d[..., 0]).abs().mean()), "lon": float((c * d[..., 0] + s * d[..., 1]).abs().mean()),
+                                          **brake_drops(b["ego_history_xyz"][j, 0, :, :2].float(), xyz[j, ..., :2].float(),
+                                                        b["ego_future_xyz"][j, 0, :, :2].float(), brake_s)}))
     finally:
         m.train(was_training)
     return out

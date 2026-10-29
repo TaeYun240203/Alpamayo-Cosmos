@@ -86,4 +86,13 @@ lv = '{"step":1500,"ade":{"general":1.5},"base":{},"sm":"lat","sr":1.0,"sv":0.32
 assert "중단 기준 횡오차 s2 대비 +40.0 % (한계 +100 %)" in status(BASE | ft_running(now, val=lv), {}, now, OFF)
 lat_stop = sh | dict(halt="2026 ft stop switch at step 2000", stopm="lat")                  # the new switch fired: real ALERT
 assert {"halt", "stop"} <= keys(now, {}, OFF, **lat_stop), keys(now, {}, OFF, **lat_stop)
+assert "gpufail" in keys(now, {}, CFG, gpufail="1", pstart="0")                        # staging gpu_check FAIL: destroy (10/29)
+assert "gpufail" not in keys(now, {}, CFG, **ft_running(now, gpufail="1"))               # once training runs it is no reason
+# braking onset (10/29): popout_onset brake + general / static false_brake with step 0's; silent when the run has none
+assert "제동" not in t
+bv = val[:-1] + ',"bk":{"popout_onset":{"brake":0.42},"popout_pre":{"brake":0.08},"general":{"brake":0.1,"false_brake":0.03},"static":{"false_brake":0.05}},' \
+     '"bk0":{"popout_onset":{"brake":0.31},"popout_pre":{"brake":0.06},"general":{"false_brake":0.02}}}'
+t = status(BASE | ft_running(now, val=bv), {}, now, CFG)
+assert "제동 onset 42 % / pre 8 % (s0 31 % / pre 6 %), 오제동 일반 0.03 (s0 0.02)·정적 0.05 |" in t, t
+assert "오제동 일반" in status(BASE | ft_running(now, val=val[:-1] + ',"bk":{"general":{"false_brake":0.03}},"bk0":{}}'), {}, now, CFG)
 print("test_r2ft_autowatch: all passed")

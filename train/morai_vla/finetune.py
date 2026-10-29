@@ -21,6 +21,12 @@ Each item also carries, for StudentVLA.forward:
              the zero-displacement or the lane-shaped history (MoraiDataset synth; hist_xyz / hist_rot) a third each; a row
              without a lane-shaped history keeps its real one. R2 D start rows (synth_only) always use theirs.
   vkd_ok     replay rows: s2's soft-target rule check (MoraiDataset rule_ok); GT rows False
+  kd_row     only when a source has `kd: true` (LwF, configs/student_lwf.yaml): the row is distilled from the frozen
+             self-teacher (StudentVLA kd_row), except rows whose _ego signal at i (or in the next kd_skip_horizon grid
+             rows) is in kd_skip_signal (1 = red, an estimate: reports/r2ft_regression_analysis.md): GT only. kd_all (LwF
+             QAD, teacher = the ft final itself): every row of every source
+  hist: red_split  (LwF replay, user 10/29 "replay 전체") kd rows real / zero by hist_dropout; the red rows (kd_skip_*)
+             real / zero / synthetic a third each like the stop rows, real / zero when the row has no synthetic history
 FtSelect: final/ selection. Every `every_steps` (and at step 0 = s2 final, and at the last step) the expert's trajectory
 ADE (early_stop.expert_ade: 6.4 s, mean of K samples, LiDAR on, seed 0 per sample) on the validation sets (general,
 dynamic, static, curve); final/ = the last measurement whose `ref` set ADE is not more than rel_worse above the step-0
@@ -30,6 +36,9 @@ Records (user 10/27 "메트릭을 철저히 기록"): per set also FDE and the m
 frame (ft_select.json `metrics`), every row in <output_dir>/ft_val_rows.jsonl; scripts/ft_metrics.py makes CSVs and figures.
 Stop switch (user 10/28): reads `stop_ref` = the ref set without the rows of `stop_exclude` (general_wo_relabel: the
 start-relabelled rows keep their old "wait" GT in the gate set); the selection and the gate keep `ref`.
+Braking onset (10/29, record only: no selection / stop use): per set also brake / false_brake / brake_hit (brake_rates; per
+row v0 / pred_drop / gt_drop from early_stop.brake_drops) - popout_onset's brake = 제동 시작률, general / static's
+false_brake = 오제동률.
 """
 import hashlib, json, logging, math, time
 from pathlib import Path
@@ -96,27 +105,47 @@ def plan(rows, shares, new, stride=5, extra=(2, 3), seed=0, epochs=1):
     return sched[rng.permutation(len(sched))], summary
 
 
+def signal_rows(ds, codes, horizon=0):
+    """rows of a MoraiDataset whose _ego signal is one of `codes` at grid row i or in the next `horizon` grid rows (64 = the
+    6.4 s future); an episode without a signal array has none."""
+    out, i = np.zeros(len(ds.rows), bool), ds.rows.i.to_numpy()
+    for ep, k in ds.rows.groupby(ds.rows.episode.astype(str)).indices.items():
+        with np.load(ds.root / "_ego" / f"{ep}.npz") as z:
+            if "signal" not in z: continue
+            c = np.r_[0, np.cumsum(np.isin(z["signal"], codes))]                    # hits in [i, i + horizon]
+            out[k] = c[np.minimum(i[k] + horizon + 1, len(c) - 1)] > c[i[k]]
+    return out
+
+
 class MixtureDataset(torch.utils.data.Dataset):
-    """sources: {name: {share, loss: gt | distill, new: bool, dataset: MoraiDataset kwargs}}; common: MoraiDataset kwargs
+    """sources: {name: {share, loss: gt | distill, new: bool, [kd: bool,] dataset: MoraiDataset kwargs}}; common: MoraiDataset kwargs
     shared by every source (lidar_dropout, jitter, augment). Sources read every grid row; frame_stride and extra_offsets
     define the 2 Hz / ~4 Hz row sets (module docstring)."""
 
     def __init__(self, sources, frame_stride=5, extra_offsets=(2, 3), hist_dropout=0.5, seed=0, common=None, model_config=None,
-                 vla_preprocess_args=None, epochs=1):
+                 vla_preprocess_args=None, epochs=1, kd_skip_signal=(1,), kd_skip_horizon=0, kd_all=False):
         self.names = list(sources); self.hist_dropout, self.seed, self.stride = hist_dropout, seed, frame_stride
         self.loss = [sources[s]["loss"] for s in self.names]
         self.thirds = [sources[s].get("hist") == "thirds" for s in self.names]
         self.real_synth = [sources[s].get("hist") == "real_synth" for s in self.names]   # 10/28 dyn ft: stop rows real / synth 1/2, no zero
+        self.red_split = [sources[s].get("hist") == "red_split" for s in self.names]     # 10/29 LwF replay (user "replay 전체")
         assert set(self.loss) <= set(LOSSES), self.loss
         self.parts = [MoraiDataset(**{**(common or {}), **sources[s]["dataset"], "frame_stride": 1}, seed=seed, model_config=model_config,
                                    vla_preprocess_args=vla_preprocess_args) for s in self.names]
         self.schedule, self.summary = plan({s: (p.rows.episode.astype(str).to_numpy(), p.rows.i.to_numpy()) for s, p in zip(self.names, self.parts)},
                                            {s: float(sources[s]["share"]) for s in self.names},
                                            [s for s in self.names if sources[s].get("new")], frame_stride, tuple(extra_offsets), seed, epochs)
+        need = [bool(sources[s].get("kd")) and not kd_all or rs for s, rs in zip(self.names, self.red_split)]
+        self.red = [signal_rows(p, list(kd_skip_signal), kd_skip_horizon) if n else None for p, n in zip(self.parts, need)]
+        self.kd = [np.ones(len(p.rows), bool) if kd_all else ~red if sources[s].get("kd") else None for s, p, red in zip(self.names, self.parts, self.red)]
         drop, syn = map(np.array, zip(*(self._hist_mode(k) for k in range(len(self.schedule))))) if len(self.schedule) else ([], [])
         gt = np.array([self.loss[j] == "gt" for j in self.schedule[:, 0]], bool)
         self.summary.update(gt_share=round(float(gt.mean()), 4), hist_drop_share=round(float(np.mean(drop)), 4),
                             hist_synth_share=round(float(np.mean(syn)), 4))   # synth: before the per-row availability check
+        if any(k is not None for k in self.kd):                                  # LwF: rows the self-teacher distils
+            for s, red in zip(self.names, self.red):
+                if red is not None: self.summary["sources"][s]["signal_rows"] = int(red.sum())   # GT only (kd), thirds (red_split)
+            self.summary["kd_share"] = round(float(np.mean([self.kd[j] is not None and self.kd[j][r] for j, r in self.schedule[:, :2]])), 4)
         log.info("MixtureDataset: %s", json.dumps(self.summary))
 
     def __len__(self):
@@ -126,6 +155,10 @@ class MixtureDataset(torch.utils.data.Dataset):
         """(zero-displacement history, lane-shaped history) of schedule position k, before the per-row checks."""
         j, r = int(self.schedule[k, 0]), int(self.schedule[k, 1]); u = mix("hist", self.seed, k)
         rows = self.parts[j].rows
+        if self.red_split[j]:                    # kd rows real / zero (the teacher sees the same tokens); red rows as stop rows:
+            if not self.red[j][r]: return u < self.hist_dropout, False                  # thirds, real / zero without a synth one
+            if (str(rows.episode.iat[r]), int(rows.i.iat[r])) in self.parts[j].synth: return u < 1 / 3, 1 / 3 <= u < 2 / 3
+            return u < self.hist_dropout, False
         if self.loss[j] != "gt" or bool(rows.synth_only.iloc[r] if "synth_only" in rows else False): return False, False
         if self.real_synth[j]: return False, u < 0.5
         return (u < 1 / 3, 1 / 3 <= u < 2 / 3) if self.thirds[j] else (u < self.hist_dropout, False)
@@ -140,6 +173,7 @@ class MixtureDataset(torch.utils.data.Dataset):
                     hist_rot=sr if syn else torch.eye(3).expand(1, 16, 3, 3).clone(),
                     vkd_ok=not gt and bool(item.get("vkd_ok", False)), source=self.names[j], ft_tier=t,
                     ft_offset=int(self.parts[j].rows.i.iloc[r]) % self.stride)
+        if any(k is not None for k in self.kd): item["kd_row"] = self.kd[j] is not None and bool(self.kd[j][r])   # LwF configs only
         return item
 
 
@@ -175,9 +209,23 @@ def choose(history, ref="general", rel_worse=0.02):
     return max(ok, key=lambda h: h["step"]), base
 
 
+def brake_rates(rows, drop=1.5, v_min=2.0):
+    """braking onset per set (reports/lwf_dynstop_recipe_20261029.md section 6) from expert_ade detail rows (v0, pred_drop,
+    gt_drop): brake = share of rows with pred_drop >= drop (on popout_onset's decision rows: the onset rate);
+    false_brake = the same share among rows with v0 >= v_min and gt_drop < drop (general / static: false braking);
+    brake_hit = the same share among rows with gt_drop >= drop. NaN without such rows; {} when the rows lack the keys."""
+    e = [x for _, x in rows if "pred_drop" in x]
+    if not e: return {}
+    p, g, v = (np.array([x[k] for x in e], float) for k in ("pred_drop", "gt_drop", "v0"))
+    hit = p >= drop
+    share = lambda m: round(float(hit[m].mean()), 5) if m.any() else math.nan
+    return {"brake": share(np.ones_like(hit)), "false_brake": share((v >= v_min) & (g < drop)), "brake_hit": share(g >= drop)}
+
+
 class FtSelect(TrainerCallback):
     def __init__(self, sets, every_steps=500, ref="general", rel_worse=0.02, num_samples=6, num_workers=4, stop_rel_worse=None,
-                 stop_patience=2, batch=1, stop_ref=None, stop_exclude=None, stop_metric="ade", stop_base=None):
+                 stop_patience=2, batch=1, stop_ref=None, stop_exclude=None, stop_metric="ade", stop_base=None,
+                 brake_drop=1.5, brake_s=1.0, brake_v=2.0):
         assert ref in sets, (ref, list(sets))
         # user 10/28: the stop switch reads the ref set without the start-relabelled rows (their GT is the old "wait" label)
         self.stop_ref, self.stop_exclude = stop_ref or ref, stop_exclude
@@ -187,6 +235,7 @@ class FtSelect(TrainerCallback):
         self.stop, self.patience = stop_rel_worse, stop_patience      # stop switch: run control only, not the selection
         self.stop_metric = stop_metric                                # user 10/28: ade | lat (|lateral error|, GT heading frame) | fde | lon
         self.stop_base = stop_base                                    # fixed reference (10/28 stop round: s2's value, not step 0's)
+        self.brake_drop, self.brake_s, self.brake_v = brake_drop, brake_s, brake_v   # brake_rates: m/s, window s, moving m/s (record only)
         self.samples = self.st = self._skip = None
 
     def _file(self, args):
@@ -212,9 +261,10 @@ class FtSelect(TrainerCallback):
         if self.samples is None:
             self.samples = {name: FtValSamples(parts, m.config, rank, world) for name, parts in self.sets.items()}
         ade, n, met = {}, {}, {}
-        mean = lambda rows: {k: round(float(np.mean([e[k] for _, e in rows])), 5) if rows else math.nan for k in ("ade", "fde", "lat", "lon")}
+        mean = lambda rows: {k: round(float(np.mean([e[k] for _, e in rows])), 5) if rows else math.nan for k in ("ade", "fde", "lat", "lon")} | \
+            brake_rates(rows, self.brake_drop, self.brake_v)
         for name, samples in self.samples.items():
-            rows = expert_ade(m, samples, self.k, self.workers, detail=True, batch=self.batch)
+            rows = expert_ade(m, samples, self.k, self.workers, detail=True, batch=self.batch, brake_s=self.brake_s)
             if dist:
                 parts = [None] * world; torch.distributed.all_gather_object(parts, rows); rows = [r for p in parts for r in p]
             met[name] = mean(rows); ade[name], n[name] = met[name]["ade"], len(rows)

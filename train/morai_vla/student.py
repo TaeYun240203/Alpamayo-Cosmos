@@ -23,6 +23,11 @@ R2 fine-tune (DATA_PLAN_R2 7, morai_vla/finetune.py) adds two per-row batch keys
   hist_drop  True: the 16-point ego history reaches the LLM as zero displacements (the car standing still, the input the
              deployment builds before it has any history). Only the history TOKENS change: the action space keeps the
              real history for v0, the (a, kappa) targets and the integration, as at inference.
+LwF (configs/student_lwf.yaml, reports/lwf_plan_20261029.md): `self_teacher` loads the teacher as a saved student (the R2 ft
+final, frozen copy of the init), and the per-row key `kd_row` (MixtureDataset sources with `kd: true`) replaces ~gt_row
+as the rows of kv and vkd (vkd without the rule_ok gate) and of traj_kl, KL(T || S) on the trajectory answer tokens. The
+GT losses (fm, traj_ce) of kd rows are weighted by loss_weights kd_gt. A micro-batch without kd rows skips the teacher
+when vit and coc_kl are off. Batches without kd_row train as before.
 """
 import json, logging, zlib
 from pathlib import Path
@@ -98,7 +103,7 @@ class StudentVLA(TeacherVLA):
         super().__init__(config, pretrained_modules, original_vocab_size)
         d = self.vlm.config.vision_config.hidden_size
         self.vit_kd = nn.ModuleDict({k: nn.Linear(d, config.teacher_vit_hidden) for k in ("camera", "lidar")})
-        self.loss_weights = dict(kv=1.0, vit=1.0, fm=1.0, traj_ce=1.0, lm=1.0, vkd=0.0, coc_kl=0.0)
+        self.loss_weights = dict(kv=1.0, vit=1.0, fm=1.0, traj_ce=1.0, lm=1.0, vkd=0.0, coc_kl=0.0, traj_kl=0.0, kd_gt=1.0)
         self.vit_feats = hook_vit_features(self)
         self.eval_sums = {}                     # loss components of the current evaluation (EvalComponentMetric)
 
@@ -106,12 +111,14 @@ class StudentVLA(TeacherVLA):
     @classmethod
     def build(cls, teacher=None, init=None, vlm_name_or_path="Qwen/Qwen3-VL-4B-Instruct", teacher_vlm="Qwen/Qwen3-VL-8B-Instruct",
               distill=True, train_parts=(), loss_weights=None, attn_implementation=None, dtype="bfloat16", vlm_overrides=None,
-              strict=True, master_fp32=False, **load_kwargs):
+              strict=True, master_fp32=False, self_teacher=False, **load_kwargs):
         """teacher: T* checkpoint dir (until T* exists: the 1.5 release or the step-2 checkpoint; a tiny teacher in tests).
         It runs frozen in every step (distill) and is the source of a new student's expert.
         init: None = new student from the pretrained vlm_name_or_path (4B weights, LiDAR ViT copy, new rows for the
         3,761 added tokens, T*'s expert); 'random' = random VLM of that config + vlm_overrides (tests), T*'s expert;
-        a directory = a saved student (stage 2, evaluation), loaded strictly. teacher=None: no distillation (evaluation)."""
+        a directory = a saved student (stage 2, evaluation), loaded strictly. teacher=None: no distillation (evaluation).
+        self_teacher: `teacher` is a saved BF16 student (LwF: the R2 ft final), loaded as this class with init's VLM."""
+        assert not self_teacher or (init and init != "random"), "a self-teacher needs a saved student as init"
         if init and init != "random":
             if (Path(init) / "modelopt_state.pth").exists():
                 import morai_vla.qad  # noqa: F401  (ModelOpt restores the quantizers inside from_pretrained)
@@ -127,7 +134,10 @@ class StudentVLA(TeacherVLA):
                 model = cls._from_pretrained_vlm(teacher, vlm_name_or_path, attn_implementation, getattr(torch, dtype), extra)
             transplant(model, teacher)
             model.set_stage(train_parts, loss_weights, master_fp32)
-        if teacher and distill:
+        if teacher and distill and self_teacher:
+            assert not (Path(teacher) / "modelopt_state.pth").exists(), f"self-teacher {teacher} is fake-quantized: give the BF16 one"
+            model.attach_teacher(cls.build(init=teacher, vlm_name_or_path=vlm_name_or_path, attn_implementation=model.config.attn_implementation, dtype=dtype))
+        elif teacher and distill:
             T = TeacherVLA.build(teacher, vlm_name_or_path=teacher_vlm, attn_implementation=model.config.attn_implementation, dtype=dtype)
             model.attach_teacher(T)
         return model
@@ -171,15 +181,17 @@ class StudentVLA(TeacherVLA):
     # ------------------------------------------------------------------ training forward
     def forward(self, tokenized_data, ego_history_xyz=None, ego_history_rot=None, ego_future_xyz=None, ego_future_rot=None,
                 labels_mask=None, vkd_ok=None, key=None, gt_row=None, hist_drop=None, source=None, hist_synth=None, hist_xyz=None,
-                hist_rot=None, **kwargs):
+                hist_rot=None, kd_row=None, **kwargs):
         w, T = self.loss_weights, self.teacher
-        assert T is not None or not any(w[k] for k in ("kv", "vit", "vkd", "coc_kl")), "distillation needs the teacher"
+        assert T is not None or not any(w[k] for k in ("kv", "vit", "vkd", "coc_kl", "traj_kl")), "distillation needs the teacher"
         td = dict(tokenized_data)
         is_lidar = td.pop("image_is_lidar", None)
         traj_data = dict(ego_history_xyz=ego_history_xyz, ego_history_rot=ego_history_rot, ego_future_xyz=ego_future_xyz, ego_future_rot=ego_future_rot)
         raw_ids = td.pop("input_ids")
         input_ids = self.fuse_traj_tokens(raw_ids, traj_data)
         distill = ~torch.as_tensor(gt_row if gt_row is not None else [False] * len(raw_ids), dtype=torch.bool, device=raw_ids.device)
+        kd = distill if kd_row is None else torch.as_tensor(kd_row, dtype=torch.bool, device=raw_ids.device)   # rows of kv, vkd, traj_kl
+        gw = None if kd_row is None or w["kd_gt"] == 1 else torch.where(kd, w["kd_gt"], 1.0)                    # GT weight per row (LwF)
         if hist_drop is not None and any(hist_drop):
             input_ids = self.drop_history_tokens(raw_ids, input_ids, traj_data, torch.as_tensor(hist_drop, dtype=torch.bool, device=raw_ids.device))
         if hist_synth is not None and any(hist_synth):                           # R2 recovery rows (user 10/28): lane-shaped tokens
@@ -189,13 +201,13 @@ class StudentVLA(TeacherVLA):
         attn = td["attention_mask"]
         start = int((input_ids == self.config.traj_token_ids["future_start"]).nonzero()[-1, 1]) + 1
         has_coc = (input_ids == self.special_token_ids["cot_start"]).any(1)
-        need_logits = w["traj_ce"] > 0 or w["lm"] > 0 or w["coc_kl"] > 0
+        need_logits = w["traj_ce"] > 0 or w["lm"] > 0 or w["coc_kl"] > 0 or w["traj_kl"] > 0
         keep = input_ids.shape[1] - int(labels_mask.float().argmax(1)[labels_mask.any(1)].min()) + 1   # logits from the first
         labels = labels[:, -keep:]                                                                    # answer token on only
         losses = {}
         with torch.autocast("cuda", torch.bfloat16, enabled=input_ids.is_cuda):      # fp32 action inputs, bf16 weights (DeepSpeed)
             self.vit_feats.clear()
-            if T is not None:
+            if T is not None and (kd_row is None or bool(kd.any()) or w["vit"] > 0 or w["coc_kl"] > 0):   # LwF: no kd row, no teacher
                 with torch.no_grad():
                     if T.device != input_ids.device: T.to(input_ids.device)
                     T.vit_feats.clear()
@@ -203,12 +215,12 @@ class StudentVLA(TeacherVLA):
                     if self.teacher_vit_only and gt_row is not None and all(gt_row) and w["coc_kl"] == 0:   # GT rows only:
                         T.vlm.model.get_image_features(td["pixel_values"], td["image_grid_thw"])          # T* feeds vit KD only
                     else:
-                        t_out = T.vlm(input_ids=input_ids, use_cache=True, logits_to_keep=keep if w["coc_kl"] > 0 else 1, **td)
+                        t_out = T.vlm(input_ids=input_ids, use_cache=True, logits_to_keep=keep if w["coc_kl"] > 0 or w["traj_kl"] > 0 else 1, **td)
             self.vlm.model._image_is_lidar = is_lidar
             out = self.vlm(input_ids=input_ids, use_cache=True, logits_to_keep=keep if need_logits else 1, **td)
             frac = lambda m: m.float().mean() if gt_row is not None else 1.0   # R2 mixture: replay-only losses keep per-row
-            if w["kv"] > 0 and bool(distill.any()):                              # weights at any batch size (batch 1: x 1)
-                losses["kv"] = kv_mse(out.past_key_values, t_out.past_key_values, attn, start, distill)[0] * frac(distill)
+            if w["kv"] > 0 and bool(kd.any()):                                   # weights at any batch size (batch 1: x 1)
+                losses["kv"] = kv_mse(out.past_key_values, t_out.past_key_values, attn, start, kd)[0] * frac(kd)
             if w["vit"] > 0:
                 vit = F.mse_loss(self.vit_kd["camera"](self.vit_feats["camera"]).float(), T.vit_feats["camera"].float())
                 if "lidar" in self.vit_feats:   # a LiDAR-free batch has only the zero-weighted pass LidarQwen3VLModel runs while
@@ -218,7 +230,15 @@ class StudentVLA(TeacherVLA):
             if need_logits:
                 traj = ((labels >= self.future_token_start_idx) & (labels < self.future_token_start_idx + self.config.traj_vocab_size)
                         | (labels == self.special_token_ids["traj_future_start"]) | (labels == self.special_token_ids["traj_future_end"]))
-                losses["traj_ce"] = self._compute_next_token_loss(out, labels, traj)
+                if gw is None:
+                    losses["traj_ce"] = self._compute_next_token_loss(out, labels, traj)
+                else:                                                            # per-token weights (dagger/loss.py idiom)
+                    sel = traj[:, 1:]; ce = F.cross_entropy(out.logits[:, :-1][sel].float(), labels[:, 1:][sel], reduction="none")
+                    losses["traj_ce"] = (ce * gw[sel.nonzero()[:, 0]]).mean() if len(ce) else ce.sum()
+                kl = (traj & kd[:, None])[:, 1:]                                 # LwF: the teacher's trajectory tokens
+                if w["traj_kl"] > 0 and bool(kl.any()):
+                    ls, lt = out.logits[:, :-1][kl].float().log_softmax(-1), t_out.logits[:, :-1][kl].float().log_softmax(-1)
+                    losses["traj_kl"] = F.kl_div(ls, lt, log_target=True, reduction="batchmean") * frac(kd)
                 other = labels.masked_fill(traj | ~distill[:, None], IGNORE_INDEX)   # lm: replay rows only (GT rows: no CoC)
                 if bool(distill.any()):
                     losses["lm"] = self._compute_next_token_loss(out, other, other != IGNORE_INDEX) * frac(distill)
@@ -236,12 +256,13 @@ class StudentVLA(TeacherVLA):
                         fut = self._process_traj_future_training(traj_data)
                 v = self._velocity(out, input_ids, attn, fut["noisy_x"], fut["timesteps"], detach=False).float()
                 per = lambda d: d.pow(2).mean((1, 2))
-                losses["fm"] = masked_mean(per(v - (fut["x"] - fut["noise"]).float()), fm_rows)
-                if w["vkd"] > 0 and bool(distill.any()) and (vkd_ok is not None or self.training):
-                    assert vkd_ok is not None, "vkd needs the soft-target rule check: set data.train_dataset.rule_ok"
+                fm = per(v - (fut["x"] - fut["noise"]).float())
+                losses["fm"] = masked_mean(fm if gw is None else fm * gw, fm_rows)
+                if w["vkd"] > 0 and bool(kd.any()) and (vkd_ok is not None or kd_row is not None or self.training):
+                    assert vkd_ok is not None or kd_row is not None, "vkd needs the soft-target rule check: set data.train_dataset.rule_ok"
                     with torch.no_grad():
                         v_t = T._velocity(t_out, input_ids, attn, fut["noisy_x"], fut["timesteps"]).float()
-                    vk = fm_rows & distill & torch.as_tensor(vkd_ok, device=fm_rows.device)
+                    vk = fm_rows & (kd if kd_row is not None else kd & torch.as_tensor(vkd_ok, device=fm_rows.device))   # LwF: no rule gate
                     losses["vkd"] = masked_mean(per(v - v_t), vk) * frac(vk)
         # R2 mixture: also per source as "<source>/<loss>" (batch 1 = one source per micro-batch; a mixed batch is "mixed")
         src = None if source is None or not self.training else source[0] if len(set(source)) == 1 else "mixed"

@@ -5,7 +5,8 @@ the row's real history tokens, zero history (the fine-tune's dropout) and the la
 Per row / model / history / seed: ADE, |lateral| and signed longitudinal error at 3 s and 6.4 s (+ = ahead of GT, i.e.
 too fast / too far), path length vs GT; the first seed's predicted path for overlays.
 Usage (cwd train/): python scripts/ft_probe.py --root /data/step0 --keep keep.parquet --synth synth.parquet --s2 <s2/final>
-    --snapshot <ft_snapshots/step-1000.safetensors> --out <dir> [--k 2]"""
+    [--snapshot <ft_snapshots/step-1000.safetensors>] [--more tag=<full ckpt> ...] --out <dir> [--k 2]
+--more (10/29 history probe): further full checkpoints (e.g. r2ft=<runs/r2ft/ft/final>), each run like s2 under its tag."""
 import argparse, json, sys
 from pathlib import Path
 
@@ -42,7 +43,8 @@ def run(model, tag, ds, synth, k, f):
 
 def main():
     ap = argparse.ArgumentParser()
-    for k in ("--root", "--keep", "--synth", "--s2", "--snapshot", "--out"): ap.add_argument(k, required=True)
+    for k in ("--root", "--keep", "--synth", "--s2", "--out"): ap.add_argument(k, required=True)
+    ap.add_argument("--snapshot"); ap.add_argument("--more", nargs="*", default=[])
     ap.add_argument("--k", type=int, default=2); ap.add_argument("--device", default="cuda:0")
     a = ap.parse_args(); out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     sy = pd.read_parquet(a.synth); synth = {r.key: (r.hist_x, r.hist_y, r.hist_yaw) for r in sy.itertuples()}
@@ -51,11 +53,16 @@ def main():
     print("rows", len(ds.rows), flush=True)
     with open(out / "probe_rows.jsonl", "w") as f:
         run(model, "s2", ds, synth, a.k, f)
-        sd = load_file(a.snapshot, device="cpu")                                 # trainable params at step N (FtSelect snapshot)
-        missing, unexpected = model.m.load_state_dict(sd, strict=False)
-        assert not unexpected and not set(sd) & set(missing), (unexpected[:5], list(set(sd) & set(missing))[:5])
-        print("snapshot", a.snapshot, len(sd), "tensors", flush=True); del sd
-        run(model, "ft", ds, synth, a.k, f)
+        if a.snapshot:
+            sd = load_file(a.snapshot, device="cpu")                             # trainable params at step N (FtSelect snapshot)
+            missing, unexpected = model.m.load_state_dict(sd, strict=False)
+            assert not unexpected and not set(sd) & set(missing), (unexpected[:5], list(set(sd) & set(missing))[:5])
+            print("snapshot", a.snapshot, len(sd), "tensors", flush=True); del sd
+            run(model, "ft", ds, synth, a.k, f)
+        for tm in a.more:
+            tag, ck = tm.split("=", 1); del model; torch.cuda.empty_cache()
+            model = BF16(ck, a.device); print("model", tag, ck, flush=True)
+            run(model, tag, ds, synth, a.k, f)
     (out / "DONE").touch()
 
 

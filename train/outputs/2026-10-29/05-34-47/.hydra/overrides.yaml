@@ -1,0 +1,16 @@
+- +tiny=student_ft
+- paths.s2=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/s2/final
+- paths.r2_root=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/root
+- data.root=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/root
+- paths.ft_pools=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/root/_ft
+- paths.start_relabel=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/root/_ft/start_relabel.parquet
+- paths.output_dir=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/ft
+- trainer.max_steps=8
+- paths.teacher=/private/tmp/claude-501/-Users-taeyunkim-Library-Mobile-Documents-com-apple-CloudDocs-Workspaces-Alpamayo-Cosmos/cd963fbd-2384-4a14-85db-500c2dfa7ceb/scratchpad/lwf_tiny/s2/final
+- +model.self_teacher=true
+- model.loss_weights.vkd=1.0
+- +model.loss_weights.traj_kl=0.5
+- +data.train_dataset.kd_skip_signal=[1]
+- +data.train_dataset.sources.replay.kd=true
+- +data.train_dataset.sources.old_recovery.kd=true
+- +data.train_dataset.sources.new_d.kd=true

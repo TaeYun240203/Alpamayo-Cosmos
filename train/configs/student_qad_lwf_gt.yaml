@@ -1,0 +1,13 @@
+# LwF QAD memory fallback (user 10/29: keep a GT-only QAD for when the BF16 teacher does not fit): student_qad_lwf without a
+# teacher, i.e. student_qad_dyn's losses on the LwF mixture. Re-run after an OOM: STAGES="qad deliver qgate" QAD_CFG=student_qad_lwf_gt.
+defaults: [student_qad_lwf, _self_]
+
+model:
+  teacher: null
+  loss_weights: {vkd: 0.0}
+
+data:
+  train_dataset:
+    kd_all: false
+
+task_name: student_qad_lwf_gt

@@ -1,0 +1,44 @@
+# LwF QAD (user 10/29 "이걸로 하자"): the classic QAD teacher, the LwF ft final itself (BF16, frozen), with vkd + GT on every
+# row (data.train_dataset.kd_all), so the quantized student keeps the ft's stopping instead of drifting back to R2 ft; on
+# student_lwf's mixture and history modes, with student_qad_dyn's quantization and schedule (= student_qad: 4.75 bits,
+# 800 steps, lr 1e-6, final/ = best eval_fm). qad_search scores with the same loss (teacher included).
+# Teacher path: the pipeline keeps the ft final at <OUT>/ft/final next to <OUT>/qad (= paths.output_dir), so
+# paths.qad_teacher needs no override there (scripts/pipeline_student.sh unchanged). Memory fallbacks: QAD_CFG=student_qad_lwf_gt
+# (no teacher, GT only); the search alone without the teacher: QEXTRA="model.teacher=null model.loss_weights.vkd=0.0".
+#   python scripts/qad_search.py --config-name student_qad_lwf ... model.init=<lwf ft final> +out=<search dir>   (one GPU)
+#   torchrun ... -m morai_vla.train --config-name student_qad_lwf ... model.init=<search dir>                   (QAD training)
+defaults: [student_lwf, _self_]
+
+paths:
+  qad_teacher: ${paths.output_dir}/../ft/final
+
+model:
+  init: ???                                # ft/final for the search, then the search dir (has modelopt_state.pth)
+  teacher: ${paths.qad_teacher}            # BF16 ft final (a QAD dir is refused)
+
+data:
+  train_dataset:
+    kd_all: true                           # every row of every source, red rows too (the teacher is the model being quantized)
+
+quant:                                     # = student_qad_dyn
+  effective_bits: 4.75
+  calib_samples: 128
+  num_calib_steps: 64
+  num_score_steps: 32
+
+trainer:                                   # = student_qad_dyn
+  max_steps: 800
+  lr_scheduler_kwargs: {min_lr: 1e-6}
+  learning_rate: 1e-6
+  lr_multiplier: null
+  warmup_steps: 50
+  eval_steps: 200
+  save_steps: 200
+  load_best_model_at_end: true
+  metric_for_best_model: eval_fm
+  greater_is_better: false
+
+callbacks:
+  ft_select: null
+
+task_name: student_qad_lwf

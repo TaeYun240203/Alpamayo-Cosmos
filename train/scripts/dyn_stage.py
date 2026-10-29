@@ -3,7 +3,7 @@ step0_r2 and its _dyn_relabel/ are downloaded: for every virtual episode of _dyn
 gets relative links to the original episode's sensor files and ROOT/_ego/<virtual>.npz links to _dyn_relabel/ego/. The
 loader is unchanged: the dyn sources read index _dyn_relabel/dyn_index.parquet. Idempotent; a virtual episode whose
 original (or ego table) is missing is skipped and counted (MoraiDataset would skip it too).
-Usage: python train/scripts/dyn_stage.py R2_ROOT
+Usage: python train/scripts/dyn_stage.py R2_ROOT [--relabel-dir _dyn_relabel]   (pop-out v2 labels: --relabel-dir _dyn_relabel_v2)
 """
 import sys
 from pathlib import Path
@@ -15,20 +15,20 @@ EXTRA = ("meta.json",)
 
 
 def main():
-    root = Path(sys.argv[1])
-    vi = pd.read_parquet(root / "_dyn_relabel/dyn_index.parquet", columns=["episode", "src_episode"]).drop_duplicates("episode")
+    root = Path(sys.argv[1]); rd = sys.argv[sys.argv.index("--relabel-dir") + 1] if "--relabel-dir" in sys.argv else "_dyn_relabel"
+    vi = pd.read_parquet(root / rd / "dyn_index.parquet", columns=["episode", "src_episode"]).drop_duplicates("episode")
     made = skipped = 0
     for v, src in zip(vi.episode, vi.src_episode):
-        ego = root / "_dyn_relabel/ego" / f"{v}.npz"
+        ego = root / rd / "ego" / f"{v}.npz"
         if not ego.exists() or not all((root / src / f).exists() for f in SENSORS): skipped += 1; continue
         d = root / v; d.mkdir(exist_ok=True)
         for f in SENSORS + EXTRA:
             if (root / src / f).exists() and not (d / f).is_symlink(): (d / f).symlink_to(Path("..") / src / f)
         e = root / "_ego" / f"{v}.npz"
-        if not e.is_symlink(): e.symlink_to(Path("../_dyn_relabel/ego") / ego.name)
+        if not e.is_symlink(): e.symlink_to(Path("..") / rd / "ego" / ego.name)
         made += 1
     print(f"dyn_stage: {made} virtual episodes staged, {skipped} skipped (original episode or ego table missing)")
-    assert made, "nothing staged: is _dyn_relabel/ next to the episode folders?"
+    assert made, f"nothing staged: is {rd}/ next to the episode folders?"
 
 
 if __name__ == "__main__":

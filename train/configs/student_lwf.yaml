@@ -1,0 +1,106 @@
+# LwF dynamic-stop fine-tune of WoWmayo (user 10/29 "오케이 이걸로 해보자"; recipe reports/lwf_dynstop_recipe_20261029.md,
+# implementation reports/lwf_plan_20261029.md). Start = R2 ft final (BF16); the teacher is a frozen copy of it loaded as a
+# student (model.self_teacher, morai_vla/student.py "LwF"), run on the kd rows only with the student's tokens. Keep rows
+# (lane / curve, replay, static avoidance) take the teacher's velocity field next to their GT; answer rows (dyn stop incl.
+# pop-outs, red, dyn pass) stay GT only, and so does every row at or turning red within 6.4 s (kd_skip_*).
+# Changes against student_dyn (the dynbal run): 2,000 steps; dyn stop 25 % (pop-outs 20 %, R2 5 %) with each stop list split
+# into decision rows (label braking start tau_b <= tau < tau_b + 1 s) and the rest, a decision row weighing 4 rest rows of
+# its list (scripts/lwf_mix.py --norm cell); replay 30 %; stop and red rows' history real / zero / synthetic a third each; replay history dropped too (hist: red_split).
+# The dyn-stop sources below are lwf_mix.py's output with the audit's visibility rule (--rowvis, approved 10/29: a stop row
+# counts from the first row the mover is >= 30 px on Front after >= 0.3 s of motion), without the pop-out restart rows (user 10/29
+# "그래...", lwf_mix.py --drop-rh), the near-shoulder stop cells seen ~8 times (user 10/29 "켜", --near-passes 8). Pop-out rows read
+# _dyn_relabel/dyn_index_nav.parquet: nav_text from each row's own path_s (scripts/popout_nav_fix.py, audit 10/29).
+# Launch: pipeline_student.sh FT_CFG=student_lwf QAD_CFG=student_qad_lwf. The teacher = paths.s2 (one checkpoint on the box).
+# It sits in model.teacher, not paths.teacher: gate_student.py (qgate) builds paths.teacher as a T* (TeacherVLA, 8B), so
+# paths.teacher stays null (student_dyn) and the gates measure the student alone, as before.
+defaults: [student_dyn, sources_reset, lwf_dynstop, _self_]
+
+paths:
+  popout_dyn: ${paths.popout_root}/_dyn_relabel_v2            # pop-out label dir, the one knob (10/29 rebuild; where it lands is being settled)
+  mix_lwf_popout: ${paths.popout_dyn}/mix_lwf                 # scripts/lwf_mix.py out (box: tools/vast/lwf_box.sh; B2 runs/lwf/<RUN>/mix_lwf_popout)
+  mix_lwf_r2: ${paths.dyn}/mix_lwf                            # scripts/lwf_mix.py out (B2 step0_r2/_dyn_relabel/mix_lwf)
+  hist_real_synth: thirds                  # recipe B: dyn stop (R2 + pop-out hard) and red rows real / zero / synthetic 1/3 each
+
+lwf:                                       # 확정 (user 10/29 "제안대로"): teacher (true) or GT only (false)
+  static: true                             # static avoidance 15 %: R2 ft had no static-obstacle stop (r2stop's 19 m stop came later)
+  dyn_pass: false                          # dynamic pass 5 %: movers in view, where R2 ft's braking is not trusted
+
+model:
+  teacher: ${paths.s2}                     # the R2 ft final = the start (frozen copy, BF16; a QAD dir is refused)
+  self_teacher: true
+  # 확정 10/29 ("제안대로"): vkd 1.0 = MSE(v_student, v_teacher) at the GT loss's (x_t, t) on kd rows (no rule_ok gate); kv and traj_kl off;
+  # kd_gt 1.0 = kd rows keep their GT fm / traj_ce at full weight (0 = teacher only)
+  loss_weights: {kv: 0.0, vit: 0.0, fm: 1.0, traj_ce: 1.0, lm: 1.0, vkd: 1.0, coc_kl: 0.0, traj_kl: 0.0, kd_gt: 1.0}
+
+data:
+  train_dataset:
+    epochs: 3                              # schedule ~92k samples over the new rows (new share 46 %); 2,000 steps read 64k of it
+    kd_skip_signal: [1]                    # _ego signal 1 = red (estimate, reports/r2ft_regression_analysis.md): GT only
+    kd_skip_horizon: 64                    # also rows turning red within the 6.4 s future (replay +6.6 %, old recovery +21.9 %)
+    sources:                               # dyn stop 25 (pop-out 20, R2 5: configs/lwf_dynstop.yaml) / cruise 5 / dyn pass 5 / static 15 / red 10 / lane 15 / replay 25
+      popout_cruise:                       # main 10/29: original pop-out rows up to onset - 0.5 s + episodes without an event -> cruise
+        # (same places, parked cars, standing people: no place shortcut, no stop for people who stay put); GT, real / zero history
+        {share: 0.05000, loss: gt, new: true, dataset: {root: "${paths.popout_root}", split: train, index: "${paths.popout_dyn}/popout_index.parquet", keep: "${paths.popout_dyn}/mix/popout_cruise.parquet"}}
+      dyn_pass_A_along:
+        {share: 0.01300, loss: gt, kd: "${lwf.dyn_pass}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_along.parquet"}}
+      dyn_pass_A_late_cross:
+        {share: 0.00975, loss: gt, kd: "${lwf.dyn_pass}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_late_cross.parquet"}}
+      dyn_pass_A_crossed:
+        {share: 0.00975, loss: gt, kd: "${lwf.dyn_pass}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_A_crossed.parquet"}}
+      dyn_pass_B_along:
+        {share: 0.00700, loss: gt, kd: "${lwf.dyn_pass}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_B_along.parquet"}}
+      dyn_pass_B_late_cross:
+        {share: 0.00525, loss: gt, kd: "${lwf.dyn_pass}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_B_late_cross.parquet"}}
+      dyn_pass_B_crossed:
+        {share: 0.00525, loss: gt, kd: "${lwf.dyn_pass}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/dyn_pass_B_crossed.parquet"}}
+      static_general_r1_03_06:
+        {share: 0.00066, loss: gt, kd: "${lwf.static}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_general_r1_03_06.parquet"}}
+      static_general_r1_10p:
+        {share: 0.07434, loss: gt, kd: "${lwf.static}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_general_r1_10p.parquet"}}
+      static_tunnel_r1_03_06:
+        {share: 0.00328, loss: gt, kd: "${lwf.static}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_tunnel_r1_03_06.parquet"}}
+      static_tunnel_r1_06_10:
+        {share: 0.00694, loss: gt, kd: "${lwf.static}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_tunnel_r1_06_10.parquet"}}
+      static_tunnel_r1_10p:
+        {share: 0.00478, loss: gt, kd: "${lwf.static}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/static_tunnel_r1_10p.parquet"}}
+      static_tunnel_r2_06_10:
+        {share: 0.03169, loss: gt, kd: "${lwf.static}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/static_tunnel_r2_06_10.parquet"}}
+      static_tunnel_r2_10p:
+        {share: 0.02831, loss: gt, kd: "${lwf.static}", new: true, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/static_tunnel_r2_10p.parquet"}}
+      red_approach_7294:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_7294.parquet", synth: "${paths.synth_dyn}"}}
+      red_approach_6254:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_6254.parquet", synth: "${paths.synth_dyn}"}}
+      red_approach_4188:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_4188.parquet", synth: "${paths.synth_dyn}"}}
+      red_approach_4356:
+        {share: 0.01500, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_approach_4356.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_7294:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_7294.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_6254:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_6254.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_4188:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_4188.parquet", synth: "${paths.synth_dyn}"}}
+      red_wait_4356:
+        {share: 0.01000, loss: gt, hist: "${paths.hist_real_synth}", dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/red_wait_4356.parquet", synth: "${paths.synth_dyn}"}}
+      lane_r2_D:
+        {share: 0.10000, loss: gt, kd: true, new: true, hist: thirds, dataset: {root: "${paths.r2_root}", split: train, keep: "${paths.mix}/lane_r2_D.parquet", synth: "${paths.synth_hist}"}}
+      lane_old_recovery:
+        {share: 0.05000, loss: gt, kd: true, hist: thirds, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/lane_old_recovery.parquet", synth: "${paths.synth_hist}"}}
+      replay:                              # user 10/29 "replay 전체": kd rows real / zero, red rows thirds (synth_dyn has 82 % of them)
+        {share: 0.25000, loss: distill, kd: true, hist: red_split, dataset: {root: "${data.root}", split: train, keep: "${paths.mix}/replay.parquet", cell_keep: {C0: 0.4, C3: 0.65, C5: 0.55}, synth: "${paths.synth_dyn}"}}
+
+trainer:
+  max_steps: 2000                          # 64,000 samples (recipe D: pop-outs ~2.5 times)
+
+callbacks:
+  ft_select:
+    sets:                                  # + student_dyn's general, red_stop, dynamic_stop, curve
+      popout_onset:                        # braking-onset rate: pop-out val decision rows (lwf_mix.py popout_val_onset, 197 rows)
+        - {root: "${paths.popout_root}", split: val, index: "${paths.popout_dyn}/dyn_index.parquet", keep: "${paths.mix_lwf_popout}/popout_val_onset.parquet", n: 400}
+      popout_pre:                          # main 10/29: the same events' rows 1.5-0.5 s before onset (original rows: v2 popout_index)
+        - {root: "${paths.popout_root}", split: val, index: "${paths.popout_dyn}/popout_index.parquet", keep: "${paths.mix_lwf_popout}/popout_val_pre.parquet", n: 400}
+      static:                              # false braking: old static-obstacle section (C2) held-out rows, as student_ft
+        - {root: "${data.root}", split: [val, val_asset], frame_stride: 10, keep: "${paths.ft_pools}/old_static.parquet", n: 300}
+
+task_name: student_lwf

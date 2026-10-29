@@ -1,0 +1,67 @@
+{
+ "v2": {
+  "scenes": 1940,
+  "per_scene": {
+   "static": {
+    "1": 0.494,
+    "2": 0.506
+   },
+   "ra_dynamic": {
+    "1": 0.499,
+    "2": 0.501
+   },
+   "tunnel_static": {
+    "0": 0.59,
+    "1": 0.209,
+    "2": 0.201
+   },
+   "rb_dynamic": {
+    "1": 0.479,
+    "2": 0.521
+   }
+  },
+  "static_s": [
+   280.1,
+   292.0,
+   346.8,
+   386.2,
+   390.0
+  ],
+  "static_lat": [
+   -4.96,
+   -1.56,
+   4.41,
+   12.59,
+   16.22
+  ],
+  "dyn_A_s": [
+   421.0,
+   461.8,
+   502.9
+  ],
+  "tunnel": {
+   "both": 0.41,
+   "dynamic": 0.59
+  },
+  "cls": {
+   "car": 0.084,
+   "other": 0.491,
+   "person": 0.424
+  },
+  "timing": {
+   "must_stop": 0.859,
+   "pass_front": 0.141
+  },
+  "ptype": {
+   "behind_parked": 0.059,
+   "cross_lr": 0.311,
+   "cross_rl": 0.315,
+   "from_centre": 0.316
+  },
+  "static_assets": 38,
+  "mover_assets": 70,
+  "ring_type": {
+   "-1": 1.0
+  }
+ }
+}
